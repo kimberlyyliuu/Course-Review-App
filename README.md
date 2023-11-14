@@ -3,7 +3,7 @@
 
 ## Authors
 1) Ashley Sokol, mqx4vk, mqx4vk
-2) Name, netid, [GitHub profile name]
+2) Mia Ark, pzc4aq, MiaLA55
 3) Name, netid, [GitHub profile name]
 4) Name, netid, [GitHub profile name]
 
@@ -21,7 +21,7 @@ List the primary contributions of each author. It is recommended to update this 
 * as a bulleted list
 * each line starts with an asterisk and a space
 
-### [Author 2 - replace this with their name]
+### Mia Ark
 
 * Author 2 contributions
 * as a bulleted list
