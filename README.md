@@ -4,7 +4,7 @@
 ## Authors
 1) Ashley Sokol, mqx4vk, mqx4vk
 2) Mia Ark, pzc4aq, MiaLA55
-3) Name, netid, [GitHub profile name]
+3) Kimberly Liu, hfx6mh, kimberlyyliuu
 4) Name, netid, [GitHub profile name]
 
 ## To Run
@@ -27,7 +27,7 @@ List the primary contributions of each author. It is recommended to update this 
 * as a bulleted list
 * each line starts with an asterisk and a space
 
-### [Author 3 - replace this with their name]
+### Kimberly Liu
 
 * Author 3 contributions
 * as a bulleted list
