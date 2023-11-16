@@ -5,4 +5,10 @@ public class Review {
     private final String courseName;
 
 
+    public Review(String user, String courseName){
+        this.user = user;
+        this.courseName = courseName;
+    }
+
+
 }
