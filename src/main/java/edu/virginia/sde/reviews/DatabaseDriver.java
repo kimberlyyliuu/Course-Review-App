@@ -229,4 +229,22 @@ public class DatabaseDriver {
             throw e;
         }
     }
+
+    /**
+     * Removes all data from the tables, leaving the tables empty (but still existing!).
+     */
+    public void clearTables() throws SQLException {
+        try {
+            connection.createStatement().execute("DELETE FROM Reviews;");
+
+            connection.createStatement().execute("DELETE FROM Users;");
+
+            connection.createStatement().execute("DELETE FROM Courses;");
+
+
+        } catch (SQLException e) {
+            rollback();
+            throw e;
+        }
+    }
 }
