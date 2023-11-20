@@ -3,6 +3,7 @@ package edu.virginia.sde.reviews;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 public class DatabaseDriver {
     private final String sqliteFilename;
@@ -64,21 +65,89 @@ public class DatabaseDriver {
 
         connection.createStatement().execute("CREATE TABLE IF NOT EXISTS Courses (" +
                 "CourseID INTEGER PRIMARY KEY," +
-                "Subject TEXT NOT NULL," +
-                "Number INTEGER NOT NULL," +
-                "Title TEXT NOT NULL" +
+                "Mnemonic TEXT NOT NULL," +
+                "CourseNumber INTEGER NOT NULL," +
+                "CourseName TEXT NOT NULL" +
+                "AverageRating REAL DEFAULT 0.0," +
                 ");");
+
 
         connection.createStatement().execute("CREATE TABLE IF NOT EXISTS Reviews (" +
                 "ReviewID INTEGER PRIMARY KEY," +
-                "Rating INTEGER NOT NULL," +
-                "Comment TEXT," +
-                "Timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"+ //unsure of how to use this data type
                 "UserID INTEGER," +
                 "CourseID INTEGER," +
+                "Rating REAL NOT NULL," +
+                "Comment TEXT," +
+                "ReviewTimestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"+ //unsure of how to use this data type
                 "FOREIGN KEY(UserID) REFERENCES Users(UserID) ON DELETE CASCADE," +
                 "FOREIGN KEY(CourseID) REFERENCES Courses(CourseID) ON DELETE CASCADE," +
                 ");");
 
+    }
+
+    /**
+     * Adds users to the Users table
+     * @throws SQLException
+     */
+    public void addUsers(List<User> users) throws SQLException{
+        try{
+            var insertUserQuery = "INSERT INTO Users (UserID, Username, Password) VALUES (?, ?, ?)";
+            var userStatement = connection.prepareStatement(insertUserQuery);
+
+            for(User user: users){
+                userStatement.setInt(1, user.getUserID());
+                userStatement.setString(2, user.getUsername());
+                userStatement.setString(3, user.getPassword());
+                userStatement.executeUpdate();
+            }
+        } catch (SQLException e){
+            rollback();
+            throw e;
+        }
+    }
+
+    /**
+     * Adds courses to the Courses table
+     * @throws SQLException
+     */
+    public void addCourses(List<Course> courses) throws SQLException{
+        try{
+            var insertCourseQuery = "INSERT INTO Courses (Mnemonic, CourseNumber, CourseName, AverageRating) VALUES (?, ?, ?, ?)";
+            var courseStatement = connection.prepareStatement(insertCourseQuery);
+
+            for(Course course: courses){
+                courseStatement.setString(1, course.getMnemonic());
+                courseStatement.setInt(2, course.getCourseNumber());
+                courseStatement.setString(3, course.getCourseName());
+                courseStatement.setDouble(4, course.getAverageRating());
+                courseStatement.executeUpdate();
+            }
+        } catch (SQLException e){
+            rollback();
+            throw e;
+        }
+    }
+
+    /**
+     * Adds reviews to the Reviews table
+     * @throws SQLException
+     */
+    public void addReviews(List<Review> reviews) throws SQLException{
+        try{
+            var insertReviewQuery = "INSERT INTO Reviews (UserID, CourseID, Rating, Comment, ReviewTimestamp) VALUES (?, ?, ?, ?, ?)";
+            var reviewStatement = connection.prepareStatement(insertReviewQuery);
+
+            for(Review review: reviews){
+                reviewStatement.setInt(1, review.getUserID());
+                reviewStatement.setInt(2, review.getCourseID());
+                reviewStatement.setDouble(3, review.getRating());
+                reviewStatement.setString(4, review.getComment());
+                reviewStatement.setTimestamp(5, review.getTimestamp());
+                reviewStatement.executeUpdate();
+            }
+        } catch (SQLException e){
+            rollback();
+            throw e;
+        }
     }
 }

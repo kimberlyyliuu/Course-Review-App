@@ -1,20 +1,30 @@
 package edu.virginia.sde.reviews;
 
+import java.util.Objects;
+
 public class Course {
 
     private final String mnemonic;
 
-    private final String courseNumber;
+    private final int courseNumber;
 
     private final String courseName;
 
-    public Course(String mnemonic, String courseNumber, String courseName){
+    private double averageRating; //should be to 2 decimal places
+
+    public Course(String mnemonic, int courseNumber, String courseName, double averageRating){
         this.mnemonic = mnemonic;
         this.courseName = courseName;
         this.courseNumber = courseNumber;
+        this.averageRating = averageRating;
     }
 
-    public String getCourseNumber(){
+
+    public String getMnemonic() {
+        return mnemonic;
+    }
+
+    public int getCourseNumber(){
         return courseNumber;
     }
 
@@ -22,9 +32,9 @@ public class Course {
         return courseName;
     }
 
-    public String getMnemonic() {
-        return mnemonic;
-    }
+    public double getAverageRating(){ return averageRating;}
+
+
 
 
 
@@ -35,15 +45,13 @@ public class Course {
 
         Course course = (Course) obj;
 
-        if(!getMnemonic().equals(course.getMnemonic())) return false;
-        return getCourseNumber().equals(course.getCourseNumber());
+        if(!Objects.equals(getMnemonic(), course.getMnemonic())) return false;
+        return Objects.equals(getCourseNumber(), course.getCourseNumber());
 
     }
 
     @Override
     public int hashCode() {
-        int result = getMnemonic().hashCode();
-        result = 31 * result + getCourseNumber().hashCode();
-        return result;
+        return Objects.hash(getMnemonic(), getCourseNumber());
     }
 }

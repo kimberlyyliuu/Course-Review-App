@@ -4,14 +4,19 @@ import java.util.Objects;
 
 public class User {
 
+    private int userID;
     private String username;
     private String password;
 
-    public User(String password, String username){
-        this.password = password;
+    public User(int userID, String username, String password){
+        this.userID = userID;
         this.username = username;
+        this.password = password;
     }
 
+    public int getUserID(){
+        return userID;
+    }
     public String getPassword() {
         return password;
     }
