@@ -3,6 +3,7 @@ package edu.virginia.sde.reviews;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseDriver {
@@ -147,6 +148,84 @@ public class DatabaseDriver {
             }
         } catch (SQLException e){
             rollback();
+            throw e;
+        }
+    }
+
+    /**
+     * Returns all users in the Users table
+     * @return
+     * @throws SQLException
+     */
+    public List<User> getAllUsers() throws SQLException{
+        try{
+            List<User> userList = new ArrayList<>();
+            var statement = connection.prepareStatement("SELECT * FROM Users");
+
+            var resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                var userID = resultSet.getInt("UserID");
+                var username = resultSet.getString("Username");
+                var password = resultSet.getString("Password");
+                var newUser = new User(userID, username, password);
+
+                userList.add(newUser);
+            }
+            return userList;
+        } catch (SQLException e){
+            throw e;
+        }
+    }
+
+    /**
+     * Returns all courses in the Courses table
+     * @return
+     * @throws SQLException
+     */
+    public List<Course> getAllCourses() throws SQLException{
+        try{
+            List<Course> courseList = new ArrayList<>();
+            var statement = connection.prepareStatement("SELECT * FROM Courses");
+            var resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+                var mnemonic = resultSet.getString("Mnemonic");
+                var courseNumber = resultSet.getInt("CourseNumber");
+                var courseName = resultSet.getString("CourseName");
+                var averageRating = resultSet.getDouble("AverageRating");
+                var newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+
+                courseList.add(newCourse);
+            }
+            return courseList;
+        } catch (SQLException e){
+            throw e;
+        }
+    }
+
+    /**
+     * Returns all reviews in the Reviews table
+     * @return
+     * @throws SQLException
+     */
+    public List<Review> getAllReviews() throws SQLException{
+        try{
+            List<Review> reviewsList = new ArrayList<>();
+            var statement = connection.prepareStatement("SELECT * FROM Reviews");
+            var resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+               var userID = resultSet.getInt("UserID");
+               var courseID = resultSet.getInt("CourseID");
+               var rating = resultSet.getDouble("Rating");
+               var comment = resultSet.getString("Comment");
+               var timestamp = resultSet.getTimestamp("ReviewTimestamp");
+               var newReview = new Review(userID, courseID, rating, comment, timestamp);
+
+                reviewsList.add(newReview);
+            }
+            return reviewsList;
+        } catch (SQLException e){
             throw e;
         }
     }

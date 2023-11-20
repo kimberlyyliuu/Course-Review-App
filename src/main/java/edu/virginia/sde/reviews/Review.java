@@ -19,6 +19,16 @@ public class Review {
 
     }
 
+    //This constructor is used in DatabaseDriver when returning a list of all reviews in the database
+    public Review(int userID, int courseID, double rating, String comment, Timestamp timestamp) {
+        this.userID = userID;
+        this.courseID = courseID;
+        this.rating = rating;
+        this.comment = comment;
+        this.timestamp = timestamp;
+
+    }
+
 
     public int getCourseID() {
         return courseID;
