@@ -123,7 +123,6 @@ public class DatabaseDriver {
             var courseStatement = connection.prepareStatement(insertCourseQuery);
 
             for(Course course: courses){
-                courseStatement.setInt(1, course.getCourseID());
                 courseStatement.setString(2, course.getMnemonic());
                 courseStatement.setInt(3, course.getCourseNumber());
                 courseStatement.setString(4, course.getCourseName());
@@ -204,12 +203,11 @@ public class DatabaseDriver {
             var resultSet = statement.executeQuery();
 
             while(resultSet.next()){
-                var courseID = resultSet.getInt("CourseID");
                 var mnemonic = resultSet.getString("Mnemonic");
                 var courseNumber = resultSet.getInt("CourseNumber");
                 var courseName = resultSet.getString("CourseName");
                 var averageRating = resultSet.getDouble("AverageRating");
-                var newCourse = new Course(courseID, mnemonic, courseNumber, courseName, averageRating);
+                var newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
 
                 courseList.add(newCourse);
             }
@@ -286,8 +284,14 @@ public class DatabaseDriver {
             throw new IllegalStateException("Connection is not open.");
         }
         var reviewsList = new ArrayList<Review>();
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Reviews WHERE CourseID = ?");
-        statement.setInt(1, course.getCourseID());
+        PreparedStatement statement = connection.prepareStatement("""
+                                SELECT * FROM Reviews 
+                                JOIN Courses ON Reviews.CourseID = Courses.CourseID 
+                                WHERE Mnemonic = ? AND CourseNumber = ? AND CourseName = ?
+                                """);
+        statement.setString(1, course.getMnemonic());
+        statement.setInt(2, course.getCourseNumber());
+        statement.setString(3, course.getCourseName());
         ResultSet resultSet = statement.executeQuery();
 
         while(resultSet.next()) {
