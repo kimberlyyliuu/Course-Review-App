@@ -310,6 +310,81 @@ public class DatabaseDriver {
     }
 
     /**
+     * Gets a list of all courses with a course name that contains a given substring (case-insensitive)
+     */
+    public List<Course> getCourseByName(String substring) throws SQLException {
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open");
+        }
+        var coursesList = new ArrayList<Course>();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Courses WHERE CourseName LIKE ?");
+        substring = "%" + substring + "%";
+        statement.setString(1, substring);
+        ResultSet resultSet = statement.executeQuery();
+
+        while(resultSet.next()) {
+            var mnemonic = resultSet.getString("Mnemonic");
+            var courseNumber = resultSet.getInt("CourseNumber");
+            var courseName = resultSet.getString("CourseName");
+            var averageRating = resultSet.getDouble("AverageRating");
+            var course = new Course(mnemonic, courseNumber, courseName, averageRating);
+            coursesList.add(course);
+        }
+
+        statement.close();
+        return coursesList;
+    }
+
+    /**
+     * Gets a list of all courses that match a given mnemonic
+     */
+    public List<Course> getCourseByMnemonic(String courseMnemonic) throws SQLException {
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open");
+        }
+        var coursesList = new ArrayList<Course>();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Courses WHERE Mnemonic = ?");
+        statement.setString(1, courseMnemonic);
+        ResultSet resultSet = statement.executeQuery();
+
+        while(resultSet.next()) {
+            var mnemonic = resultSet.getString("Mnemonic");
+            var courseNumber = resultSet.getInt("CourseNumber");
+            var courseName = resultSet.getString("CourseName");
+            var averageRating = resultSet.getDouble("AverageRating");
+            var course = new Course(mnemonic, courseNumber, courseName, averageRating);
+            coursesList.add(course);
+        }
+        statement.close();
+        return coursesList;
+    }
+
+    /**
+     * Gets a list of courses that match a given course number
+     */
+
+    public List<Course> getCourseByNumber(int number) throws SQLException {
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open");
+        }
+        var coursesList = new ArrayList<Course>();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Courses WHERE CourseNumber = ?");
+        statement.setInt(1, number);
+        ResultSet resultSet = statement.executeQuery();
+
+        while(resultSet.next()) {
+            var mnemonic = resultSet.getString("Mnemonic");
+            var courseNumber = resultSet.getInt("CourseNumber");
+            var courseName = resultSet.getString("CourseName");
+            var averageRating = resultSet.getDouble("AverageRating");
+            var course = new Course(mnemonic, courseNumber, courseName, averageRating);
+            coursesList.add(course);
+        }
+        statement.close();
+        return coursesList;
+    }
+
+    /**
      * Checks if username already exists in Users
      */
     public boolean checkUserExists(String username) throws SQLException{
