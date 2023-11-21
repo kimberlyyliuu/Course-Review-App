@@ -16,7 +16,6 @@
             <Font name="Microsoft Sans Serif" size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="171.0" layoutY="154.0" />
       <TextField layoutX="171.0" layoutY="122.0" />
       <Label alignment="TOP_CENTER" layoutX="49.0" layoutY="125.0" text="Username">
          <font>
@@ -30,5 +29,6 @@
       </Label>
       <Button layoutX="269.0" layoutY="203.0" mnemonicParsing="false" text="Log-In" />
       <Button layoutX="49.0" layoutY="203.0" mnemonicParsing="false" text="Create New User" />
+      <PasswordField layoutX="171.0" layoutY="154.0" />
    </children>
 </AnchorPane>
