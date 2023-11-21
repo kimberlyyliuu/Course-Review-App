@@ -4,6 +4,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.sql.SQLException;
+import java.util.List;
+
 public class LoginController {
 
     @FXML
@@ -18,48 +22,72 @@ public class LoginController {
     @FXML
     private void initialize(){
         loginButton.setOnAction(event -> handleLogin());
-        newUserButton.setOnAction(event -> handleCreateNewUser());
+        newUserButton.setOnAction(event -> {
+            try {
+                handleCreateNewUser();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
+    /**
+     * When login button is pressed, checks if user is in database. If not, an error message is shown in the application. If they are in the database and the correct password is
+     * given, then the login is successful and course review scene is shown.
+     */
     private void handleLogin(){
         var username = usernameField.getText();
         var password = passwordField.getText();
-        var userExists = validateUser(username, password);
 
-        if(userExists){
-            openCourseReviewScene();
-        }
-        else{
-            //error message shown about invalid username or password or create new user
+        try{
+            DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
+            dbDriver.connect();
+
+            if(dbDriver.checkUserPassword(username, password)){
+                dbDriver.disconnect();
+                openCourseReviewScene();
+            }
+            else{
+                //display error message
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
         }
     }
 
-    private void handleCreateNewUser(){
+    /**
+     * When create new user button is pressed, checks to see if the username is already used. If it is, a message will be shown in the application saying the username exists already.
+     * If not, the new user will be created successfully, and then the course review scene will be shown.
+     * @throws SQLException
+     */
+    private void handleCreateNewUser() throws SQLException {
         var username = usernameField.getText();
         var password = passwordField.getText();
-        var usernameExists = checkUserExists(username);
 
-        if(usernameExists){
-            //error message about username already existing
+        try{
+            DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
+            dbDriver.connect();
+
+            if(dbDriver.checkUserExists(username)){
+                //error message
+            }
+            else{
+                User newUser = new User(username, password);
+                List<User> newUserList = null;
+                newUserList.add(newUser);
+
+                dbDriver.addUsers(newUserList);
+                dbDriver.disconnect();
+
+                openCourseReviewScene();
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
         }
-        else{
-            addUserToDatabase(username, password);
-            openCourseReviewScene();
-        }
 
     }
 
-    private boolean validateUser(String username, String password){
-        return true;
-    }
 
-    private boolean checkUserExists(String username){
-        return true;
-    }
-
-    private void addUserToDatabase(String username, String password){
-
-    }
 
     private void openCourseReviewScene(){
       var stage = (Stage) loginButton.getScene().getWindow();

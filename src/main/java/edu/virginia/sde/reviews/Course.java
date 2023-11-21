@@ -6,13 +6,16 @@ public class Course {
 
     private final String mnemonic;
 
+    private final int courseID;
+
     private final int courseNumber;
 
     private final String courseName;
 
     private double averageRating; //should be to 2 decimal places
 
-    public Course(String mnemonic, int courseNumber, String courseName, double averageRating){
+    public Course(int courseID, String mnemonic, int courseNumber, String courseName, double averageRating){
+        this.courseID = courseID;
         this.mnemonic = mnemonic;
         this.courseName = courseName;
         this.courseNumber = courseNumber;
@@ -20,6 +23,7 @@ public class Course {
     }
 
 
+    public int getCourseID(){return courseID;}
     public String getMnemonic() {
         return mnemonic;
     }

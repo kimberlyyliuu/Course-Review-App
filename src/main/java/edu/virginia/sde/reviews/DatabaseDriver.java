@@ -92,13 +92,12 @@ public class DatabaseDriver {
      */
     public void addUsers(List<User> users) throws SQLException{
         try{
-            var insertUserQuery = "INSERT INTO Users (UserID, Username, Password) VALUES (?, ?, ?)";
+            var insertUserQuery = "INSERT INTO Users (Username, Password) VALUES (?, ?)";
             var userStatement = connection.prepareStatement(insertUserQuery);
 
             for(User user: users){
-                userStatement.setInt(1, user.getUserID());
-                userStatement.setString(2, user.getUsername());
-                userStatement.setString(3, user.getPassword());
+                userStatement.setString(1, user.getUsername());
+                userStatement.setString(2, user.getPassword());
                 userStatement.executeUpdate();
             }
         } catch (SQLException e){
@@ -113,14 +112,15 @@ public class DatabaseDriver {
      */
     public void addCourses(List<Course> courses) throws SQLException{
         try{
-            var insertCourseQuery = "INSERT INTO Courses (Mnemonic, CourseNumber, CourseName, AverageRating) VALUES (?, ?, ?, ?)";
+            var insertCourseQuery = "INSERT INTO Courses (CourseID, Mnemonic, CourseNumber, CourseName, AverageRating) VALUES (?, ?, ?, ?, ?)";
             var courseStatement = connection.prepareStatement(insertCourseQuery);
 
             for(Course course: courses){
-                courseStatement.setString(1, course.getMnemonic());
-                courseStatement.setInt(2, course.getCourseNumber());
-                courseStatement.setString(3, course.getCourseName());
-                courseStatement.setDouble(4, course.getAverageRating());
+                courseStatement.setInt(1, course.getCourseID());
+                courseStatement.setString(2, course.getMnemonic());
+                courseStatement.setInt(3, course.getCourseNumber());
+                courseStatement.setString(4, course.getCourseName());
+                courseStatement.setDouble(5, course.getAverageRating());
                 courseStatement.executeUpdate();
             }
         } catch (SQLException e){
@@ -164,10 +164,9 @@ public class DatabaseDriver {
 
             var resultSet = statement.executeQuery();
             while(resultSet.next()){
-                var userID = resultSet.getInt("UserID");
                 var username = resultSet.getString("Username");
                 var password = resultSet.getString("Password");
-                var newUser = new User(userID, username, password);
+                var newUser = new User(username, password);
 
                 userList.add(newUser);
             }
@@ -189,11 +188,12 @@ public class DatabaseDriver {
             var resultSet = statement.executeQuery();
 
             while(resultSet.next()){
+                var courseID = resultSet.getInt("CourseID");
                 var mnemonic = resultSet.getString("Mnemonic");
                 var courseNumber = resultSet.getInt("CourseNumber");
                 var courseName = resultSet.getString("CourseName");
                 var averageRating = resultSet.getDouble("AverageRating");
-                var newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+                var newCourse = new Course(courseID, mnemonic, courseNumber, courseName, averageRating);
 
                 courseList.add(newCourse);
             }
@@ -231,15 +231,46 @@ public class DatabaseDriver {
     }
 
     /**
+     * Checks if username already exists in Users
+     */
+    public boolean checkUserExists(String username) throws SQLException{
+        // Agent: ChatGPT
+        // Source: Asked how to return boolean from searching a table
+        try{
+            var statement = connection.prepareStatement("SELECT * FROM Users WHERE Username = ?");
+            statement.setString(1, username);
+            var resultSet = statement.executeQuery();
+
+            return resultSet.next(); //returns true if there exists at a row w/the username
+        } catch (SQLException e){
+            throw e;
+        }
+    }
+
+    public boolean checkUserPassword(String username, String password) throws  SQLException{
+        try{
+            var statement = connection.prepareStatement("SELECT * FROM Users WHERE Username = ? AND Password = ?");
+            statement.setString(1, username);
+            statement.setString(2, password);
+
+            var resultSet = statement.executeQuery();
+
+            return resultSet.next(); //returns true if there exists at a row w/the password
+        } catch (SQLException e){
+            throw e;
+        }
+    }
+
+    /**
      * Removes all data from the tables, leaving the tables empty (but still existing!).
      */
     public void clearTables() throws SQLException {
         try {
             connection.createStatement().execute("DELETE FROM Reviews;");
 
-            connection.createStatement().execute("DELETE FROM Users;");
-
             connection.createStatement().execute("DELETE FROM Courses;");
+
+            connection.createStatement().execute("DELETE FROM Users;");
 
 
         } catch (SQLException e) {
