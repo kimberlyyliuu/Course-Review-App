@@ -73,10 +73,8 @@ public class LoginController {
             }
             else{
                 User newUser = new User(username, password);
-                List<User> newUserList = null;
-                newUserList.add(newUser);
 
-                dbDriver.addUsers(newUserList);
+                dbDriver.addUser(newUser);
                 dbDriver.disconnect();
 
                 openCourseReviewScene();

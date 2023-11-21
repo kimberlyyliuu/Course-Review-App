@@ -91,7 +91,7 @@ public class DatabaseDriver {
      * Adds users to the Users table
      * @throws SQLException
      */
-    public void addUsers(List<User> users) throws SQLException{
+    public void addUser(User user) throws SQLException{
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
@@ -99,11 +99,9 @@ public class DatabaseDriver {
             var insertUserQuery = "INSERT INTO Users (Username, Password) VALUES (?, ?)";
             var userStatement = connection.prepareStatement(insertUserQuery);
 
-            for(User user: users){
-                userStatement.setString(1, user.getUsername());
-                userStatement.setString(2, user.getPassword());
-                userStatement.executeUpdate();
-            }
+            userStatement.setString(1, user.getUsername());
+            userStatement.setString(2, user.getPassword());
+            userStatement.executeUpdate();
         } catch (SQLException e){
             rollback();
             throw e;
@@ -114,21 +112,19 @@ public class DatabaseDriver {
      * Adds courses to the Courses table
      * @throws SQLException
      */
-    public void addCourses(List<Course> courses) throws SQLException{
+    public void addCourse(Course course) throws SQLException{
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
         try{
-            var insertCourseQuery = "INSERT INTO Courses (CourseID, Mnemonic, CourseNumber, CourseName, AverageRating) VALUES (?, ?, ?, ?, ?)";
+            var insertCourseQuery = "INSERT INTO Courses (Mnemonic, CourseNumber, CourseName, AverageRating) VALUES (?, ?, ?, ?)";
             var courseStatement = connection.prepareStatement(insertCourseQuery);
 
-            for(Course course: courses){
-                courseStatement.setString(2, course.getMnemonic());
-                courseStatement.setInt(3, course.getCourseNumber());
-                courseStatement.setString(4, course.getCourseName());
-                courseStatement.setDouble(5, course.getAverageRating());
-                courseStatement.executeUpdate();
-            }
+            courseStatement.setString(1, course.getMnemonic());
+            courseStatement.setInt(2, course.getCourseNumber());
+            courseStatement.setString(3, course.getCourseName());
+            courseStatement.setDouble(4, course.getAverageRating());
+            courseStatement.executeUpdate();
         } catch (SQLException e){
             rollback();
             throw e;
@@ -139,7 +135,7 @@ public class DatabaseDriver {
      * Adds reviews to the Reviews table
      * @throws SQLException
      */
-    public void addReviews(List<Review> reviews) throws SQLException{
+    public void addReview(Review review) throws SQLException{
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
@@ -147,14 +143,12 @@ public class DatabaseDriver {
             var insertReviewQuery = "INSERT INTO Reviews (UserID, CourseID, Rating, Comment, ReviewTimestamp) VALUES (?, ?, ?, ?, ?)";
             var reviewStatement = connection.prepareStatement(insertReviewQuery);
 
-            for(Review review: reviews){
                 reviewStatement.setInt(1, review.getUserID());
                 reviewStatement.setInt(2, review.getCourseID());
                 reviewStatement.setDouble(3, review.getRating());
                 reviewStatement.setString(4, review.getComment());
                 reviewStatement.setTimestamp(5, review.getTimestamp());
                 reviewStatement.executeUpdate();
-            }
         } catch (SQLException e){
             rollback();
             throw e;
