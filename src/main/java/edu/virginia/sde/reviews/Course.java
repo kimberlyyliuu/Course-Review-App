@@ -10,7 +10,15 @@ public class Course {
 
     private final String courseName;
 
-    private double averageRating; //should be to 2 decimal places
+    // should be to 2 decimal places
+    // defaults to 0.00 - won't have any ratings when initially created by user
+    private double averageRating = 0.00;
+
+    public Course(String mnemonic, int courseNumber, String courseName) {
+        this.mnemonic = mnemonic;
+        this.courseNumber = courseNumber;
+        this.courseName = courseName;
+    }
 
     public Course(String mnemonic, int courseNumber, String courseName, double averageRating){
         this.mnemonic = mnemonic;
