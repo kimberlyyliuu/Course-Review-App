@@ -1,8 +1,6 @@
 package edu.virginia.sde.reviews;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -217,7 +215,7 @@ public class DatabaseDriver {
             while(resultSet.next()){
                var userID = resultSet.getInt("UserID");
                var courseID = resultSet.getInt("CourseID");
-               var rating = resultSet.getDouble("Rating");
+               var rating = resultSet.getInt("Rating");
                var comment = resultSet.getString("Comment");
                var timestamp = resultSet.getTimestamp("ReviewTimestamp");
                var newReview = new Review(userID, courseID, rating, comment, timestamp);
@@ -228,6 +226,60 @@ public class DatabaseDriver {
         } catch (SQLException e){
             throw e;
         }
+    }
+
+    /**
+     * Gets all reviews for a given user
+     */
+    public List<Review> getReviewsByUser(User user) throws SQLException {
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
+        var reviewsList = new ArrayList<Review>();
+        PreparedStatement statement = connection.prepareStatement("""
+                                SELECT * FROM Reviews 
+                                WHERE UserID IN(
+                                    SELECT UserID FROM Users WHERE Username = ?)
+                                """);
+        statement.setString(1, user.getUsername());
+        ResultSet resultSet = statement.executeQuery();
+
+        while(resultSet.next()) {
+            var userID = resultSet.getInt("UserID");
+            var courseID = resultSet.getInt("CourseID");
+            var rating = resultSet.getInt("Rating");
+            var comment = resultSet.getString("Comment");
+            var timestamp = resultSet.getTimestamp("ReviewTimestamp");
+
+            var review = new Review(userID, courseID, rating, comment, timestamp);
+            reviewsList.add(review);
+        }
+        return reviewsList;
+    }
+
+    /**
+     * Gets all reviews for a given course
+     */
+    public List<Review> getReviewsByCourse(Course course) throws SQLException {
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
+        var reviewsList = new ArrayList<Review>();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Reviews WHERE CourseID = ?");
+        statement.setInt(1, course.getCourseID());
+        ResultSet resultSet = statement.executeQuery();
+
+        while(resultSet.next()) {
+            var userID = resultSet.getInt("UserID");
+            var courseID = resultSet.getInt("CourseID");
+            var rating = resultSet.getInt("Rating");
+            var comment = resultSet.getString("Comment");
+            var timestamp = resultSet.getTimestamp("ReviewTimestamp");
+
+            var review = new Review(userID, courseID, rating, comment, timestamp);
+            reviewsList.add(review);
+        }
+        return reviewsList;
     }
 
     /**
