@@ -50,11 +50,11 @@ public class LoginController {
     }
 
     private boolean validateUser(String username, String password){
-
+        return true;
     }
 
     private boolean checkUserExists(String username){
-
+        return true;
     }
 
     private void addUserToDatabase(String username, String password){
