@@ -54,6 +54,9 @@ public class DatabaseDriver {
      * @throws SQLException
      */
     public void createTables() throws SQLException {
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
         // Agent: ChatGPT
         // Usage: Asked how generate certain SQL commands (i.e. based on how to introduce foreign keys)
         connection.createStatement().execute("CREATE TABLE IF NOT EXISTS Users (" +
@@ -89,6 +92,9 @@ public class DatabaseDriver {
      * @throws SQLException
      */
     public void addUsers(List<User> users) throws SQLException{
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
         try{
             var insertUserQuery = "INSERT INTO Users (Username, Password) VALUES (?, ?)";
             var userStatement = connection.prepareStatement(insertUserQuery);
@@ -109,6 +115,9 @@ public class DatabaseDriver {
      * @throws SQLException
      */
     public void addCourses(List<Course> courses) throws SQLException{
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
         try{
             var insertCourseQuery = "INSERT INTO Courses (CourseID, Mnemonic, CourseNumber, CourseName, AverageRating) VALUES (?, ?, ?, ?, ?)";
             var courseStatement = connection.prepareStatement(insertCourseQuery);
@@ -132,6 +141,9 @@ public class DatabaseDriver {
      * @throws SQLException
      */
     public void addReviews(List<Review> reviews) throws SQLException{
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
         try{
             var insertReviewQuery = "INSERT INTO Reviews (UserID, CourseID, Rating, Comment, ReviewTimestamp) VALUES (?, ?, ?, ?, ?)";
             var reviewStatement = connection.prepareStatement(insertReviewQuery);
@@ -156,6 +168,9 @@ public class DatabaseDriver {
      * @throws SQLException
      */
     public List<User> getAllUsers() throws SQLException{
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
         try{
             List<User> userList = new ArrayList<>();
             var statement = connection.prepareStatement("SELECT * FROM Users");
@@ -180,6 +195,9 @@ public class DatabaseDriver {
      * @throws SQLException
      */
     public List<Course> getAllCourses() throws SQLException{
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
         try{
             List<Course> courseList = new ArrayList<>();
             var statement = connection.prepareStatement("SELECT * FROM Courses");
@@ -207,6 +225,9 @@ public class DatabaseDriver {
      * @throws SQLException
      */
     public List<Review> getAllReviews() throws SQLException{
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
         try{
             List<Review> reviewsList = new ArrayList<>();
             var statement = connection.prepareStatement("SELECT * FROM Reviews");
@@ -286,6 +307,9 @@ public class DatabaseDriver {
      * Checks if username already exists in Users
      */
     public boolean checkUserExists(String username) throws SQLException{
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
         // Agent: ChatGPT
         // Source: Asked how to return boolean from searching a table
         try{
@@ -300,6 +324,9 @@ public class DatabaseDriver {
     }
 
     public boolean checkUserPassword(String username, String password) throws  SQLException{
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
         try{
             var statement = connection.prepareStatement("SELECT * FROM Users WHERE Username = ? AND Password = ?");
             statement.setString(1, username);
@@ -317,6 +344,9 @@ public class DatabaseDriver {
      * Removes all data from the tables, leaving the tables empty (but still existing!).
      */
     public void clearTables() throws SQLException {
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
         try {
             connection.createStatement().execute("DELETE FROM Reviews;");
 
