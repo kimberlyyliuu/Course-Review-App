@@ -102,6 +102,7 @@ public class DatabaseDriver {
             userStatement.setString(1, user.getUsername());
             userStatement.setString(2, user.getPassword());
             userStatement.executeUpdate();
+            userStatement.close();
         } catch (SQLException e){
             rollback();
             throw e;
@@ -125,6 +126,7 @@ public class DatabaseDriver {
             courseStatement.setString(3, course.getCourseName());
             courseStatement.setDouble(4, course.getAverageRating());
             courseStatement.executeUpdate();
+            courseStatement.close();
         } catch (SQLException e){
             rollback();
             throw e;
@@ -149,6 +151,7 @@ public class DatabaseDriver {
                 reviewStatement.setString(4, review.getComment());
                 reviewStatement.setTimestamp(5, review.getTimestamp());
                 reviewStatement.executeUpdate();
+                reviewStatement.close();
         } catch (SQLException e){
             rollback();
             throw e;
@@ -176,6 +179,7 @@ public class DatabaseDriver {
 
                 userList.add(newUser);
             }
+            statement.close();
             return userList;
         } catch (SQLException e){
             throw e;
@@ -205,6 +209,7 @@ public class DatabaseDriver {
 
                 courseList.add(newCourse);
             }
+            statement.close();
             return courseList;
         } catch (SQLException e){
             throw e;
@@ -235,6 +240,7 @@ public class DatabaseDriver {
 
                 reviewsList.add(newReview);
             }
+            statement.close();
             return reviewsList;
         } catch (SQLException e){
             throw e;
@@ -267,6 +273,7 @@ public class DatabaseDriver {
             var review = new Review(userID, courseID, rating, comment, timestamp);
             reviewsList.add(review);
         }
+        statement.close();
         return reviewsList;
     }
 
@@ -298,6 +305,7 @@ public class DatabaseDriver {
             var review = new Review(userID, courseID, rating, comment, timestamp);
             reviewsList.add(review);
         }
+        statement.close();
         return reviewsList;
     }
 
@@ -315,7 +323,9 @@ public class DatabaseDriver {
             statement.setString(1, username);
             var resultSet = statement.executeQuery();
 
-            return resultSet.next(); //returns true if there exists at a row w/the username
+            boolean hasUsername = resultSet.next();
+            statement.close();
+            return hasUsername; //returns true if there exists at a row w/the username
         } catch (SQLException e){
             throw e;
         }
@@ -332,7 +342,9 @@ public class DatabaseDriver {
 
             var resultSet = statement.executeQuery();
 
-            return resultSet.next(); //returns true if there exists at a row w/the password
+            boolean hasPassword = resultSet.next();
+            statement.close();
+            return hasPassword; //returns true if there exists at a row w/the password
         } catch (SQLException e){
             throw e;
         }
