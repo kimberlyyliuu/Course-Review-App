@@ -62,18 +62,15 @@ public class DatabaseDriver {
         connection.createStatement().execute("CREATE TABLE IF NOT EXISTS Users (" +
                 "UserID INTEGER PRIMARY KEY," +
                 "Username TEXT UNIQUE NOT NULL," +
-                "Password TEXT NOT NULL," +
+                "Password TEXT NOT NULL" +
                 ");");
-
         connection.createStatement().execute("CREATE TABLE IF NOT EXISTS Courses (" +
                 "CourseID INTEGER PRIMARY KEY," +
                 "Mnemonic TEXT NOT NULL," +
                 "CourseNumber INTEGER NOT NULL," +
-                "CourseName TEXT NOT NULL" +
-                "AverageRating REAL DEFAULT 0.0," +
+                "CourseName TEXT NOT NULL," +
+                "AverageRating REAL DEFAULT 0.0" +
                 ");");
-
-
         connection.createStatement().execute("CREATE TABLE IF NOT EXISTS Reviews (" +
                 "ReviewID INTEGER PRIMARY KEY," +
                 "UserID INTEGER," +
@@ -82,9 +79,8 @@ public class DatabaseDriver {
                 "Comment TEXT," +
                 "ReviewTimestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"+ //unsure of how to use this data type
                 "FOREIGN KEY(UserID) REFERENCES Users(UserID) ON DELETE CASCADE," +
-                "FOREIGN KEY(CourseID) REFERENCES Courses(CourseID) ON DELETE CASCADE," +
+                "FOREIGN KEY(CourseID) REFERENCES Courses(CourseID) ON DELETE CASCADE" +
                 ");");
-
     }
 
     /**
@@ -444,5 +440,11 @@ public class DatabaseDriver {
             rollback();
             throw e;
         }
+    }
+    public boolean isValidPassword(String pass){
+        if(pass.length() >= 8){
+            return true;
+        }
+        else return false;
     }
 }
