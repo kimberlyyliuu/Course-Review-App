@@ -250,12 +250,12 @@ public class DatabaseDriver {
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
-        var reviewsList = new ArrayList<Review>();
         PreparedStatement statement = connection.prepareStatement("""
-                                SELECT * FROM Reviews 
-                                WHERE UserID IN(
-                                    SELECT UserID FROM Users WHERE Username = ?)
-                                """);
+            SELECT * FROM Reviews 
+            WHERE UserID IN(
+            SELECT UserID FROM Users WHERE Username = ?)
+            """);
+        var reviewsList = new ArrayList<Review>();
         statement.setString(1, user.getUsername());
         ResultSet resultSet = statement.executeQuery();
 

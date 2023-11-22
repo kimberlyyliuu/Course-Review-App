@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.collections.*;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,8 @@ public class CourseSearchController {
             DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
             dbDriver.connect();
             dbDriver.createTables();
+            Course test = new Course("123456", 1234, "4", 4);
+            dbDriver.addCourse(test);
             List<Course> courses = new ArrayList<>();
             courses = dbDriver.getAllCourses();
             ObservableList<Course> observableCourseList = FXCollections.observableList(courses);
