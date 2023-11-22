@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.HelloWorldController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.LoginController">
    <children>
       <Label alignment="TOP_CENTER" layoutX="291.0" layoutY="14.0" text="Welcome to Course Review" textFill="#004dff">
          <font>
@@ -16,7 +16,12 @@
             <Font name="Cambria" size="43.0" />
          </font>
       </Label>
-      <TextField layoutX="480.0" layoutY="259.0" prefHeight="51.0" prefWidth="318.0" />
+      <TextField fx:id="usernameField" layoutX="480.0" layoutY="259.0" prefHeight="51.0" prefWidth="318.0" />
+      <Button fx:id="loginButton" layoutX="657.0" layoutY="457.0" mnemonicParsing="false" onAction="#initialize" prefHeight="90.0" prefWidth="246.0" text="Log-In">
+         <font>
+            <Font name="Cambria" size="22.0" />
+         </font>
+      </Button>
       <Label alignment="CENTER" layoutX="315.0" layoutY="259.0" prefHeight="51.0" prefWidth="148.0" text="Username">
          <font>
             <Font name="Microsoft Sans Serif" size="26.0" />
@@ -27,14 +32,25 @@
             <Font name="Microsoft Sans Serif" size="26.0" />
          </font>
       </Label>
-      <Button layoutX="643.0" layoutY="457.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="237.0" text="Log-In">
-         <font>
-            <Font name="Cambria" size="22.0" />
-         </font></Button>
-      <Button layoutX="267.0" layoutY="457.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="246.0" text="Create New User">
+      <Button fx:id="newUserButton" layoutX="333.0" layoutY="457.0" mnemonicParsing="false" onAction="#initialize" prefHeight="90.0" prefWidth="246.0" text="Create New User">
          <font>
             <Font name="Cambria" size="21.0" />
          </font></Button>
-      <PasswordField layoutX="479.0" layoutY="340.0" prefHeight="51.0" prefWidth="318.0" />
+      <PasswordField fx:id="passwordField" layoutX="479.0" layoutY="340.0" prefHeight="51.0" prefWidth="318.0" />
+      <Label fx:id="userNotExist" alignment="CENTER" layoutX="480.0" layoutY="396.0" prefHeight="0.0" prefWidth="318.0">
+         <font>
+            <Font name="Microsoft Sans Serif" size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="invalidPassword" alignment="CENTER" layoutX="480.0" layoutY="394.0" prefHeight="0.0" prefWidth="318.0">
+         <font>
+            <Font name="Microsoft Sans Serif" size="26.0" />
+         </font>
+      </Label>
+      <Button fx:id="exitButton" layoutX="556.0" layoutY="626.0" mnemonicParsing="false" onAction="#initialize" prefHeight="42.0" prefWidth="148.0" text="CLOSE APP">
+         <font>
+            <Font name="Cambria" size="22.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
