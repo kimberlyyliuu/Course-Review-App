@@ -11,7 +11,7 @@
             <Font name="Cambria" size="23.0" />
          </font>
       </Label>
-      <ListView fx:id="courseListView" layoutX="193.0" layoutY="157.0" prefHeight="539.0" prefWidth="932.0" />
+      <ListView fx:id="courseListView" layoutX="193.0" layoutY="157.0" prefHeight="482.0" prefWidth="932.0" />
       <Label fx:id="numberLabel" layoutX="476.0" layoutY="37.0" prefHeight="108.0" prefWidth="243.0" text="Course Code">
          <font>
             <Font name="Cambria" size="23.0" />
@@ -25,5 +25,10 @@
          </font>
       </Label>
       <TextField fx:id="courseTitle" layoutX="958.0" layoutY="69.0" prefHeight="43.0" prefWidth="183.0" />
+      <Button fx:id="exitButton" layoutX="556.0" layoutY="648.0" mnemonicParsing="false" onAction="#courseSearchInitialize" prefHeight="42.0" prefWidth="148.0" text="CLOSE APP">
+         <font>
+            <Font name="Cambria" size="22.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

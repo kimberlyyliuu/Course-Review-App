@@ -32,7 +32,6 @@ public class NewUserController {
     private Button exitButton;
     @FXML
     protected void newUserInitialize() {
-        System.out.println("you made it to new user scene, initializing");
         exitButton.setOnAction(event -> Platform.exit());
         createUserButton.setOnAction(event -> createNewUser());
 
