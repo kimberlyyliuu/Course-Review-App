@@ -78,7 +78,7 @@ public class NewUserController {
                 });
             } else if (!dbDriver.checkUserExists(username) && !dbDriver.isValidPassword(password)) {
                 Platform.runLater(() -> {
-                    errorMessage.setText("Invalid Password");
+                    errorMessage.setText("Invalid Password Format");
                     try {
                         dbDriver.disconnect();
                     } catch (SQLException e) {
