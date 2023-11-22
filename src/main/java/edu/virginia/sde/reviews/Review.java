@@ -18,6 +18,13 @@ public class Review {
         this.timestamp = new Timestamp(System.currentTimeMillis()); // Set the timestamp to the current date and time
 
     }
+    public Review(int userID, int courseID, int rating) {
+        this.userID = userID;
+        this.courseID = courseID;
+        this.rating = rating;
+        this.timestamp = new Timestamp(System.currentTimeMillis()); // Set the timestamp to the current date and time
+
+    }
 
     //This constructor is used in DatabaseDriver when returning a list of all reviews in the database
     public Review(int userID, int courseID, int rating, String comment, Timestamp timestamp) {
