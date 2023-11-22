@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.virginia.sde.reviews.CourseSearchController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseSearchController">
+   <children>
+      <Label fx:id="pneumonicLabel" layoutX="67.0" layoutY="50.0" prefHeight="82.0" prefWidth="251.0" text="Course Pneumonic">
+         <font>
+            <Font name="Cambria" size="23.0" />
+         </font>
+      </Label>
+      <ListView fx:id="courseListView" layoutX="193.0" layoutY="157.0" prefHeight="539.0" prefWidth="932.0" />
+      <Label fx:id="numberLabel" layoutX="476.0" layoutY="37.0" prefHeight="108.0" prefWidth="243.0" text="Course Code">
+         <font>
+            <Font name="Cambria" size="23.0" />
+         </font>
+      </Label>
+      <TextField fx:id="coursePneumonic" layoutX="257.0" layoutY="69.0" prefHeight="43.0" prefWidth="215.0" />
+      <TextField fx:id="courseNumber" layoutX="608.0" layoutY="68.0" prefHeight="43.0" prefWidth="215.0" />
+      <Label fx:id="titlelabel" layoutX="830.0" layoutY="37.0" prefHeight="108.0" prefWidth="243.0" text="Course Title">
+         <font>
+            <Font name="Cambria" size="22.0" />
+         </font>
+      </Label>
+      <TextField fx:id="courseTitle" layoutX="958.0" layoutY="69.0" prefHeight="43.0" prefWidth="183.0" />
+   </children>
 </AnchorPane>
