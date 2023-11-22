@@ -66,7 +66,7 @@ public class NewUserController {
                 Platform.runLater(() -> {
                     errorMessage.setText("New User Created. Redirecting to login screen...");
                     // Introduce a delay before switching scenes
-                    PauseTransition delay = new PauseTransition(Duration.seconds(5)); // Adjust the duration as needed
+                    PauseTransition delay = new PauseTransition(Duration.seconds(4)); // Adjust the duration as needed
                     delay.setOnFinished(event -> {
                         try {
                             returnLogInScene();

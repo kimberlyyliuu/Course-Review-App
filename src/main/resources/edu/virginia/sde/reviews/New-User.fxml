@@ -37,7 +37,7 @@
             <Font name="Cambria" size="16.0" />
          </font>
       </Label>
-        <Label fx:id="errorMessage" alignment="TOP_CENTER" layoutX="357.0" layoutY="404.0" prefHeight="38.0" prefWidth="520.0" textAlignment="CENTER">
+        <Label fx:id="errorMessage" alignment="TOP_CENTER" layoutX="357.0" layoutY="404.0" prefHeight="38.0" prefWidth="554.0" textAlignment="CENTER">
             <font>
                 <Font name="Cambria" size="26.0" />
             </font>
