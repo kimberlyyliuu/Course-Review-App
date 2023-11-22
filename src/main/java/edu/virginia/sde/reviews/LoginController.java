@@ -67,8 +67,6 @@ public class LoginController {
                     initialize();
                 });
             } else if (dbDriver.checkUserExists(username) && dbDriver.checkUserPassword(username,password)) {
-                User newUser = new User(username, password);
-                dbDriver.addUser(newUser);
                 dbDriver.commit();
                 dbDriver.disconnect();
 
@@ -136,7 +134,7 @@ public class LoginController {
             stage.setTitle("Course Reviews");
             stage.setScene(newScene);
             stage.show();
-            NewUserController controller = loader.getController();
+//            NewUserController controller = loader.getController();
 //            controller.newUserInitialize();
         } catch (IOException e) {
             e.printStackTrace();
