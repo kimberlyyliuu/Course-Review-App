@@ -32,24 +32,14 @@
                 <Font name="Cambria" size="21.0" />
             </font></Button>
         <PasswordField fx:id="newPasswordField" layoutX="479.0" layoutY="340.0" prefHeight="51.0" prefWidth="318.0" />
-        <Label fx:id="userAlreadyExists" alignment="CENTER" layoutX="480.0" layoutY="396.0" prefHeight="0.0" prefWidth="318.0">
-            <font>
-                <Font name="Microsoft Sans Serif" size="26.0" />
-            </font>
-        </Label>
-        <Label fx:id="invalidPassword" alignment="CENTER" layoutX="480.0" layoutY="394.0" prefHeight="0.0" prefWidth="318.0">
-            <font>
-                <Font name="Microsoft Sans Serif" size="26.0" />
-            </font>
-        </Label>
       <Label fx:id="passRequirements" alignment="TOP_CENTER" layoutX="311.0" layoutY="215.0" text="Username must be unique. Password must be 8+ characters. Username and Password are case-sensitive">
          <font>
             <Font name="Cambria" size="16.0" />
          </font>
       </Label>
-        <Label fx:id="userCreated" alignment="TOP_CENTER" layoutX="480.0" layoutY="402.0" prefHeight="38.0" prefWidth="318.0">
+        <Label fx:id="errorMessage" alignment="TOP_CENTER" layoutX="357.0" layoutY="404.0" prefHeight="38.0" prefWidth="520.0" textAlignment="CENTER">
             <font>
-                <Font name="Cambria" size="16.0" />
+                <Font name="Cambria" size="26.0" />
             </font>
         </Label>
         <Button fx:id="exitButton" layoutX="556.0" layoutY="626.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="42.0" prefWidth="148.0" text="CLOSE APP">
