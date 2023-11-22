@@ -1,5 +1,7 @@
 package edu.virginia.sde.reviews;
 
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -22,13 +25,9 @@ public class NewUserController {
     @FXML
     private Button createUserButton;
     @FXML
-    private Label userAlreadyExists;
-    @FXML
-    private Label userCreated;
-    @FXML
     private Label passRequirements;
     @FXML
-    private Label invalidPassword;
+    private Label errorMessage;
     @FXML
     private Button exitButton;
     @FXML
@@ -39,40 +38,60 @@ public class NewUserController {
 
 
     }
-    private void createNewUser(){
+    private void createNewUser() {
         var username = newUsernameField.getText();
         var password = newPasswordField.getText();
+
         try {
             DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
             dbDriver.connect();
             dbDriver.createTables();
-            System.out.println("tables created");
+
             if (dbDriver.checkUserExists(username)) {
-                userAlreadyExists.setText("Username already exists");
-                System.out.println("Username already exists");
-                dbDriver.disconnect();
-                newUserInitialize();
-            }
-            else if (!dbDriver.checkUserExists(username) && dbDriver.isValidPassword(password)){
+                Platform.runLater(() -> {
+                    errorMessage.setText("Username already exists");
+                    try {
+                        dbDriver.disconnect();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    newUserInitialize();
+                });
+            } else if (!dbDriver.checkUserExists(username) && dbDriver.isValidPassword(password)) {
                 User newUser = new User(username, password);
                 dbDriver.addUser(newUser);
                 dbDriver.commit();
                 dbDriver.disconnect();
-                userCreated.setText("New User Created");
-                System.out.println("Database updated with new user");
-                returnLogInScene();
-            }
-            else if (!dbDriver.checkUserExists(username) && !dbDriver.isValidPassword(password)){
-                invalidPassword.setText("Invalid Password");
-                System.out.println("Password incorrect");
-                dbDriver.disconnect();
-                newUserInitialize();
-            }
 
+                Platform.runLater(() -> {
+                    errorMessage.setText("New User Created. Redirecting to login screen...");
+                    // Introduce a delay before switching scenes
+                    PauseTransition delay = new PauseTransition(Duration.seconds(5)); // Adjust the duration as needed
+                    delay.setOnFinished(event -> {
+                        try {
+                            returnLogInScene();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                    delay.play();
+                });
+            } else if (!dbDriver.checkUserExists(username) && !dbDriver.isValidPassword(password)) {
+                Platform.runLater(() -> {
+                    errorMessage.setText("Invalid Password");
+                    try {
+                        dbDriver.disconnect();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    newUserInitialize();
+                });
+            }
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
     }
+
     private void returnLogInScene() throws SQLException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
@@ -80,7 +99,7 @@ public class NewUserController {
             // Create a new scene
             Scene newScene = new Scene(root);
             // Stage and new scene for new user
-            Stage stage = (Stage) userCreated.getScene().getWindow();
+            Stage stage = (Stage) errorMessage.getScene().getWindow();
             stage.setScene(newScene);
         } catch (IOException e) {
             e.printStackTrace();
