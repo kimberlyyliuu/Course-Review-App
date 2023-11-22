@@ -1,4 +1,5 @@
 package edu.virginia.sde.reviews;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -26,13 +28,7 @@ public class LoginController {
     @FXML
     private Button exitButton;
     @FXML
-    private Label userNotExist;
-    @FXML
-    private Label userAlreadyExists;
-    @FXML
-    private Label tryAgain;
-    @FXML
-    private Label invalidPassword;
+    private Label errorMessage;
 
     @FXML
     private void initialize(){
@@ -55,26 +51,53 @@ public class LoginController {
         var username = usernameField.getText();
         var password = passwordField.getText();
 
-        try{
+        try {
             DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
             dbDriver.connect();
-            dbDriver.createTables();        //create tables if not exists
-            dbDriver.commit();
+            dbDriver.createTables();
 
-            if(!dbDriver.checkUserExists(username)){
-                userNotExist.setText("Username does not exist");
-            }
-            else if (dbDriver.checkUserPassword(username, password)){ //queries for matching pass and returns false otherwise
+            if (!dbDriver.checkUserExists(username)) {
+                Platform.runLater(() -> {
+                    errorMessage.setText("Username does not exist");
+                    try {
+                        dbDriver.disconnect();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    initialize();
+                });
+            } else if (dbDriver.checkUserExists(username) && dbDriver.checkUserPassword(username,password)) {
+                User newUser = new User(username, password);
+                dbDriver.addUser(newUser);
+                dbDriver.commit();
                 dbDriver.disconnect();
-                openCourseReviewScene();
+
+                Platform.runLater(() -> {
+                    errorMessage.setText("Logging In...");
+                    // Introduce a delay before switching scenes
+                    PauseTransition delay = new PauseTransition(Duration.seconds(3)); // Adjust the duration as needed
+                    delay.setOnFinished(event -> {
+                        System.out.println("login correct, changing scene");
+                        openCourseReviewScene();
+                    });
+                    delay.play();
+                });
+            } else if (dbDriver.checkUserExists(username) && !dbDriver.checkUserPassword(username,password)) {
+                Platform.runLater(() -> {
+                    errorMessage.setText("Invalid Password");
+                    try {
+                        dbDriver.disconnect();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    initialize();
+                });
             }
-            else{
-               invalidPassword.setText("Invalid Password");
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
     }
+
 
     /**
      * When create new user button is pressed, checks to see if the username is already used. If it is, a message will be shown in the application saying the username exists already.
@@ -101,13 +124,22 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-
-
-
-    private void openCourseReviewScene(){
-      var stage = (Stage) loginButton.getScene().getWindow();
-      stage.close();
-      //idk
+    private void openCourseReviewScene() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseSearch.fxml"));
+            Parent root = loader.load();
+            // Create a new scene
+            Scene newScene = new Scene(root);
+            // Stage and new scene for new user
+            Stage stage = (Stage) errorMessage.getScene().getWindow();
+            stage.setScene(newScene);
+            stage.setTitle("Course Reviews");
+            stage.setScene(newScene);
+            stage.show();
+            NewUserController controller = loader.getController();
+//            controller.newUserInitialize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
 }
