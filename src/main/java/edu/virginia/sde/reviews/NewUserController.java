@@ -32,8 +32,8 @@ public class NewUserController {
     @FXML
     private Button exitButton;
     @FXML
-    private void newUserInitialize() {
-        System.out.println("you made it to new user scene");
+    protected void newUserInitialize() {
+        System.out.println("you made it to new user scene, initializing");
         exitButton.setOnAction(event -> Platform.exit());
         createUserButton.setOnAction(event -> createNewUser());
 
@@ -46,9 +46,11 @@ public class NewUserController {
             DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
             dbDriver.connect();
             dbDriver.createTables();
-
+            System.out.println("tables created");
             if (dbDriver.checkUserExists(username)) {
                 userAlreadyExists.setText("Username already exists");
+                System.out.println("Username already exists");
+                dbDriver.disconnect();
                 newUserInitialize();
             }
             else if (!dbDriver.checkUserExists(username) && dbDriver.isValidPassword(password)){
@@ -57,10 +59,13 @@ public class NewUserController {
                 dbDriver.commit();
                 dbDriver.disconnect();
                 userCreated.setText("New User Created");
+                System.out.println("Database updated with new user");
                 returnLogInScene();
             }
             else if (!dbDriver.checkUserExists(username) && !dbDriver.isValidPassword(password)){
                 invalidPassword.setText("Invalid Password");
+                System.out.println("Password incorrect");
+                dbDriver.disconnect();
                 newUserInitialize();
             }
 
