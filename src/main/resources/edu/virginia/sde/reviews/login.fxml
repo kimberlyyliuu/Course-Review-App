@@ -42,7 +42,7 @@
             <Font name="Microsoft Sans Serif" size="26.0" />
          </font>
       </Label>
-      <Label fx:id="invalidPassword" alignment="CENTER" layoutX="480.0" layoutY="394.0" prefHeight="0.0" prefWidth="318.0">
+      <Label fx:id="errorMessage" alignment="CENTER" layoutX="480.0" layoutY="394.0" prefHeight="0.0" prefWidth="318.0">
          <font>
             <Font name="Microsoft Sans Serif" size="26.0" />
          </font>
