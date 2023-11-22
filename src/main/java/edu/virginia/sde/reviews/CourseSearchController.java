@@ -11,13 +11,13 @@ import java.util.List;
 
 public class CourseSearchController {
     @FXML
-    private TextField coursePneumonic;
+    private TextField courseMneumonic;
     @FXML
     private TextField courseNumber;
     @FXML
     private TextField courseTitle;
     @FXML
-    private Label pneumonicLabel;
+    private Label MneumonicLabel;
     @FXML
     private Label numberLabel;
     @FXML
@@ -28,19 +28,23 @@ public class CourseSearchController {
     @FXML
     private Button exitButton;
     @FXML
-    private Button addCourse;
+    private Button addCourseButton;
+    @FXML
+    private Button searchButton;
     @FXML
     protected void courseSearchInitialize(){
         loadCourses();
         exitButton.setOnAction(event -> Platform.exit());
-        addCourse.setOnAction(event -> {
+        addCourseButton.setOnAction(event -> {
             try {
                 addCourse();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+        searchButton.setOnAction(event1 -> submitSearch());
         });
     }
+    //This method loads the update ListView
     private void loadCourses() {
         try {
             DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
@@ -57,11 +61,18 @@ public class CourseSearchController {
             throw new RuntimeException(e);
         }
     }
+    //Adds a course to the database which should update in the ListView as well immediately
+    @FXML
     private void addCourse() throws SQLException {
         DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
         dbDriver.connect();
         dbDriver.createTables();
 
     }
+    //Update the ListView
+    private void submitSearch(){
+
+    }
+
 }
 
