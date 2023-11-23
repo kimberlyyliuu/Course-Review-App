@@ -421,6 +421,31 @@ public class DatabaseDriver {
         }
     }
 
+
+    /**
+     * Checks if course exists
+     */
+    public boolean checkCourseExists(String mnemonic, int courseNumber, String courseName) throws SQLException{
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
+        try{
+            var statement = connection.prepareStatement("SELECT * FROM Courses WHERE Mnemonic = ? AND CourseNumber = ? AND CourseName = ?");
+            statement.setString(1, mnemonic);
+            statement.setString(2, String.valueOf(courseNumber));
+            statement.setString(3, courseName);
+
+
+            var resultSet = statement.executeQuery();
+
+            boolean exists = resultSet.next();
+            statement.close();
+            return exists; //returns true if there exists at a row w/the password
+        } catch (SQLException e){
+            throw e;
+        }
+    }
+
     /**
      * Removes all data from the tables, leaving the tables empty (but still existing!).
      */
