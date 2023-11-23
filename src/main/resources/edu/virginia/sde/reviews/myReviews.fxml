@@ -1,33 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.MyReviewsController">
     <children>
-        <Label layoutX="291.0" layoutY="14.0" text="My Reviews" textFill="#004dff">
+        <Label layoutX="460.0" layoutY="14.0" text="My Reviews" textFill="#004dff">
             <font>
                 <Font name="Cambria" size="56.0" />
             </font>
         </Label>
 
-        <Label fx:id="MnemonicLabel" layoutX="422.0" layoutY="161.0" text="Mnemonic:" textAlignment="CENTER">
-            <font>
-                <Font name="Cambria" size="43.0" />
-            </font>
-        </Label>
-        <Label fx:id="numberLabel" layoutX="480.0" layoutY="259.0" text="Number:" />
-        <Label fx:id="ratingLabel" layoutX="657.0" layoutY="340.0" text="Rating:" />
-        <Button fx:id="backtoCourseSearchButton" layoutX="556.0" layoutY="457.0" mnemonicParsing="false"  prefHeight="90.0" prefWidth="246.0" text="Back to Course Search">
+        <Button fx:id="backtoCourseSearchButton" layoutX="470.0" layoutY="575.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="246.0" text="Back to Course Search">
             <font>
                 <Font name="Cambria" size="22.0" />
             </font>
         </Button>
 
+        <TableView layoutX="180.0" layoutY="122.0" prefHeight="430.0" prefWidth="842.0">
+            <columns>
+                <TableColumn prefWidth="280.67">
+                    <graphic>
+                        <Label text="Mnemonic">
+                            <font>
+                                <Font name="Cambria" size="18.0" />
+                            </font>
+                        </Label>
+                    </graphic>
+                </TableColumn>
+                <TableColumn prefWidth="280.67">
+                    <graphic>
+                        <Label text="Number">
+                            <font>
+                                <Font name="Cambria" size="18.0" />
+                            </font>
+                        </Label>
+                    </graphic>
+                </TableColumn>
+                <TableColumn prefWidth="280.67">
+                    <graphic>
+                        <Label text="Your Rating">
+                            <font>
+                                <Font name="Cambria" size="18.0" />
+                            </font>
+                        </Label>
+                    </graphic>
+                </TableColumn>
+            </columns>
+        </TableView>
     </children>
 </AnchorPane>
