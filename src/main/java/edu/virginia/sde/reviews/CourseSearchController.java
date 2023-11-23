@@ -40,6 +40,8 @@ public class CourseSearchController {
     @FXML
     private Button myReviewsButton;
     @FXML
+    private Button logoutButton;
+    @FXML
     protected void courseSearchInitialize(){
         loadCourses();
         exitButton.setOnAction(event -> Platform.exit());
@@ -52,6 +54,7 @@ public class CourseSearchController {
         searchButton.setOnAction(event1 -> submitSearch());
         });
         myReviewsButton.setOnAction(event -> showMyReviews());
+        logoutButton.setOnAction(event -> setlogoutButton());
     }
     //This method loads the update ListView
     private void loadCourses() {
@@ -127,6 +130,21 @@ public class CourseSearchController {
             stage.show();
             MyReviewsController controller = loader.getController();
             controller.myReviewsIntialize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setlogoutButton() {
+        // Implement logic to log the user out and return to the Log-In Screen
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            Parent root = loader.load();
+            // Create a new scene
+            Scene newScene = new Scene(root);
+            // Stage and new scene for new user
+            Stage stage = (Stage) logoutButton.getScene().getWindow(); //NOT SURE ABT THIS LINE
+            stage.setScene(newScene);
         } catch (IOException e) {
             e.printStackTrace();
         }

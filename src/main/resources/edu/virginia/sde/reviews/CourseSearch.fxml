@@ -40,12 +40,12 @@
             <Font name="Cambria" size="19.0" />
          </font>
       </Button>
-      <Button fx:id="addCourseButton1" layoutX="25.0" layoutY="213.0" mnemonicParsing="false" onAction="#courseSearchInitialize" prefHeight="42.0" prefWidth="148.0" text="My Reviews" textFill="#0022ff">
+      <Button fx:id="myReviewsButton" layoutX="25.0" layoutY="213.0" mnemonicParsing="false" onAction="#courseSearchInitialize" prefHeight="42.0" prefWidth="148.0" text="My Reviews" textFill="#0022ff">
          <font>
             <Font name="Cambria" size="22.0" />
          </font>
       </Button>
-      <Button fx:id="exitButton1" layoutX="718.0" layoutY="654.0" mnemonicParsing="false" onAction="#courseSearchInitialize" prefHeight="42.0" prefWidth="148.0" text="LOG OUT" textFill="#000dff">
+      <Button fx:id="logoutButton" layoutX="718.0" layoutY="654.0" mnemonicParsing="false" onAction="#courseSearchInitialize" prefHeight="42.0" prefWidth="148.0" text="LOG OUT" textFill="#000dff">
          <font>
             <Font name="Cambria" size="22.0" />
          </font>
