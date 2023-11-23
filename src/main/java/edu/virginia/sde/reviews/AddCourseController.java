@@ -1,5 +1,6 @@
 package edu.virginia.sde.reviews;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.collections.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -36,26 +39,55 @@ public class AddCourseController {
     private Button addButton;
     @FXML
     private Button backtoCourseSearchButton;
+    @FXML
+    private Label errorMessage;
 
     @FXML
     protected void addCourseInitialize(){
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
+        addButton.setOnAction(event -> {
+            handleAddCourse();
+        });
     }
-    /**
-     * Validates the user input for adding a new course.
-     * Shows an error message if the input is invalid.
-     *
-     * @param subject The subject mnemonic entered by the user.
-     * @param number  The course number entered by the user.
-     * @param title   The course title entered by the user.
-     * @return True if the input is valid, false otherwise.
-     */
-    private boolean validateCourseInput(String subject, String number, String title) {
-        // Implement validation logic for subject, number, and title
-        // Show appropriate error messages for invalid input
-        // Return true if input is valid, false otherwise
 
-        return false;
+
+    private void handleAddCourse(){
+        var mnemonicText = courseMnemonic.getText();
+        var number = courseNumber.getText();
+        var title = courseTitle.getText();
+
+        try{
+            DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
+            dbDriver.connect();
+            dbDriver.createTables();
+
+            if(!dbDriver.checkCourseExists(mnemonicText, number, title)){
+                dbDriver.commit();
+                dbDriver.disconnect();
+                Platform.runLater(() -> {
+                    // Introduce a delay before switching scenes
+                    PauseTransition delay = new PauseTransition(Duration.seconds(3)); // Adjust the duration as needed
+                    delay.setOnFinished(event -> {
+                        System.out.println("login correct, changing scene");
+                        openCourseSearchScene();
+                    });
+                    delay.play();
+                });
+            }else if(dbDriver.checkCourseExists(mnemonicText, number, title)){
+                Platform.runLater(() -> {
+                    errorMessage.setText("Course Already Exists");
+                    try {
+                        dbDriver.disconnect();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    addCourseInitialize();
+                });
+            }
+        }catch (SQLException ex){
+            throw new RuntimeException(ex);
+        }
+
     }
 
     private void openCourseSearchScene() {
