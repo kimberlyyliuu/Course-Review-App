@@ -50,12 +50,18 @@ public class CourseSearchController {
             DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
             dbDriver.connect();
             dbDriver.createTables();
-            Course test = new Course("123456", 1234, "4", 4);
-            dbDriver.addCourse(test);
-            List<Course> courses = new ArrayList<>();
-            courses = dbDriver.getAllCourses();
+//            Course test = new Course("123456", 1234, "4", 4);
+//            dbDriver.addCourse(test);
+//            List<Course> courses = new ArrayList<>();
+//            courses = dbDriver.getAllCourses();
+//            ObservableList<Course> observableCourseList = FXCollections.observableList(courses);
+//            ListView<Course> courselistView = new ListView<>(observableCourseList);
+
+
+            List<Course> courses = dbDriver.getAllCourses(); // Retrieve the list of courses from the database
+            // Update the existing courseListView with the new data
             ObservableList<Course> observableCourseList = FXCollections.observableList(courses);
-            ListView<Course> courselistView = new ListView<>(observableCourseList);
+            courseListView.setItems(observableCourseList);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -67,7 +73,7 @@ public class CourseSearchController {
         DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
         dbDriver.connect();
         dbDriver.createTables();
-        int number = Integer.parseInt(courseNumber.getText()); // Assuming it's an integer
+        int number = Integer.parseInt(courseNumber.getText());
         String mnemonic = courseMnemonic.getText();
         String title = courseTitle.getText();
 
@@ -77,6 +83,7 @@ public class CourseSearchController {
         // Update the ListView
         loadCourses();
     }
+
     //Update the ListView
     private void submitSearch(){
     }
