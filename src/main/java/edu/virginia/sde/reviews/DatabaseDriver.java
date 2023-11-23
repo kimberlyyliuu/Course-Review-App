@@ -425,14 +425,14 @@ public class DatabaseDriver {
     /**
      * Checks if course exists
      */
-    public boolean checkCourseExists(String mnemonic, int courseNumber, String courseName) throws SQLException{
+    public boolean checkCourseExists(String mnemonic, String courseNumber, String courseName) throws SQLException{
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
         try{
             var statement = connection.prepareStatement("SELECT * FROM Courses WHERE Mnemonic = ? AND CourseNumber = ? AND CourseName = ?");
             statement.setString(1, mnemonic);
-            statement.setString(2, String.valueOf(courseNumber));
+            statement.setString(2, courseNumber);
             statement.setString(3, courseName);
 
 
