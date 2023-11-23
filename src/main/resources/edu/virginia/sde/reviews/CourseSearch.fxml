@@ -6,25 +6,25 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseSearchController">
    <children>
-      <Label fx:id="mnemonicLabel" layoutX="65.0" layoutY="50.0" prefHeight="82.0" prefWidth="251.0" text="Course Mnemonic" textFill="#0044ff">
+      <Label fx:id="mnemonicLabel" layoutX="67.0" layoutY="28.0" prefHeight="82.0" prefWidth="251.0" text="Course Mnemonic" textFill="#0044ff">
          <font>
             <Font name="Cambria" size="23.0" />
          </font>
       </Label>
-      <Label fx:id="numberLabel" layoutX="476.0" layoutY="37.0" prefHeight="108.0" prefWidth="243.0" text="Course Code" textFill="#0004ff">
+      <Label fx:id="numberLabel" layoutX="475.0" layoutY="18.0" prefHeight="108.0" prefWidth="243.0" text="Course Code" textFill="#0004ff">
          <font>
             <Font name="Cambria" size="23.0" />
          </font>
       </Label>
-      <TextField fx:id="courseMnemonic" layoutX="257.0" layoutY="69.0" prefHeight="43.0" prefWidth="215.0" />
-      <TextField fx:id="courseNumber" layoutX="608.0" layoutY="68.0" prefHeight="43.0" prefWidth="215.0" />
-      <Label fx:id="titlelabel" layoutX="830.0" layoutY="37.0" prefHeight="108.0" prefWidth="243.0" text="Course Title" textFill="#001eff">
+      <TextField fx:id="courseMnemonic" layoutX="260.0" layoutY="50.0" prefHeight="43.0" prefWidth="215.0" />
+      <TextField fx:id="courseNumber" layoutX="604.0" layoutY="50.0" prefHeight="43.0" prefWidth="215.0" />
+      <Label fx:id="titlelabel" layoutX="829.0" layoutY="18.0" prefHeight="108.0" prefWidth="243.0" text="Course Title" textFill="#001eff">
          <font>
             <Font name="Cambria" size="22.0" />
          </font>
       </Label>
-      <TextField fx:id="courseTitle" layoutX="958.0" layoutY="69.0" prefHeight="43.0" prefWidth="227.0" />
-      <Button fx:id="exitButton" layoutX="556.0" layoutY="648.0" mnemonicParsing="false" onAction="#courseSearchInitialize" prefHeight="42.0" prefWidth="148.0" text="CLOSE APP" textFill="#000dff">
+      <TextField fx:id="courseTitle" layoutX="957.0" layoutY="50.0" prefHeight="43.0" prefWidth="227.0" />
+      <Button fx:id="exitButton" layoutX="368.0" layoutY="654.0" mnemonicParsing="false" onAction="#courseSearchInitialize" prefHeight="42.0" prefWidth="148.0" text="CLOSE APP" textFill="#000dff">
          <font>
             <Font name="Cambria" size="22.0" />
          </font>
@@ -38,6 +38,16 @@
       <Button fx:id="searchButton" layoutX="563.0" layoutY="116.0" mnemonicParsing="false" onAction="#courseSearchInitialize" prefHeight="27.0" prefWidth="134.0" text="Search" textFill="#0022ff">
          <font>
             <Font name="Cambria" size="19.0" />
+         </font>
+      </Button>
+      <Button fx:id="addCourseButton1" layoutX="25.0" layoutY="213.0" mnemonicParsing="false" onAction="#courseSearchInitialize" prefHeight="42.0" prefWidth="148.0" text="My Reviews" textFill="#0022ff">
+         <font>
+            <Font name="Cambria" size="22.0" />
+         </font>
+      </Button>
+      <Button fx:id="exitButton1" layoutX="718.0" layoutY="654.0" mnemonicParsing="false" onAction="#courseSearchInitialize" prefHeight="42.0" prefWidth="148.0" text="LOG OUT" textFill="#000dff">
+         <font>
+            <Font name="Cambria" size="22.0" />
          </font>
       </Button>
    </children>
