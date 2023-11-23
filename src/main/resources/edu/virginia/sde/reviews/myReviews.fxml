@@ -3,12 +3,31 @@
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.virginia.sde.reviews.MyReviewsController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.MyReviewsController">
+    <children>
+        <Label layoutX="291.0" layoutY="14.0" text="My Reviews" textFill="#004dff">
+            <font>
+                <Font name="Cambria" size="56.0" />
+            </font>
+        </Label>
+
+        <Label fx:id="MnemonicLabel" layoutX="422.0" layoutY="161.0" text="Mnemonic:" textAlignment="CENTER">
+            <font>
+                <Font name="Cambria" size="43.0" />
+            </font>
+        </Label>
+        <Label fx:id="numberLabel" layoutX="480.0" layoutY="259.0" text="Number:" />
+        <Label fx:id="ratingLabel" layoutX="657.0" layoutY="340.0" text="Rating:" />
+        <Button fx:id="backtoCourseSearchButton" layoutX="556.0" layoutY="457.0" mnemonicParsing="false"  prefHeight="90.0" prefWidth="246.0" text="Back to Course Search">
+            <font>
+                <Font name="Cambria" size="22.0" />
+            </font>
+        </Button>
+
+    </children>
 </AnchorPane>
