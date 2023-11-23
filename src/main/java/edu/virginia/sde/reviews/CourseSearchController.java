@@ -45,14 +45,8 @@ public class CourseSearchController {
     protected void courseSearchInitialize(){
         loadCourses();
         exitButton.setOnAction(event -> Platform.exit());
-        addCourseButton.setOnAction(event -> {
-            try {
-                addCourse();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         searchButton.setOnAction(event1 -> submitSearch());
-        });
+        addCourseButton.setOnAction(event -> addCourseScreen());
         myReviewsButton.setOnAction(event -> showMyReviews());
         logoutButton.setOnAction(event -> setlogoutButton());
     }
@@ -78,21 +72,28 @@ public class CourseSearchController {
             throw new RuntimeException(e);
         }
     }
+
+
+
     //Adds a course to the database which should update in the ListView as well immediately
     @FXML
-    private void addCourse() throws SQLException {
-        DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
-        dbDriver.connect();
-        dbDriver.createTables();
-        int number = Integer.parseInt(courseNumber.getText());
-        String mnemonic = courseMnemonic.getText();
-        String title = courseTitle.getText();
-
-        Course newCourse = new Course(mnemonic, number, title);
-        dbDriver.addCourse(newCourse);
-
-        // Update the ListView
-        loadCourses();
+    private void addCourseScreen(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("courseAddScreen.fxml"));
+            Parent root = loader.load();
+            // Create a new scene
+            Scene newScene = new Scene(root);
+            // Stage and new scene for new user
+            Stage stage = (Stage) addCourseButton.getScene().getWindow();
+            stage.setScene(newScene);
+            stage.setTitle("Add Course");
+            stage.setScene(newScene);
+            stage.show();
+            AddCourseController controller = loader.getController();
+            controller.addCourseInitialize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -100,6 +101,7 @@ public class CourseSearchController {
      * Searches by subject, number, and title, and updates the view accordingly.
      */
     private void submitSearch(){
+        //TODO:
         String subject = courseMnemonic.getText().trim();
         String number = courseNumber.getText().trim();
         String title = courseTitle.getText().trim();
@@ -143,7 +145,7 @@ public class CourseSearchController {
             // Create a new scene
             Scene newScene = new Scene(root);
             // Stage and new scene for new user
-            Stage stage = (Stage) logoutButton.getScene().getWindow(); //NOT SURE ABT THIS LINE
+            Stage stage = (Stage) logoutButton.getScene().getWindow();
             stage.setScene(newScene);
         } catch (IOException e) {
             e.printStackTrace();
