@@ -11,13 +11,13 @@ import java.util.List;
 
 public class CourseSearchController {
     @FXML
-    private TextField courseMneumonic;
+    private TextField courseMnemonic;
     @FXML
     private TextField courseNumber;
     @FXML
     private TextField courseTitle;
     @FXML
-    private Label MneumonicLabel;
+    private Label MnemonicLabel;
     @FXML
     private Label numberLabel;
     @FXML
@@ -67,11 +67,18 @@ public class CourseSearchController {
         DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
         dbDriver.connect();
         dbDriver.createTables();
+        int number = Integer.parseInt(courseNumber.getText()); // Assuming it's an integer
+        String mnemonic = courseMnemonic.getText();
+        String title = courseTitle.getText();
 
+        Course newCourse = new Course(mnemonic, number, title);
+        dbDriver.addCourse(newCourse);
+
+        // Update the ListView
+        loadCourses();
     }
     //Update the ListView
     private void submitSearch(){
-
     }
 
 }
