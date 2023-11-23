@@ -10,45 +10,33 @@
          <font>
             <Font name="Cambria" size="56.0" />
          </font></Label>
-      <TextField layoutX="561.0" layoutY="141.0" prefHeight="26.0" prefWidth="346.0" />
-      <TextField layoutX="561.0" layoutY="199.0" prefHeight="26.0" prefWidth="202.0" />
-      <TextField layoutX="561.0" layoutY="259.0" prefHeight="26.0" prefWidth="202.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="262.0" layoutY="100.0" prefHeight="28.0" prefWidth="743.0" text="Please fill out the fields below to add a course to Course Review" textFill="#0051ff">
+      <TextField layoutX="561.0" layoutY="256.0" prefHeight="26.0" prefWidth="346.0" />
+      <TextField layoutX="561.0" layoutY="323.0" prefHeight="26.0" prefWidth="202.0" />
+      <TextField layoutX="561.0" layoutY="396.0" prefHeight="26.0" prefWidth="202.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="262.0" layoutY="100.0" prefHeight="28.0" prefWidth="743.0" text="Please fill out all fields completely to add a course to Course Review" textFill="#0051ff">
          <font>
             <Font name="Cambria" size="23.0" />
          </font>
       </Label>
-      <Label layoutX="438.0" layoutY="143.0" text="Course Title:">
+      <Label layoutX="438.0" layoutY="257.0" text="Course Title:">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font></Label>
-      <Label layoutX="398.0" layoutY="201.0" text="Course Mnemonic:">
+      <Label layoutX="396.0" layoutY="325.0" text="Course Mnemonic:">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="416.0" layoutY="261.0" text="Course Number:">
+      <Label layoutX="415.0" layoutY="396.0" text="Course Number:">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="ratingLabel" layoutX="439.0" layoutY="329.0" text="Your Rating: ">
-         <font>
-            <Font name="Roboto Light" size="16.0" />
-         </font>
-      </Label>
-      <TextField layoutX="561.0" layoutY="327.0" prefHeight="26.0" prefWidth="202.0" />
-      <Label fx:id="commentsLabel" layoutX="381.0" layoutY="384.0" text="Optional Comments:">
-         <font>
-            <Font name="Roboto Light" size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="commentsTextfield" layoutX="561.0" layoutY="384.0" prefHeight="196.0" prefWidth="316.0" />
-      <Button fx:id="backtoCourseSearchButton" layoutX="198.0" layoutY="135.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="182.0" text="BACK TO SEARCH" textFill="#1100ff" >
+      <Button fx:id="backtoCourseSearchButton" layoutX="546.0" layoutY="143.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="157.0" text="BACK TO SEARCH" textFill="#1100ff">
          <font>
             <Font name="Cambria" size="17.0" />
          </font></Button>
-      <Button fx:id="addButton" layoutX="575.0" layoutY="591.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="144.0" text="ADD REVIEW" textFill="#1100ff">
+      <Button fx:id="addButton" layoutX="554.0" layoutY="482.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="144.0" text="ADD COURSE" textFill="#1100ff">
          <font>
             <Font name="Cambria" size="17.0" />
          </font></Button>
