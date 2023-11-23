@@ -65,13 +65,8 @@ public class AddCourseController {
                 dbDriver.commit();
                 dbDriver.disconnect();
                 Platform.runLater(() -> {
-                    // Introduce a delay before switching scenes
-                    PauseTransition delay = new PauseTransition(Duration.seconds(3)); // Adjust the duration as needed
-                    delay.setOnFinished(event -> {
-                        System.out.println("login correct, changing scene");
-                        openCourseSearchScene();
-                    });
-                    delay.play();
+                    errorMessage.setText("Course Added!");
+                    addCourseInitialize();
                 });
             }else if(dbDriver.checkCourseExists(mnemonicText, number, title)){
                 Platform.runLater(() -> {
@@ -89,6 +84,7 @@ public class AddCourseController {
         }
 
     }
+
 
     private void openCourseSearchScene() {
         try {
