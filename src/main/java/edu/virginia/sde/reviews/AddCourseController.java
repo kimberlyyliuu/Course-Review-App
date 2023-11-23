@@ -31,6 +31,14 @@ public class AddCourseController {
     private Label numberLabel;
     @FXML
     private Label titlelabel;
+    @FXML
+    private Label ratingLabel;
+    @FXML
+    private TextField ratingTextfield;
+    @FXML
+    private Label commentsLabel;
+    @FXML
+    private TextField commentsTextfield;
 
     private ListView<Course> courseListView;
     private DatabaseDriver dbDriver;
