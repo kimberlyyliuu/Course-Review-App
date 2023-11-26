@@ -10,6 +10,7 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -24,7 +25,15 @@ public class CourseReviewController {
     @FXML
     private Label averageRatingLabel;
     @FXML
+    private TextField inputRating;
+    @FXML
+    private TextField inputComment;
+
+    @FXML
     private Button backtoCourseSearchButton;
+    @FXML
+    private Button deleteReviewButton;
+
 
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
 
