@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="edu.virginia.sde.reviews.AddReviewController"
+            prefHeight="700.0" prefWidth="1200.0">
+
+    <Button fx:id="deleteReviewButton" layoutX="662.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Delete Review" textFill="#1100ff">
+        <font>
+            <Font name="Cambria" size="17.0" />
+        </font></Button>
+    <TextField fx:id="inputRating" layoutX="561.0" layoutY="256.0" prefHeight="26.0" prefWidth="34.0" />
+    <TextField fx:id="inputComment" layoutX="561.0" layoutY="323.0" prefHeight="200.0" prefWidth="300.0" />
+
+
+</AnchorPane>

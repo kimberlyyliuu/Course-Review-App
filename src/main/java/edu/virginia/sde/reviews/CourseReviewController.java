@@ -26,86 +26,24 @@ public class CourseReviewController {
     @FXML
     private Label averageRatingLabel;
     @FXML
-    private TextField inputRating;
-    @FXML
-    private TextField inputComment;
-
+    private Button addReviewButton;
     @FXML
     private Button backtoCourseSearchButton;
-    @FXML
-    private Button deleteReviewButton;
-    @FXML
-    private Label errorMessage;
 
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
 
     @FXML
     protected void initialize() {
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
+        addReviewButton.setOnAction(event -> openAddReviewControllerScene());
     }
 
-
-    private void handleAddReview() throws SQLException{
-        var rating = Integer.parseInt(inputRating.getText());
-//        var title = courseTitleLabel.getText();
-//        String[] parts = mnemonicAndNumberLabel.getText().split("\\s+");
-//        var mnemonic = parts[0];
-//        var courseNumber = parts[1];
-
-        // Agent: ChatGPT
-        // Usage: Asked how to check if field is filled or not
-        // Check if inputComment is not empty before using its value
-        var comment = inputComment.getText().isEmpty() ? null : inputComment.getText();
-
-//        try{
-//            dbDriver.connect();
-//            dbDriver.createTables();
-//
-//            if(comment != null && isValidRating(rating)){
-//                Review review = new Review(userID, courseID, rating, comment);
-//            }else if (comment == null){
-//                  Review review = new Review(userID, courseID, rating);
-//            }
-//
-//        }catch (SQLException e){
-//            throw e;
-//        } finally {
-//            try{
-//                dbDriver.disconnect();
-//            }
-//            catch(SQLException e){
-//                throw e;
-//            }
-
-
-    }
 
     public void setData(Course course){
         courseTitleLabel.setText(course.getCourseName());
         mnemonicAndNumberLabel.setText(course.getMnemonic() + " " + course.getCourseNumber());
         averageRatingLabel.setText(String.valueOf("Average Rating: " + course.getAverageRating()));
     }
-
-    private boolean isValidRating(String ratingText){
-        try {
-            int rating = Integer.parseInt(ratingText);
-
-            // Check if the rating is within the valid range (1 to 5)
-            if (rating >= 1 && rating <= 5) {
-                return true;
-            } else {
-                Platform.runLater(() -> {
-                    errorMessage.setText("Please make sure your rating is between 1 to 5, inclusively");
-                });
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            // Handle the case where the input is not a valid integer
-            return false;
-        }
-    }
-
-
 
 
     private void openCourseSearchScene() {
@@ -117,7 +55,26 @@ public class CourseReviewController {
             // Stage and new scene for new user
             Stage stage = (Stage) backtoCourseSearchButton.getScene().getWindow();
             stage.setScene(newScene);
-            stage.setTitle("Course Reviews");
+            stage.setTitle("Course Search");
+            stage.setScene(newScene);
+            stage.show();
+            CourseSearchController controller = loader.getController();
+            controller.courseSearchInitialize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void openAddReviewControllerScene() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddReviewScreen.fxml"));
+            Parent root = loader.load();
+            // Create a new scene
+            Scene newScene = new Scene(root);
+            // Stage and new scene for new user
+            Stage stage = (Stage) addReviewButton.getScene().getWindow();
+            stage.setScene(newScene);
+            stage.setTitle("Add Review");
             stage.setScene(newScene);
             stage.show();
             CourseSearchController controller = loader.getController();

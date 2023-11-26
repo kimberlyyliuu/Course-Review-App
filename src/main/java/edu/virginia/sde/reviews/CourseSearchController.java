@@ -148,7 +148,7 @@ public class CourseSearchController {
     @FXML
     private void addCourseScreen(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("courseAddScreen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddCourseScreen.fxml"));
             Parent root = loader.load();
             // Create a new scene
             Scene newScene = new Scene(root);
