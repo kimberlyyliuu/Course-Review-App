@@ -44,6 +44,8 @@ public class AddCourseController {
 
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
 
+    private boolean validMnemonic = false, validCourseNumber = false, validCourseTitle = false;
+
     @FXML
     private Button addButton;
     @FXML
@@ -77,7 +79,7 @@ public class AddCourseController {
             checkCourseNumberReqs(number);
             checkCourseTitleReqs(title);
 
-            if(!dbDriver.checkCourseExists(mnemonicText, number, title)){
+            if(!dbDriver.checkCourseExists(mnemonicText, number, title) && validMnemonic && validCourseNumber && validCourseTitle){
                 Course newCourse = new Course(mnemonicText, Integer.parseInt(number), title, 0.0);
                 dbDriver.addCourse(newCourse);
 
@@ -108,27 +110,39 @@ public class AddCourseController {
 
     }
 
-    private static void checkMnemonicReqs(String mnemonicText) {
+    private void checkMnemonicReqs(String mnemonicText) {
         if(mnemonicText.length() > 4){
             // TODO: Create displayable error message on screen saying enter viable mnemonic
+            validMnemonic = false;
+        }else{
+            validMnemonic = true;
         }
     }
 
-    private static void checkCourseNumberReqs(String courseNumber) {
+    private void checkCourseNumberReqs(String courseNumber) {
         // Agent: ChatGPT
         // Usage: Asked how to check what's entered are all digits
-        if(courseNumber.length() != 4) {
+        if(courseNumber.length() == 4) {
             if (courseNumber.matches("\\d+")) {
-                return;
+                validCourseNumber = true;
             } else {
-                // TODO: Create displayable error message on screen saying enter viable courseNumber (must be 4 digits)
+                // TODO: Create displayable error message on screen saying enter viable courseNumber (must be 4 DIGITS)
+                validCourseNumber = false;
             }
+        }
+        else{
+            // TODO: Create displayable error message on screen saying enter viable courseNumber (must be 4 digits)
+            validCourseNumber = false;
         }
     }
 
-    private static void checkCourseTitleReqs(String courseTitle) {
+    private  void checkCourseTitleReqs(String courseTitle) {
         if(courseTitle.length() > 50){
             // TODO: Create displayable error message on screen saying enter viable courseName (has to be less than 50);
+            validCourseTitle = false;
+        }
+        else {
+            validCourseTitle = true;
         }
     }
 
