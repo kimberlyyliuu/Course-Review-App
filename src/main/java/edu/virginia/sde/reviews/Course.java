@@ -44,7 +44,15 @@ public class Course {
 
 
 
-
+    /**
+     *  Overrides toString so it displays nicely in the search screen
+     */
+    @Override
+    public String toString(){
+        // Agent: ChatGPT
+        // Usage: Formatting flags
+        return String.format("%s %04d  |  %s  |  Average Rating: %.2f", mnemonic, courseNumber, courseName, averageRating);
+    }
 
     @Override
     public boolean equals(Object obj) {
