@@ -29,6 +29,8 @@ public class CourseReviewController {
     private Button addReviewButton;
     @FXML
     private Button backtoCourseSearchButton;
+    @FXML
+    private Button deleteReviewButton;
 
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
 

@@ -23,17 +23,35 @@ public class AddReviewController {
     private TextField inputRating;
     @FXML
     private TextField inputComment;
+
     @FXML
-    private Button deleteReviewButton;
+    private Label courseTitleLabel;
+    @FXML
+    private Label mnemonicAndNumberLabel;
+    @FXML
+    private Label averageRatingLabel;
+
     @FXML
     private Label errorMessage;
     @FXML
     private Button submitReviewButton;
 
     @FXML
-    protected void initialize(){
+    private Button backtoCourseSearchButton;
 
+    private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
+
+    @FXML
+    protected void initialize(){
+        backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
     }
+
+    public void setData(Course course){
+        courseTitleLabel.setText(course.getCourseName());
+        mnemonicAndNumberLabel.setText(course.getMnemonic() + " " + course.getCourseNumber());
+        averageRatingLabel.setText(String.valueOf("Average Rating: " + course.getAverageRating()));
+    }
+
     private void handleAddReview() throws SQLException{
         var rating = Integer.parseInt(inputRating.getText());
 //        var title = courseTitleLabel.getText();
@@ -88,6 +106,23 @@ public class AddReviewController {
         }
     }
 
-
+    private void openCourseSearchScene() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseSearch.fxml"));
+            Parent root = loader.load();
+            // Create a new scene
+            Scene newScene = new Scene(root);
+            // Stage and new scene for new user
+            Stage stage = (Stage) backtoCourseSearchButton.getScene().getWindow();
+            stage.setScene(newScene);
+            stage.setTitle("Course Search");
+            stage.setScene(newScene);
+            stage.show();
+            CourseSearchController controller = loader.getController();
+            controller.courseSearchInitialize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

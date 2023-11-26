@@ -1,23 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.virginia.sde.reviews.AddReviewController"
-            prefHeight="700.0" prefWidth="1200.0">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.AddReviewController">
 
-    <Button fx:id="deleteReviewButton" layoutX="662.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Delete Review" textFill="#1100ff">
+
+    <TextField fx:id="inputRating" layoutX="561.0" layoutY="256.0" prefHeight="26.0" prefWidth="34.0" />
+    <TextField fx:id="inputComment" layoutX="561.0" layoutY="323.0" prefHeight="200.0" prefWidth="300.0" />
+
+    <Label alignment="TOP_CENTER" layoutX="12.0" layoutY="22.0" prefHeight="78.0" prefWidth="1182.0" text="Add Review" textAlignment="CENTER" textFill="#004dff">
+        <font>
+            <Font name="Cambria" size="56.0" />
+        </font></Label>
+    <Button fx:id="backtoCourseSearchButton" layoutX="381.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="BACK TO SEARCH" textFill="#1100ff">
         <font>
             <Font name="Cambria" size="17.0" />
         </font></Button>
-    <TextField fx:id="inputRating" layoutX="561.0" layoutY="256.0" prefHeight="26.0" prefWidth="34.0" />
-    <TextField fx:id="inputComment" layoutX="561.0" layoutY="323.0" prefHeight="200.0" prefWidth="300.0" />
+
+    <Label layoutX="439.0" layoutY="258.0" text="Rating 1-5: ">
+        <font>
+            <Font name="Roboto Light" size="16.0" />
+        </font>
+    </Label>
+    <Label layoutX="396.0" layoutY="396.0" prefHeight="26.0" prefWidth="166.0" text="Comment (Optional):">
+        <font>
+            <Font name="Roboto Light" size="16.0" />
+        </font>
+    </Label>
+    <Button fx:id="submitReviewButton" layoutX="680.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Submit Review" textFill="#1100ff">
+        <font>
+            <Font name="Cambria" size="17.0" />
+        </font></Button>
+
+    <Label fx:id="courseTitleLabel" alignment="TOP_CENTER" layoutX="9.0" layoutY="85.0" prefHeight="78.0" prefWidth="1182.0" text="Course Title" textAlignment="CENTER" textFill="#004dff">
+        <font>
+            <Font name="Cambria" size="16.0" />
+        </font></Label>
+    <Label fx:id="mnemonicAndNumberLabel" alignment="TOP_CENTER" layoutX="60.0" layoutY="108.0" prefHeight="18.0" prefWidth="1088.0" text="Course Mnemonic and Number">
+        <font>
+            <Font name="Roboto Light" size="16.0" />
+        </font></Label>
+    <Label fx:id="averageRatingLabel" alignment="TOP_CENTER" layoutX="152.0" layoutY="130.0" prefHeight="20.0" prefWidth="896.0" text="Average Rating:">
+        <font>
+            <Font name="Roboto Light" size="16.0" />
+        </font>
+    </Label>
+
 
 
 </AnchorPane>
