@@ -41,7 +41,8 @@ public class AddCourseController {
     private TextField commentsTextfield;
 
     private ListView<Course> courseListView;
-    private DatabaseDriver dbDriver;
+
+    private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
 
     @FXML
     private Button addButton;
@@ -54,41 +55,51 @@ public class AddCourseController {
     protected void addCourseInitialize(){
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
         addButton.setOnAction(event -> {
-            handleAddCourse();
+            try {
+                handleAddCourse();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
 
-    private void handleAddCourse(){
+    private void handleAddCourse() throws SQLException {
         var mnemonicText = courseMnemonic.getText();
         var number = courseNumber.getText();
         var title = courseTitle.getText();
 
         try{
-            DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
             dbDriver.connect();
             dbDriver.createTables();
 
             if(!dbDriver.checkCourseExists(mnemonicText, number, title)){
+                Course newCourse = new Course(mnemonicText, Integer.parseInt(number), title, 0.0);
+                dbDriver.addCourse(newCourse);
+
                 dbDriver.commit();
-                dbDriver.disconnect();
-                Platform.runLater(() -> {
-                    errorMessage.setText("Course Added!");
-                    addCourseInitialize();
-                });
-            }else if(dbDriver.checkCourseExists(mnemonicText, number, title)){
+
+                // TODO: Figure out how to display this message in fxml--currently getting null pointers
+//
+//                Platform.runLater(() -> {
+//                    errorMessage.setText("Course Added!");
+//                    addCourseInitialize();
+//                });
+            }else{
                 Platform.runLater(() -> {
                     errorMessage.setText("Course Already Exists");
-                    try {
-                        dbDriver.disconnect();
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
                     addCourseInitialize();
                 });
             }
-        }catch (SQLException ex){
-            throw new RuntimeException(ex);
+        }catch (SQLException e){
+            throw e;
+        } finally {
+            try{
+                dbDriver.disconnect();
+            }
+            catch(SQLException e){
+                throw e;
+            }
         }
 
     }

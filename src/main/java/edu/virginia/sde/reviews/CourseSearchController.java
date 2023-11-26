@@ -30,7 +30,6 @@ public class CourseSearchController {
     private Label titlelabel;
     @FXML
     private ListView<Course> courseListView;
-    private DatabaseDriver dbDriver;
     @FXML
     private Button exitButton;
     @FXML
@@ -41,21 +40,47 @@ public class CourseSearchController {
     private Button myReviewsButton;
     @FXML
     private Button logoutButton;
+
+    private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
     @FXML
     protected void courseSearchInitialize(){
-        loadCourses();
+        // Agent: ChatGPT
+        // Usage: Handling disconnections correctly
+        try {
+            dbDriver.connect();
+            dbDriver.createTables();
+
+            loadCourses();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        finally{
+            try{
+                dbDriver.disconnect();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
         exitButton.setOnAction(event -> Platform.exit());
-        searchButton.setOnAction(event1 -> submitSearch());
+        searchButton.setOnAction(event1 -> {
+            try {
+                submitSearch();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
         addCourseButton.setOnAction(event -> addCourseScreen());
         myReviewsButton.setOnAction(event -> showMyReviews());
         logoutButton.setOnAction(event -> setlogoutButton());
     }
     //This method loads the update ListView
-    private void loadCourses() {
+    private void loadCourses() throws SQLException {
         try {
-            DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
-            dbDriver.connect();
-            dbDriver.createTables();
+//            DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
+//            dbDriver.connect();
+//            dbDriver.createTables();
+
 //            Course test = new Course("123456", 1234, "4", 4);
 //            dbDriver.addCourse(test);
 //            List<Course> courses = new ArrayList<>();
@@ -68,8 +93,9 @@ public class CourseSearchController {
             ObservableList<Course> observableCourseList = FXCollections.observableList(courses);
             courseListView.setItems(observableCourseList);
 
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw e;
         }
     }
 
@@ -100,7 +126,7 @@ public class CourseSearchController {
      * Updates the list of courses displayed in the courseListView based on the search criteria.
      * Searches by subject, number, and title, and updates the view accordingly.
      */
-    private void submitSearch(){
+    private void submitSearch() throws SQLException {
         //TODO:
         String subject = courseMnemonic.getText().trim();
         String number = courseNumber.getText().trim();

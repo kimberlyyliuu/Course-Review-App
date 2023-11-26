@@ -30,10 +30,18 @@ public class LoginController {
     @FXML
     private Label errorMessage;
 
+    private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
+
     @FXML
     private void initialize(){
         exitButton.setOnAction(event -> Platform.exit());
-        loginButton.setOnAction(event -> handleLogin());
+        loginButton.setOnAction(event -> {
+            try {
+                handleLogin();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
         newUserButton.setOnAction(event -> {
             try {
                 handleCreateNewUser();
@@ -47,52 +55,67 @@ public class LoginController {
      * When login button is pressed, checks if user is in database. If not, an error message is shown in the application. If they are in the database and the correct password is
      * given, then the login is successful and course review scene is shown.
      */
-    private void handleLogin(){
+    private void handleLogin() throws SQLException {
+        // Agent: ChatGPT
+        // Usage: Making sure disconnections are handled correctly
         var username = usernameField.getText();
         var password = passwordField.getText();
 
         try {
-            DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
             dbDriver.connect();
             dbDriver.createTables();
 
             if (!dbDriver.checkUserExists(username)) {
                 Platform.runLater(() -> {
                     errorMessage.setText("Username does not exist");
-                    try {
-                        dbDriver.disconnect();
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
+//                    try {
+//                        dbDriver.disconnect();
+//                    } catch (SQLException e) {
+//                        throw new RuntimeException(e);
+//                    }
                     initialize();
                 });
             } else if (dbDriver.checkUserExists(username) && dbDriver.checkUserPassword(username,password)) {
-                dbDriver.commit();
-                dbDriver.disconnect();
+               try {
+                   dbDriver.commit();
+//                dbDriver.disconnect();
 
-                Platform.runLater(() -> {
-                    errorMessage.setText("Logging In...");
-                    // Introduce a delay before switching scenes
-                    PauseTransition delay = new PauseTransition(Duration.seconds(3)); // Adjust the duration as needed
-                    delay.setOnFinished(event -> {
-                        System.out.println("login correct, changing scene");
-                        openCourseReviewScene();
-                    });
-                    delay.play();
-                });
+                   Platform.runLater(() -> {
+                       errorMessage.setText("Logging In...");
+                       // Introduce a delay before switching scenes
+                       PauseTransition delay = new PauseTransition(Duration.seconds(2)); // Adjust the duration as needed
+                       delay.setOnFinished(event -> {
+                           System.out.println("login correct, changing scene");
+                           openCourseReviewScene();
+                       });
+                       delay.play();
+
+                   });
+               }
+               catch(SQLException e){
+                   e.printStackTrace();
+               }
+               finally {
+                   try{
+                       dbDriver.disconnect();
+                   }
+                   catch (SQLException e){
+                       e.printStackTrace();
+                   }
+               }
             } else if (dbDriver.checkUserExists(username) && !dbDriver.checkUserPassword(username,password)) {
                 Platform.runLater(() -> {
                     errorMessage.setText("Invalid Password");
-                    try {
-                        dbDriver.disconnect();
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
+//                    try {
+//                        dbDriver.disconnect();
+//                    } catch (SQLException e) {
+//                        throw new RuntimeException(e);
+//                    }
                     initialize();
                 });
             }
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+        } catch (SQLException e) {
+            throw e;
         }
     }
 

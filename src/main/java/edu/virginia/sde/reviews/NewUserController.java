@@ -30,6 +30,8 @@ public class NewUserController {
     private Label errorMessage;
     @FXML
     private Button exitButton;
+
+    private DatabaseDriver dbDriver;
     @FXML
     protected void newUserInitialize() {
         exitButton.setOnAction(event -> Platform.exit());
@@ -42,7 +44,7 @@ public class NewUserController {
         var password = newPasswordField.getText();
 
         try {
-            DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
+            dbDriver = new DatabaseDriver("course_app.sqlite");
             dbDriver.connect();
             dbDriver.createTables();
 

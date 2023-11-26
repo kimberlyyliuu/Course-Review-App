@@ -10,9 +10,9 @@
          <font>
             <Font name="Cambria" size="56.0" />
          </font></Label>
-      <TextField layoutX="561.0" layoutY="256.0" prefHeight="26.0" prefWidth="346.0" />
-      <TextField layoutX="561.0" layoutY="323.0" prefHeight="26.0" prefWidth="202.0" />
-      <TextField layoutX="561.0" layoutY="396.0" prefHeight="26.0" prefWidth="202.0" />
+      <TextField fx:id="courseTitle" layoutX="561.0" layoutY="256.0" prefHeight="26.0" prefWidth="346.0" />
+      <TextField fx:id="courseMnemonic" layoutX="561.0" layoutY="323.0" prefHeight="26.0" prefWidth="202.0" />
+      <TextField fx:id="courseNumber" layoutX="561.0" layoutY="396.0" prefHeight="26.0" prefWidth="202.0" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="262.0" layoutY="100.0" prefHeight="28.0" prefWidth="743.0" text="Please fill out all fields completely to add a course to Course Review" textFill="#0051ff">
          <font>
             <Font name="Cambria" size="23.0" />
