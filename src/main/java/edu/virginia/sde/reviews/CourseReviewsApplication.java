@@ -14,7 +14,7 @@ public class CourseReviewsApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        primaryStage.setTitle("Course Reviews");
+        primaryStage.setTitle("Log-In to Course Review");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

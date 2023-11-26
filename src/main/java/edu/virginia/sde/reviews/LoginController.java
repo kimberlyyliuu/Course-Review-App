@@ -130,7 +130,7 @@ public class LoginController {
             // Stage and new scene for new user
             Stage stage = (Stage) newUserButton.getScene().getWindow();
             stage.setScene(newScene);
-            stage.setTitle("Course Reviews");
+            stage.setTitle("Create New User");
             stage.setScene(newScene);
             stage.show();
             NewUserController controller = loader.getController();
@@ -149,7 +149,7 @@ public class LoginController {
             // Stage and new scene for new user
             Stage stage = (Stage) errorMessage.getScene().getWindow();
             stage.setScene(newScene);
-            stage.setTitle("Course Reviews");
+            stage.setTitle("Course Search");
             stage.setScene(newScene);
             stage.show();
             CourseSearchController controller = loader.getController();
