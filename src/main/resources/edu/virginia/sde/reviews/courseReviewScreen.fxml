@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseReviewController">
+   <children>
+      <Label fx:id="courseTitleLabel" layoutX="482.0" layoutY="22.0" prefHeight="78.0" prefWidth="380.0" text="Course Title" textFill="#004dff">
+         <font>
+            <Font name="Cambria" size="56.0" />
+         </font></Label>
+      <Button fx:id="backtoCourseSearchButton" layoutX="559.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="BACK TO SEARCH" textFill="#1100ff">
+         <font>
+            <Font name="Cambria" size="17.0" />
+         </font></Button>
+      <Label layoutX="542.0" layoutY="92.0" text="Course Mnemonic and Number" />
+      <Label layoutX="573.0" layoutY="110.0" text="Rating:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

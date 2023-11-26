@@ -73,26 +73,73 @@ public class CourseSearchController {
         addCourseButton.setOnAction(event -> addCourseScreen());
         myReviewsButton.setOnAction(event -> showMyReviews());
         logoutButton.setOnAction(event -> setlogoutButton());
+
+        //Clickable courses
+        courseListView.setOnMouseClicked(event -> {
+            Course selectedCourse = courseListView.getSelectionModel().getSelectedItem();
+            if(selectedCourse!=null){
+                try {
+                    handleCourseClick(selectedCourse);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
     }
+
+    private void handleCourseClick(Course selectedCourse) throws SQLException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("courseReviewScreen.fxml"));
+            Parent root = loader.load();
+            CourseReviewController controller = loader.getController();
+            controller.setData(selectedCourse);
+            // Create a new scene
+            Scene newScene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(newScene);
+            stage.setTitle("Course Review");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     //This method loads the update ListView
     private void loadCourses() throws SQLException {
         try {
-//            DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
-//            dbDriver.connect();
-//            dbDriver.createTables();
-
-//            Course test = new Course("123456", 1234, "4", 4);
-//            dbDriver.addCourse(test);
-//            List<Course> courses = new ArrayList<>();
-//            courses = dbDriver.getAllCourses();
-//            ObservableList<Course> observableCourseList = FXCollections.observableList(courses);
-//            ListView<Course> courselistView = new ListView<>(observableCourseList);
-
             List<Course> courses = dbDriver.getAllCourses(); // Retrieve the list of courses from the database
+
+            // Agent: ChatGPT
+            // Usage: Help making courses clickable
+            courseListView.setCellFactory(param -> new ListCell<Course>() {
+                @Override
+                protected void updateItem(Course item, boolean empty){
+                    super.updateItem(item, empty);
+
+                    if(empty || item == null){
+                        setText(null);
+                    }
+                    else{
+                        setText(item.toString());
+                    }
+                }
+            });
             // Update the existing courseListView with the new data
             ObservableList<Course> observableCourseList = FXCollections.observableList(courses);
             courseListView.setItems(observableCourseList);
 
+            courseListView.setOnMouseClicked(event -> {
+                Course selectedCourse = courseListView.getSelectionModel().getSelectedItem();
+                if(selectedCourse != null){
+                    try{
+                        handleCourseClick(selectedCourse);
+                    }
+                    catch(SQLException e){
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
 
         } catch (SQLException e) {
             throw e;
@@ -100,8 +147,9 @@ public class CourseSearchController {
     }
 
 
-
-    //Adds a course to the database which should update in the ListView as well immediately
+    /**
+     *  Adds a course to the database which should update in the ListView as well immediately
+     */
     @FXML
     private void addCourseScreen(){
         try {

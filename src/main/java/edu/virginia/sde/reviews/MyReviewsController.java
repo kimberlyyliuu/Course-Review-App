@@ -71,12 +71,12 @@ public class MyReviewsController {
 
     private void openCourseReviewScene(Review selectedReview) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("course-review.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("courseReviewScreen.fxml"));
             Parent root = loader.load();
 
             // Pass the selected review to the next controller
             CourseReviewController controller = loader.getController();
-            controller.initalize();
+            controller.initialize();
 
             // Create a new scene
             Scene newScene = new Scene(root);
