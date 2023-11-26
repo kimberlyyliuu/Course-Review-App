@@ -67,11 +67,15 @@ public class AddCourseController {
     private void handleAddCourse() throws SQLException {
         var mnemonicText = courseMnemonic.getText();
         var number = courseNumber.getText();
-        var title = courseTitle.getText();
+        var title = formatCourseTitle(courseTitle.getText());
 
         try{
             dbDriver.connect();
             dbDriver.createTables();
+
+            checkMnemonicReqs(mnemonicText);
+            checkCourseNumberReqs(number);
+            checkCourseTitleReqs(title);
 
             if(!dbDriver.checkCourseExists(mnemonicText, number, title)){
                 Course newCourse = new Course(mnemonicText, Integer.parseInt(number), title, 0.0);
@@ -104,6 +108,47 @@ public class AddCourseController {
 
     }
 
+    private static void checkMnemonicReqs(String mnemonicText) {
+        if(mnemonicText.length() > 4){
+            // TODO: Create displayable error message on screen saying enter viable mnemonic
+        }
+    }
+
+    private static void checkCourseNumberReqs(String courseNumber) {
+        // Agent: ChatGPT
+        // Usage: Asked how to check what's entered are all digits
+        if(courseNumber.length() != 4) {
+            if (courseNumber.matches("\\d+")) {
+                return;
+            } else {
+                // TODO: Create displayable error message on screen saying enter viable courseNumber (must be 4 digits)
+            }
+        }
+    }
+
+    private static void checkCourseTitleReqs(String courseTitle) {
+        if(courseTitle.length() > 50){
+            // TODO: Create displayable error message on screen saying enter viable courseName (has to be less than 50);
+        }
+    }
+
+    private String formatCourseTitle(String courseTitle){
+        // Agent: ChatGPT
+        // Usage: Asked how to split string into individual words and capitalize first letter of each word
+        String[] words = courseTitle.split("\\s+");
+        StringBuilder reformattedTitle = new StringBuilder();
+
+        for(String word : words){
+            if(word.length() > 0){
+                reformattedTitle.append(word.substring(0, 1).toUpperCase());
+                if(word.length() > 1){
+                    reformattedTitle.append(word.substring(1).toLowerCase());
+                }
+                reformattedTitle.append(" ");
+            }
+        }
+        return reformattedTitle.toString().trim();
+    }
 
     private void openCourseSearchScene() {
         try {
