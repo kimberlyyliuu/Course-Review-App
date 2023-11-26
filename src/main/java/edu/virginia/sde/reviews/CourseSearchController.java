@@ -23,12 +23,6 @@ public class CourseSearchController {
     @FXML
     private TextField courseTitle;
     @FXML
-    private Label MnemonicLabel;
-    @FXML
-    private Label numberLabel;
-    @FXML
-    private Label titlelabel;
-    @FXML
     private ListView<Course> courseListView;
     @FXML
     private Button exitButton;
@@ -94,9 +88,9 @@ public class CourseSearchController {
             Parent root = loader.load();
             CourseReviewController controller = loader.getController();
             controller.setData(selectedCourse);
-            // Create a new scene
+
+            Stage stage = (Stage) courseListView.getScene().getWindow();
             Scene newScene = new Scene(root);
-            Stage stage = new Stage();
             stage.setScene(newScene);
             stage.setTitle("Course Review");
             stage.show();

@@ -19,16 +19,43 @@ public class CourseReviewController {
 
     @FXML
     private Label courseTitleLabel;
+    @FXML
+    private Label mnemonicAndNumberLabel;
+    @FXML
+    private Label averageRatingLabel;
+    @FXML
+    private Button backtoCourseSearchButton;
 
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
 
     @FXML
     protected void initialize() {
-
+        backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
     }
 
     public void setData(Course course){
         courseTitleLabel.setText(course.getCourseName());
+        mnemonicAndNumberLabel.setText(course.getMnemonic() + " " + course.getCourseNumber());
+        averageRatingLabel.setText(String.valueOf(course.getAverageRating()));
+    }
+
+    private void openCourseSearchScene() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseSearch.fxml"));
+            Parent root = loader.load();
+            // Create a new scene
+            Scene newScene = new Scene(root);
+            // Stage and new scene for new user
+            Stage stage = (Stage) backtoCourseSearchButton.getScene().getWindow();
+            stage.setScene(newScene);
+            stage.setTitle("Course Reviews");
+            stage.setScene(newScene);
+            stage.show();
+            CourseSearchController controller = loader.getController();
+            controller.courseSearchInitialize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
