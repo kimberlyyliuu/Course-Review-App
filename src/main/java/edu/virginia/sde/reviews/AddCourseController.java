@@ -78,6 +78,7 @@ public class AddCourseController {
                 dbDriver.addCourse(newCourse);
 
                 dbDriver.commit();
+                openCourseSearchScene();
 
             }else{
                 Platform.runLater(() -> {
