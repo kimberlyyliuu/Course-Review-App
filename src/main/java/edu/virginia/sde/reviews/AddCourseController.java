@@ -44,8 +44,6 @@ public class AddCourseController {
 
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
 
-    private boolean validMnemonic = false, validCourseNumber = false, validCourseTitle = false;
-
     @FXML
     private Button addButton;
     @FXML
@@ -75,11 +73,7 @@ public class AddCourseController {
             dbDriver.connect();
             dbDriver.createTables();
 
-            checkMnemonicReqs(mnemonicText);
-            checkCourseNumberReqs(number);
-            checkCourseTitleReqs(title);
-
-            if(!dbDriver.checkCourseExists(mnemonicText, number, title) && validMnemonic && validCourseNumber && validCourseTitle){
+            if(!dbDriver.checkCourseExists(mnemonicText, number, title) && isValidMnemonic(mnemonicText) && isValidCourseNumber(number) && isValidCourseTitle(title)){
                 Course newCourse = new Course(mnemonicText, Integer.parseInt(number), title, 0.0);
                 dbDriver.addCourse(newCourse);
 
@@ -110,39 +104,39 @@ public class AddCourseController {
 
     }
 
-    private void checkMnemonicReqs(String mnemonicText) {
+    private boolean isValidMnemonic(String mnemonicText) {
         if(mnemonicText.length() > 4){
             // TODO: Create displayable error message on screen saying enter viable mnemonic
-            validMnemonic = false;
+            return false;
         }else{
-            validMnemonic = true;
+            return true;
         }
     }
 
-    private void checkCourseNumberReqs(String courseNumber) {
+    private boolean isValidCourseNumber(String courseNumber) {
         // Agent: ChatGPT
         // Usage: Asked how to check what's entered are all digits
         if(courseNumber.length() == 4) {
             if (courseNumber.matches("\\d+")) {
-                validCourseNumber = true;
+                return true;
             } else {
                 // TODO: Create displayable error message on screen saying enter viable courseNumber (must be 4 DIGITS)
-                validCourseNumber = false;
+                return false;
             }
         }
         else{
             // TODO: Create displayable error message on screen saying enter viable courseNumber (must be 4 digits)
-            validCourseNumber = false;
+            return false;
         }
     }
 
-    private  void checkCourseTitleReqs(String courseTitle) {
+    private boolean isValidCourseTitle(String courseTitle) {
         if(courseTitle.length() > 50){
             // TODO: Create displayable error message on screen saying enter viable courseName (has to be less than 50);
-            validCourseTitle = false;
+            return false;
         }
         else {
-            validCourseTitle = true;
+            return true;
         }
     }
 
