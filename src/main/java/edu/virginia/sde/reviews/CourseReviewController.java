@@ -48,6 +48,8 @@ public class CourseReviewController {
         averageRatingLabel.setText(String.valueOf("Average Rating: " + course.getAverageRating()));
     }
 
+
+
     private void openCourseSearchScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseSearch.fxml"));

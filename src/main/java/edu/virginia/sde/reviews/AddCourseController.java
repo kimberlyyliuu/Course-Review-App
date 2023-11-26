@@ -105,7 +105,7 @@ public class AddCourseController {
     private boolean isValidMnemonic(String mnemonicText) {
         if(mnemonicText.length() > 4 || !mnemonicText.matches("[a-zA-Z]+")){
             Platform.runLater(() -> {
-                errorMessage.setText("Please make sure the entered course mnemonic is no more than 4 characters that are letters");
+                errorMessage.setText("Please make sure the entered course mnemonic is no more than 4 characters that are letters. No spaces");
             });
             return false;
         }else{

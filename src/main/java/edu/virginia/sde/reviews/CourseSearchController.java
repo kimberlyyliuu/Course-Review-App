@@ -35,6 +35,7 @@ public class CourseSearchController {
     @FXML
     private Button logoutButton;
 
+
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
     @FXML
     protected void courseSearchInitialize(){
