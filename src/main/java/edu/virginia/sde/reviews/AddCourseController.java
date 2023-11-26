@@ -79,17 +79,14 @@ public class AddCourseController {
 
                 dbDriver.commit();
 
-                // TODO: Figure out how to display this message in fxml--currently getting null pointers
-//
-//                Platform.runLater(() -> {
-//                    errorMessage.setText("Course Added!");
-//                    addCourseInitialize();
-//                });
             }else{
                 Platform.runLater(() -> {
                     errorMessage.setText("Course Already Exists");
                     addCourseInitialize();
                 });
+                isValidCourseTitle(title);
+                isValidMnemonic(mnemonicText);
+                isValidCourseNumber(number);
             }
         }catch (SQLException e){
             throw e;
@@ -105,8 +102,10 @@ public class AddCourseController {
     }
 
     private boolean isValidMnemonic(String mnemonicText) {
-        if(mnemonicText.length() > 4){
-            // TODO: Create displayable error message on screen saying enter viable mnemonic
+        if(mnemonicText.length() > 4 || !mnemonicText.matches("[a-zA-Z]+")){
+            Platform.runLater(() -> {
+                errorMessage.setText("Please make sure the entered course mnemonic is no more than 4 characters that are letters");
+            });
             return false;
         }else{
             return true;
@@ -120,19 +119,25 @@ public class AddCourseController {
             if (courseNumber.matches("\\d+")) {
                 return true;
             } else {
-                // TODO: Create displayable error message on screen saying enter viable courseNumber (must be 4 DIGITS)
+                Platform.runLater(() -> {
+                    errorMessage.setText("Please make sure the entered course number is 4 digits");
+                });
                 return false;
             }
         }
         else{
-            // TODO: Create displayable error message on screen saying enter viable courseNumber (must be 4 digits)
+            Platform.runLater(() -> {
+                errorMessage.setText("Please make sure the entered course number is 4 digits long");
+            });
             return false;
         }
     }
 
     private boolean isValidCourseTitle(String courseTitle) {
         if(courseTitle.length() > 50){
-            // TODO: Create displayable error message on screen saying enter viable courseName (has to be less than 50);
+            Platform.runLater(() -> {
+                errorMessage.setText("Please make sure the entered course name is no more than 50 characters long");
+            });
             return false;
         }
         else {

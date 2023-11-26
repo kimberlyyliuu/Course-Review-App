@@ -68,17 +68,12 @@ public class LoginController {
             if (!dbDriver.checkUserExists(username)) {
                 Platform.runLater(() -> {
                     errorMessage.setText("Username does not exist");
-//                    try {
-//                        dbDriver.disconnect();
-//                    } catch (SQLException e) {
-//                        throw new RuntimeException(e);
-//                    }
                     initialize();
                 });
+                dbDriver.disconnect();
             } else if (dbDriver.checkUserExists(username) && dbDriver.checkUserPassword(username,password)) {
                try {
                    dbDriver.commit();
-//                dbDriver.disconnect();
 
                    Platform.runLater(() -> {
                        errorMessage.setText("Logging In...");
