@@ -109,6 +109,7 @@ public class MyReviewsController {
             stage.setScene(newScene);
             stage.show();
             CourseSearchController controller = loader.getController();
+            controller.setActiveUser(activeUser);
             controller.courseSearchInitialize();
         } catch (IOException e) {
             e.printStackTrace();

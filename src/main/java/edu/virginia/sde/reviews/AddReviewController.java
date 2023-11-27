@@ -38,7 +38,7 @@ public class AddReviewController {
     @FXML
     private Button backtoCourseSearchButton;
 
-    private User activeUser;
+    private User activeUser = new User("", "");
     public void setActiveUser(User user){
         activeUser.setUsername(user.getUsername());
         activeUser.setPassword(user.getPassword());
@@ -125,6 +125,7 @@ public class AddReviewController {
             stage.setScene(newScene);
             stage.show();
             CourseSearchController controller = loader.getController();
+            controller.setActiveUser(activeUser);
             controller.courseSearchInitialize();
         } catch (IOException e) {
             e.printStackTrace();

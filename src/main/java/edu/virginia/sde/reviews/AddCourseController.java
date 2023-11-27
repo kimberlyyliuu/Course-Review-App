@@ -41,9 +41,7 @@ public class AddCourseController {
     private TextField commentsTextfield;
 
     private ListView<Course> courseListView;
-
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
-
     @FXML
     private Button addButton;
     @FXML
@@ -183,6 +181,7 @@ public class AddCourseController {
             stage.setScene(newScene);
             stage.show();
             CourseSearchController controller = loader.getController();
+            controller.setActiveUser(activeUser);
             controller.courseSearchInitialize();
         } catch (IOException e) {
             e.printStackTrace();
