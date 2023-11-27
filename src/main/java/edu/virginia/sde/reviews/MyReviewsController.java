@@ -68,6 +68,7 @@ public class MyReviewsController {
             List<Review> reviewList = databaseDriver.getReviewsByUser(activeUser);
             ObservableList<Review> observableReviewList = FXCollections.observableArrayList(reviewList);
             tableView.setItems(observableReviewList);
+            databaseDriver.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
