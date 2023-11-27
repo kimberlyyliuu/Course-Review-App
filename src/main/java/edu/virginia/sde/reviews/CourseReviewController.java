@@ -29,8 +29,7 @@ public class CourseReviewController {
     private Button addReviewButton;
     @FXML
     private Button backtoCourseSearchButton;
-    @FXML
-    private Button deleteReviewButton;
+
 
     private User activeUser = new User("", "");
     public void setActiveUser(User user){
@@ -50,7 +49,9 @@ public class CourseReviewController {
         courseTitleLabel.setText(course.getCourseName());
         mnemonicAndNumberLabel.setText(course.getMnemonic() + " " + course.getCourseNumber());
         averageRatingLabel.setText(String.valueOf("Average Rating: " + course.getAverageRating()));
+
     }
+
 
 //    private void setDeleteReviewButton() throws SQLException {
 //        try {
@@ -99,9 +100,11 @@ public class CourseReviewController {
             stage.setTitle("Add Review");
             stage.setScene(newScene);
             stage.show();
-            CourseSearchController controller = loader.getController();
+
+            AddReviewController controller = loader.getController();
             controller.setActiveUser(activeUser);
-            controller.courseSearchInitialize();
+            controller.setData(courseTitleLabel.getText(), mnemonicAndNumberLabel.getText(), averageRatingLabel.getText());
+            controller.initialize();
         } catch (IOException e) {
             e.printStackTrace();
         }
