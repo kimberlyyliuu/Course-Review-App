@@ -18,9 +18,9 @@
             </font>
         </Button>
 
-        <TableView layoutX="180.0" layoutY="122.0" prefHeight="430.0" prefWidth="842.0">
+        <TableView fx:id="tableView" layoutX="180.0" layoutY="122.0" prefHeight="430.0" prefWidth="842.0">
             <columns>
-                <TableColumn prefWidth="280.67">
+                <TableColumn fx:id="mnemonicColumn" prefWidth="280.67">
                     <graphic>
                         <Label text="Mnemonic">
                             <font>
@@ -29,7 +29,7 @@
                         </Label>
                     </graphic>
                 </TableColumn>
-                <TableColumn prefWidth="280.67">
+                <TableColumn fx:id="numberColumn" prefWidth="280.67">
                     <graphic>
                         <Label text="Number">
                             <font>
@@ -38,7 +38,7 @@
                         </Label>
                     </graphic>
                 </TableColumn>
-                <TableColumn prefWidth="280.67">
+                <TableColumn fx:id="ratingColumn" prefWidth="280.67">
                     <graphic>
                         <Label text="Your Rating">
                             <font>
