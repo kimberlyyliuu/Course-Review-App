@@ -60,10 +60,10 @@ public class AddReviewController {
         });
     }
 
-    public void setData(Course course){
-        courseTitleLabel.setText(course.getCourseName());
-        mnemonicAndNumberLabel.setText(course.getMnemonic() + " " + course.getCourseNumber());
-        averageRatingLabel.setText(String.valueOf("Average Rating: " + course.getAverageRating()));
+    public void setData(String courseTitle, String mnemonicAndNumber, String rating){
+        courseTitleLabel.setText(courseTitle);
+        mnemonicAndNumberLabel.setText(mnemonicAndNumber);
+        averageRatingLabel.setText(rating);
     }
 
 
