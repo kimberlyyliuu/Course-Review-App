@@ -29,7 +29,7 @@ public class MyReviewsController {
     private TableColumn numberColumn;
     @FXML
     private TableColumn ratingColumn;
-    private User activeUser;
+    private User activeUser = new User("", "");
     public void setActiveUser(User user){
         activeUser.setUsername(user.getUsername());
         activeUser.setPassword(user.getPassword());
