@@ -156,7 +156,6 @@ public class LoginController {
             stage.show();
             CourseSearchController controller = loader.getController();
             controller.setActiveUser(new User(usernameField.getText() , passwordField.getText()));
-           //testing if it worked but it did not System.out.println(activeUser.getUsername());
             controller.courseSearchInitialize();
         } catch (IOException e) {
             e.printStackTrace();

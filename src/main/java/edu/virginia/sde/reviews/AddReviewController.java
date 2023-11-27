@@ -58,44 +58,43 @@ public class AddReviewController {
     }
 
 
-    private void handleAddReview() throws SQLException{
-        var rating = Integer.parseInt(inputRating.getText());
-//        var title = courseTitleLabel.getText();
-//        String[] parts = mnemonicAndNumberLabel.getText().split("\\s+");
-//        var mnemonic = parts[0];
-//        var courseNumber = parts[1];
-
-        // Agent: ChatGPT
-        // Usage: Asked how to check if field is filled or not
-        // Check if inputComment is not empty before using its value
-        var comment = inputComment.getText().isEmpty() ? null : inputComment.getText();
-
-//        try{
+//    private void handleAddReview() throws SQLException {
+//        var rating = Integer.parseInt(inputRating.getText());
+//        var username = activeUser.getUsername();
+//
+//        // Agent: ChatGPT
+//        // Usage: Asked how to check if field is filled or not
+//        // Check if inputComment is not empty before using its value
+//        var comment = inputComment.getText().isEmpty() ? null : inputComment.getText();
+//
+//        try {
 //            dbDriver.connect();
 //            dbDriver.createTables();
 //
-//            if(comment != null && isValidRating(rating)){
-//                Review review = new Review(userID, courseID, rating, comment);
-//            }else if (comment == null){
-//                  Review review = new Review(userID, courseID, rating);
+//            if (comment != null && isValidRating(rating)) {
+//                Review review = new Review(username, courseID, rating, comment);
+//                dbDriver.addReview(review);
+//                dbDriver.commit();
+//            } else if (comment == null) {
+//                Review review = new Review(username, courseID, rating);
+//                dbDriver.addReview(review);
+//                dbDriver.commit();
 //            }
-//
-//        }catch (SQLException e){
+//        } catch (SQLException e) {
 //            throw e;
 //        } finally {
-//            try{
+//            try {
 //                dbDriver.disconnect();
-//            }
-//            catch(SQLException e){
+//            } catch (SQLException e) {
 //                throw e;
 //            }
 
 
-    }
 
-    private boolean isValidRating(String ratingText){
+
+    private boolean isValidRating(Integer ratingText){
         try {
-            int rating = Integer.parseInt(ratingText);
+            int rating = Integer.parseInt(String.valueOf(ratingText));
 
             // Check if the rating is within the valid range (1 to 5)
             if (rating >= 1 && rating <= 5) {
