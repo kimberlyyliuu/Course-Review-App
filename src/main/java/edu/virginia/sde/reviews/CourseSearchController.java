@@ -59,6 +59,9 @@ public class CourseSearchController {
         exitButton.setOnAction(event -> Platform.exit());
         searchButton.setOnAction(event1 -> {
             try {
+                if (dbDriver.connection.isClosed()){
+                    dbDriver.connect();
+                }
                 submitSearch();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -135,7 +138,6 @@ public class CourseSearchController {
                     }
                 }
             });
-
         } catch (SQLException e) {
             throw e;
         }

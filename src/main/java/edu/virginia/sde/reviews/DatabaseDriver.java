@@ -6,7 +6,7 @@ import java.util.List;
 
 public class DatabaseDriver {
     private final String sqliteFilename;
-    private Connection connection;
+    protected Connection connection;
 
     public DatabaseDriver (String sqlListDatabaseFilename) {
         this.sqliteFilename = sqlListDatabaseFilename;
