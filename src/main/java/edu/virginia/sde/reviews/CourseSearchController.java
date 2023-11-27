@@ -34,8 +34,7 @@ public class CourseSearchController {
     private Button myReviewsButton;
     @FXML
     private Button logoutButton;
-
-
+    private User activeUser;
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
     @FXML
     protected void courseSearchInitialize(){
@@ -159,6 +158,7 @@ public class CourseSearchController {
             stage.setScene(newScene);
             stage.show();
             AddCourseController controller = loader.getController();
+            controller.setActiveUser(this.activeUser);
             controller.addCourseInitialize();
         } catch (IOException e) {
             e.printStackTrace();
@@ -200,10 +200,15 @@ public class CourseSearchController {
             stage.setScene(newScene);
             stage.show();
             MyReviewsController controller = loader.getController();
+            controller.setActiveUser(activeUser);
             controller.myReviewsIntialize();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void setActiveUser(User user){
+        activeUser.setUsername(user.getUsername());
+        activeUser.setPassword(user.getPassword());
     }
 
     private void setlogoutButton() {

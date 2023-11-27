@@ -30,7 +30,6 @@ public class AddReviewController {
     private Label mnemonicAndNumberLabel;
     @FXML
     private Label averageRatingLabel;
-
     @FXML
     private Label errorMessage;
     @FXML
@@ -38,6 +37,12 @@ public class AddReviewController {
 
     @FXML
     private Button backtoCourseSearchButton;
+
+    private User activeUser;
+    public void setActiveUser(User user){
+        activeUser.setUsername(user.getUsername());
+        activeUser.setPassword(user.getPassword());
+    }
 
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
 

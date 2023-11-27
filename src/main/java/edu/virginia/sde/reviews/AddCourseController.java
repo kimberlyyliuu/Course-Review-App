@@ -51,6 +51,12 @@ public class AddCourseController {
     @FXML
     private Label errorMessage;
 
+    private User activeUser;
+    public void setActiveUser(User user){
+        activeUser.setUsername(user.getUsername());
+        activeUser.setPassword(user.getPassword());
+    }
+
     @FXML
     protected void addCourseInitialize(){
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
@@ -65,7 +71,7 @@ public class AddCourseController {
 
 
     private void handleAddCourse() throws SQLException {
-        var mnemonicText = courseMnemonic.getText();
+        var mnemonicText = courseMnemonic.getText().toUpperCase();
         var number = courseNumber.getText();
         var title = formatCourseTitle(courseTitle.getText());
 
@@ -164,7 +170,7 @@ public class AddCourseController {
         return reformattedTitle.toString().trim();
     }
 
-    private void openCourseSearchScene() {
+    public void openCourseSearchScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseSearch.fxml"));
             Parent root = loader.load();

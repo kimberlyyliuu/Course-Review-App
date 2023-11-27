@@ -29,7 +29,11 @@ public class MyReviewsController {
     private TableColumn numberColumn;
     @FXML
     private TableColumn ratingColumn;
-    private User currentUser;
+    private User activeUser;
+    public void setActiveUser(User user){
+        activeUser.setUsername(user.getUsername());
+        activeUser.setPassword(user.getPassword());
+    }
     private final DatabaseDriver databaseDriver = new DatabaseDriver("course_app.sqlite");
 
 
@@ -60,7 +64,7 @@ public class MyReviewsController {
 
     private void populateTable() {
         try {
-            List<Review> reviewList = databaseDriver.getReviewsByUser(currentUser);
+            List<Review> reviewList = databaseDriver.getReviewsByUser(activeUser);
             ObservableList<Review> observableReviewList = FXCollections.observableArrayList(reviewList);
             tableView.setItems(observableReviewList);
         } catch (SQLException e) {

@@ -29,6 +29,7 @@ public class LoginController {
     private Button exitButton;
     @FXML
     private Label errorMessage;
+    private User activeUser = new User("", "");;
 
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
 
@@ -50,6 +51,7 @@ public class LoginController {
             }
         });
     }
+
 
     /**
      * When login button is pressed, checks if user is in database. If not, an error message is shown in the application. If they are in the database and the correct password is
@@ -74,7 +76,7 @@ public class LoginController {
             } else if (dbDriver.checkUserExists(username) && dbDriver.checkUserPassword(username,password)) {
                try {
                    dbDriver.commit();
-
+                   activeUser = new User(username, password);
                    Platform.runLater(() -> {
                        errorMessage.setText("Logging In...");
                        // Introduce a delay before switching scenes
@@ -153,6 +155,8 @@ public class LoginController {
             stage.setScene(newScene);
             stage.show();
             CourseSearchController controller = loader.getController();
+            controller.setActiveUser(this.activeUser);
+           //testing if it worked but it did not System.out.println(activeUser.getUsername());
             controller.courseSearchInitialize();
         } catch (IOException e) {
             e.printStackTrace();

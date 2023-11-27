@@ -30,6 +30,7 @@ public class NewUserController {
     private Label errorMessage;
     @FXML
     private Button exitButton;
+    private User activeUser;
 
     private DatabaseDriver dbDriver;
     @FXML
@@ -60,6 +61,7 @@ public class NewUserController {
                 });
             } else if (!dbDriver.checkUserExists(username) && dbDriver.isValidPassword(password)) {
                 User newUser = new User(username, password);
+                activeUser = new User(username, password);
                 dbDriver.addUser(newUser);
                 dbDriver.commit();
                 dbDriver.disconnect();
@@ -93,6 +95,11 @@ public class NewUserController {
         }
     }
 
+    public void setActiveUser(User user){
+        activeUser.setUsername(user.getUsername());
+        activeUser.setPassword(user.getPassword());
+    }
+
     private void returnLogInScene() throws SQLException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
@@ -102,6 +109,8 @@ public class NewUserController {
             // Stage and new scene for new user
             Stage stage = (Stage) errorMessage.getScene().getWindow();
             stage.setScene(newScene);
+            CourseSearchController controller = loader.getController();
+            controller.setActiveUser(this.activeUser);
         } catch (IOException e) {
             e.printStackTrace();
         }
