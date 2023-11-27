@@ -29,8 +29,7 @@ public class CourseReviewController {
     private Button addReviewButton;
     @FXML
     private Button backtoCourseSearchButton;
-    @FXML
-    private Button deleteReviewButton;
+
 
     private User activeUser = new User("", "");
     public void setActiveUser(User user){
