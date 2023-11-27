@@ -34,7 +34,7 @@ public class CourseSearchController {
     private Button myReviewsButton;
     @FXML
     private Button logoutButton;
-    private User activeUser;
+    private User activeUser = new User("", "");
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
     @FXML
     protected void courseSearchInitialize(){
@@ -67,6 +67,7 @@ public class CourseSearchController {
         addCourseButton.setOnAction(event -> addCourseScreen());
         myReviewsButton.setOnAction(event -> showMyReviews());
         logoutButton.setOnAction(event -> setlogoutButton());
+
 
         //Clickable courses
         courseListView.setOnMouseClicked(event -> {

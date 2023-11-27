@@ -83,7 +83,6 @@ public class LoginController {
                        // Introduce a delay before switching scenes
                        PauseTransition delay = new PauseTransition(Duration.seconds(2)); // Adjust the duration as needed
                        delay.setOnFinished(event -> {
-                           System.out.println("login correct, changing scene");
                            openCourseReviewScene();
                        });
                        delay.play();
