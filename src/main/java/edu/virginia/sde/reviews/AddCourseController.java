@@ -51,7 +51,7 @@ public class AddCourseController {
     @FXML
     private Label errorMessage;
 
-    private User activeUser;
+    private User activeUser = new User("", "");
     public void setActiveUser(User user){
         activeUser.setUsername(user.getUsername());
         activeUser.setPassword(user.getPassword());
