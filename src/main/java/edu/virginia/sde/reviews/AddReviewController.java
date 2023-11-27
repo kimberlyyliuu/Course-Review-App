@@ -52,6 +52,7 @@ public class AddReviewController {
         averageRatingLabel.setText(String.valueOf("Average Rating: " + course.getAverageRating()));
     }
 
+
     private void handleAddReview() throws SQLException{
         var rating = Integer.parseInt(inputRating.getText());
 //        var title = courseTitleLabel.getText();

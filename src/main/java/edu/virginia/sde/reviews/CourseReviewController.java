@@ -47,6 +47,21 @@ public class CourseReviewController {
         averageRatingLabel.setText(String.valueOf("Average Rating: " + course.getAverageRating()));
     }
 
+//    private void setDeleteReviewButton() throws SQLException {
+//        try {
+//            dbDriver.connect();
+//            if ()
+//
+//        } catch (SQLException e) {
+//            throw e;
+//        } finally {
+//            try {
+//                dbDriver.disconnect();
+//            } catch (SQLException e) {
+//                throw e;
+//            }
+//        }
+//    }
 
     private void openCourseSearchScene() {
         try {
