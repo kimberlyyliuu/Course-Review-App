@@ -211,6 +211,38 @@ public class DatabaseDriver {
             throw e;
         }
     }
+    public List<Course> getSearchedCourses(String subject, String number, String title) throws SQLException {
+        if (connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
+
+        try {
+            List<Course> courseList = new ArrayList<>();
+            String sql = "SELECT * FROM Courses WHERE Mnemonic LIKE ? AND CourseNumber LIKE ? AND CourseName LIKE ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, "%" + subject + "%");
+                statement.setString(2, "%" + number + "%");
+                statement.setString(3, "%" + title + "%");
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        String mnemonic = resultSet.getString("Mnemonic");
+                        int courseNumber = resultSet.getInt("CourseNumber");
+                        String courseName = resultSet.getString("CourseName");
+                        double averageRating = resultSet.getDouble("AverageRating");
+
+                        Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+                        courseList.add(newCourse);
+                    }
+                }
+            }
+
+            return courseList;
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
 
     /**
      * Returns all reviews in the Reviews table

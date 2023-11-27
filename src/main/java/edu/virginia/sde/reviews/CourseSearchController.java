@@ -182,8 +182,9 @@ public class CourseSearchController {
         // Update the courseListView with the search results
         // You may need to modify loadCourses or create a new method to handle search results
         // For simplicity, assuming all courses are shown in this example
-
-        loadCourses(); // Reload all courses for simplicity
+        List<Course> coursesList = dbDriver.getSearchedCourses(subject, number, title);
+        ObservableList<Course> observableCourseList = FXCollections.observableList(coursesList);
+        courseListView.setItems(observableCourseList);
     }
 
     /**
