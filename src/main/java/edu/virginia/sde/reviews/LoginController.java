@@ -29,7 +29,7 @@ public class LoginController {
     private Button exitButton;
     @FXML
     private Label errorMessage;
-    private User activeUser = new User("", "");;
+    private User activeUser1 = new User("", "");;
 
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
 
@@ -76,7 +76,8 @@ public class LoginController {
             } else if (dbDriver.checkUserExists(username) && dbDriver.checkUserPassword(username,password)) {
                try {
                    dbDriver.commit();
-                   activeUser = new User(username, password);
+                   activeUser1 = new User(username, password);
+                   //System.out.println(activeUser.getUsername());
                    Platform.runLater(() -> {
                        errorMessage.setText("Logging In...");
                        // Introduce a delay before switching scenes
@@ -155,7 +156,7 @@ public class LoginController {
             stage.setScene(newScene);
             stage.show();
             CourseSearchController controller = loader.getController();
-            controller.setActiveUser(this.activeUser);
+            controller.setActiveUser(new User(usernameField.getText() , passwordField.getText()));
            //testing if it worked but it did not System.out.println(activeUser.getUsername());
             controller.courseSearchInitialize();
         } catch (IOException e) {
