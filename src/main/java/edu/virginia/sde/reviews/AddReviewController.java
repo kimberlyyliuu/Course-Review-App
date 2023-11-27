@@ -49,6 +49,13 @@ public class AddReviewController {
     @FXML
     protected void initialize(){
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
+        submitReviewButton.setOnAction(event -> {
+            try {
+                handleAddReview();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void setData(Course course){
@@ -58,38 +65,49 @@ public class AddReviewController {
     }
 
 
-//    private void handleAddReview() throws SQLException {
-//        var rating = Integer.parseInt(inputRating.getText());
-//        var username = activeUser.getUsername();
-//
-//        // Agent: ChatGPT
-//        // Usage: Asked how to check if field is filled or not
-//        // Check if inputComment is not empty before using its value
-//        var comment = inputComment.getText().isEmpty() ? null : inputComment.getText();
-//
-//        try {
-//            dbDriver.connect();
-//            dbDriver.createTables();
-//
-//            if (comment != null && isValidRating(rating)) {
-//                Review review = new Review(username, courseID, rating, comment);
-//                dbDriver.addReview(review);
-//                dbDriver.commit();
-//            } else if (comment == null) {
-//                Review review = new Review(username, courseID, rating);
-//                dbDriver.addReview(review);
-//                dbDriver.commit();
-//            }
-//        } catch (SQLException e) {
-//            throw e;
-//        } finally {
-//            try {
-//                dbDriver.disconnect();
-//            } catch (SQLException e) {
-//                throw e;
-//            }}}
+    private void handleAddReview() throws SQLException {
+        // Split the mnemonicAndNumberLabel content into mnemonic and number
+        String[] parts = mnemonicAndNumberLabel.getText().split("\\s+");
 
+        var mnemonic = parts[0];
+        var number = parts[1];
 
+        var rating = Integer.parseInt(inputRating.getText());
+        var userID = dbDriver.getUserIDbyusername(activeUser.getUsername());
+        var courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(courseTitleLabel.getText(), mnemonic, number);
+        // Agent: ChatGPT
+        // Usage: Asked how to check if field is filled or not
+        // Check if inputComment is not empty before using its value
+        var comment = inputComment.getText().isEmpty() ? null : inputComment.getText();
+
+        try {
+            dbDriver.connect();
+            dbDriver.createTables();
+
+            if (comment != null && isValidRating(rating)) {
+                Review review = new Review(userID, courseID, rating, comment);
+                dbDriver.addReview(review);
+                dbDriver.commit();
+                inputComment.clear();
+                inputRating.clear();
+            } else if (comment == null) {
+                Review review = new Review(userID, courseID, rating);
+                dbDriver.addReview(review);
+                dbDriver.commit();
+                inputComment.clear();
+                inputRating.clear();
+            }
+        } catch (SQLException e) {
+            throw e;
+        } finally {
+            try {
+                dbDriver.disconnect();
+            } catch (SQLException e) {
+                throw e;
+            }
+
+        }
+    }
 
 
     private boolean isValidRating(Integer ratingText){
