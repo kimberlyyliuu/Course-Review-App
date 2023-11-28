@@ -75,8 +75,7 @@ public class AddReviewController {
         var number = parts[1];
 
         var rating = Integer.parseInt(inputRating.getText());
-        var userID = dbDriver.getUserIDbyusername(activeUser.getUsername());
-        var courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(courseTitleLabel.getText(), mnemonic, number);
+
         // Agent: ChatGPT
         // Usage: Asked how to check if field is filled or not
         // Check if inputComment is not empty before using its value
@@ -85,6 +84,9 @@ public class AddReviewController {
         try {
             dbDriver.connect();
             dbDriver.createTables();
+
+            var userID = dbDriver.getUserIDbyusername(activeUser.getUsername());
+            var courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(courseTitleLabel.getText(), mnemonic, number);
 
             if (comment != null && isValidRating(rating)) {
                 Review review = new Review(userID, courseID, rating, comment);
