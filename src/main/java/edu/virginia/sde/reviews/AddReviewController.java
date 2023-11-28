@@ -136,6 +136,7 @@ public class AddReviewController {
         try{
             dbDriver.connect();
             dbDriver.editReview(userID, courseID,inputComment.getText(), inputRating.getText() );
+            //dbDriver.updateAverageRating(courseID, Integer.parseInt(inputRating.getText()));
             dbDriver.commit();
             Platform.runLater(() -> {
                 errorMessage.setText("Review Edited!");

@@ -14,7 +14,7 @@
          <font>
             <Font name="Cambria" size="17.0" />
          </font></Button>
-      <Button fx:id="addReviewButton" layoutX="893.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Add a Review" textFill="#1100ff">
+      <Button fx:id="addReviewButton" layoutX="893.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Your Review" textFill="#1100ff">
          <font>
             <Font name="Cambria" size="17.0" />
          </font></Button>
