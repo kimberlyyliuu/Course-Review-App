@@ -84,6 +84,7 @@ public class MyReviewsController {
             CourseReviewController controller = loader.getController();
             controller.initialize();
 
+
             // Create a new scene
             Scene newScene = new Scene(root);
 

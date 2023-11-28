@@ -51,6 +51,12 @@
         <font>
             <Font name="Cambria" size="17.0" />
         </font></Button>
+    <Label fx:id="errorMessage" alignment="CENTER" layoutX="464.0" layoutY="193.0" prefHeight="26.0" prefWidth="286.0">
+        <font>
+            <Font name="Microsoft Sans Serif" size="26.0" />
+        </font>
+    </Label>
+
 
 
 

@@ -94,12 +94,22 @@ public class AddReviewController {
                 dbDriver.commit();
                 inputComment.clear();
                 inputRating.clear();
+                Platform.runLater(() -> {
+                    errorMessage.setText("Review Added!");
+                });
             } else if (comment == null) {
                 Review review = new Review(userID, courseID, rating);
                 dbDriver.addReview(review);
                 dbDriver.commit();
                 inputComment.clear();
                 inputRating.clear();
+                Platform.runLater(() -> {
+                    errorMessage.setText("Review Added!");
+                });
+            } else if (!isValidRating(rating)){
+                Platform.runLater(() -> {
+                    errorMessage.setText("Rating must be between 1 and 5");
+                });
             }
         } catch (SQLException e) {
             throw e;
