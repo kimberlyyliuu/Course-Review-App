@@ -39,7 +39,8 @@ public class AddReviewController {
     private Button backtoCourseSearchButton;
     @FXML
     private Button deleteReviewButton;
-
+    private int userID;
+    private int courseID;
     private User activeUser = new User("", "");
     public void setActiveUser(User user){
         activeUser.setUsername(user.getUsername());
@@ -51,6 +52,13 @@ public class AddReviewController {
     @FXML
     protected void initialize(){
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
+        try {
+            userID = getUserID();
+            courseID = getCourseID();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        handleReturningReviewer();
         submitReviewButton.setOnAction(event -> {
             try {
                 handleAddReview();
@@ -66,6 +74,67 @@ public class AddReviewController {
         averageRatingLabel.setText(rating);
     }
 
+    private boolean userReviewed() throws SQLException{
+        String[] parts = mnemonicAndNumberLabel.getText().split("\\s+");
+
+        var mnemonic = parts[0];
+        var number = parts[1];
+
+        try{
+            dbDriver.connect();
+            dbDriver.createTables();
+
+            var userID = dbDriver.getUserIDbyusername(activeUser.getUsername());
+            var courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(courseTitleLabel.getText(), mnemonic, number);
+
+            return dbDriver.userIDAlreadyReviewedCourse(userID, courseID);
+        } catch (SQLException e) {
+            throw e;
+        } finally {
+            try {
+                dbDriver.disconnect();
+            } catch (SQLException e) {
+                throw e;
+            }
+
+        }
+    }
+
+    private void handleReturningReviewer(){
+        try {
+            if (userReviewed()){
+                inputRating.setText(dbDriver.loadRatingbyUserID(userID, courseID));
+                inputComment.setText(dbDriver.loadCommentbyUserID(userID, courseID));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private int getUserID() throws SQLException {
+        try {
+            dbDriver.connect();
+            dbDriver.createTables();
+
+            return dbDriver.getUserIDbyusername(activeUser.getUsername());
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
+    private int getCourseID() throws SQLException {
+        try {
+            dbDriver.connect();
+            dbDriver.createTables();
+            String[] parts = mnemonicAndNumberLabel.getText().split("\\s+");
+
+            var mnemonic = parts[0];
+            var number = parts[1];
+            return dbDriver.getCourseIDbyCourseTitleandMnemonic(courseTitleLabel.getText(), mnemonic, number);
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
 
     private void handleAddReview() throws SQLException {
         // Split the mnemonicAndNumberLabel content into mnemonic and number
@@ -87,29 +156,30 @@ public class AddReviewController {
 
 //            var userID = dbDriver.getUserIDbyusername(activeUser.getUsername());
 //            var courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(courseTitleLabel.getText(), mnemonic, number);
-                if (comment != null && isValidRating(rating)) {
-                    Review review = new Review(userID, courseID, rating, comment);
-                    dbDriver.addReview(review);
-                    dbDriver.updateAverageRating(courseID, rating);dbDriver.commit();
-                    inputComment.clear();
-                    inputRating.clear();
-                    Platform.runLater(() -> {
-                        errorMessage.setText("Review Added!");
-                    });
-                } else if (comment == null) {
-                    Review review = new Review(userID, courseID, rating);
-                    dbDriver.addReview(review);dbDriver.updateAverageRating(courseID, rating);
-                    dbDriver.commit();
-                    inputComment.clear();
-                    inputRating.clear();
-                    Platform.runLater(() -> {
-                        errorMessage.setText("Review Added!");
-                    });
-                } else if (!isValidRating(rating)) {
-                    Platform.runLater(() -> {
-                        errorMessage.setText("Rating must be between 1 and 5");
-                    });
-                }
+            if (comment != null && isValidRating(rating)) {
+                Review review = new Review(userID, courseID, rating, comment);
+                dbDriver.addReview(review);
+                dbDriver.commit();
+                inputComment.clear();
+                inputRating.clear();
+                Platform.runLater(() -> {
+                    errorMessage.setText("Review Added!");
+                });
+            } else if (comment == null) {
+                Review review = new Review(userID, courseID, rating);
+                dbDriver.addReview(review);
+                dbDriver.commit();
+                inputComment.clear();
+                inputRating.clear();
+                Platform.runLater(() -> {
+                    errorMessage.setText("Review Added!");
+                });
+            } else if (!isValidRating(rating)) {
+                Platform.runLater(() -> {
+                    errorMessage.setText("Rating must be between 1 and 5");
+                });
+            }
+
         } catch (SQLException e) {
             throw e;
         } finally {
