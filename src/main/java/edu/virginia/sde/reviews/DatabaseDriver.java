@@ -413,6 +413,26 @@ public class DatabaseDriver {
     }
 
     /**
+     * Gets the course corresponding to given course ID
+     */
+
+    public Course getCourseByCourseID(int courseID) throws SQLException{
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open");
+        }
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Courses WHERE CourseID = ?");
+        statement.setInt(1, courseID);
+        ResultSet resultSet = statement.executeQuery();
+
+        var mnemonic = resultSet.getString("Mnemonic");
+        var courseNumber = resultSet.getInt("CourseNumber");
+        var courseName = resultSet.getString("CourseName");
+        var averageRating = resultSet.getDouble("AverageRating");
+        var course = new Course(mnemonic, courseNumber, courseName, averageRating);
+        return course;
+    }
+
+    /**
      * Checks if username already exists in Users
      */
     public boolean checkUserExists(String username) throws SQLException{
@@ -550,6 +570,34 @@ public class DatabaseDriver {
             throw e;
         }
 
+    }
+
+    /**
+     * Gets the sum of all ratings for a particular course
+     */
+
+    public int getSumOfRatings(int courseID) throws SQLException {
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
+        var statement = connection.prepareStatement("SELECT Rating FROM Reviews WHERE CourseID = ?");
+        statement.setInt(1, courseID);
+        var resultSet = statement.executeQuery();
+        int sum = 0;
+        while(resultSet.next()) {
+            sum += resultSet.getInt("Rating");
+        }
+        return sum;
+    }
+
+    public void updateAverageRating(int courseID, int newRating) throws SQLException {
+        int numReviews = getReviewsByCourse(getCourseByCourseID(courseID)).size();
+        int sumRatings = getSumOfRatings(courseID);
+        double newAverage = (double) (sumRatings + newRating) / (numReviews + 1);
+        var statement = connection.prepareStatement("UPDATE Courses SET AverageRating = ? WHERE CourseID = ?");
+        statement.setDouble(1, newAverage);
+        statement.setInt(2, courseID);
+        statement.executeUpdate();
     }
 
     public boolean userIDAlreadyReviewedCourse(int userID, int courseID) throws SQLException{
