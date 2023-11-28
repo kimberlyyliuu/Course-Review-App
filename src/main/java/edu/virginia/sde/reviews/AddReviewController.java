@@ -34,6 +34,8 @@ public class AddReviewController {
     private Label errorMessage;
     @FXML
     private Button submitReviewButton;
+    @FXML
+    private Label screentitle;
 
     @FXML
     private Button backtoCourseSearchButton;
@@ -58,15 +60,34 @@ public class AddReviewController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        handleReturningReviewer();
-        submitReviewButton.setOnAction(event -> {
-            try {
-                handleAddReview();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+        handleReturningReviewer(); //loads the textfields
+
+        try {
+            if (userReviewed()){
+                submitReviewButton.setOnAction(event -> {
+                    try {
+                        handleUpdateReview();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            } else{
+                submitReviewButton.setOnAction(event -> {
+                    try {
+                        handleAddReview();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
             }
-        });
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
     }
+
 
     public void setData(String courseTitle, String mnemonicAndNumber, String rating){
         courseTitleLabel.setText(courseTitle);
@@ -75,18 +96,10 @@ public class AddReviewController {
     }
 
     private boolean userReviewed() throws SQLException{
-        String[] parts = mnemonicAndNumberLabel.getText().split("\\s+");
-
-        var mnemonic = parts[0];
-        var number = parts[1];
-
         try{
-            dbDriver.connect();
-            dbDriver.createTables();
-
-            var userID = dbDriver.getUserIDbyusername(activeUser.getUsername());
-            var courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(courseTitleLabel.getText(), mnemonic, number);
-
+            if (dbDriver.connection.isClosed()){
+                dbDriver.connect();
+            }
             return dbDriver.userIDAlreadyReviewedCourse(userID, courseID);
         } catch (SQLException e) {
             throw e;
@@ -102,21 +115,44 @@ public class AddReviewController {
 
     private void handleReturningReviewer(){
         try {
+            dbDriver.connect();
             if (userReviewed()){
                 inputRating.setText(dbDriver.loadRatingbyUserID(userID, courseID));
                 inputComment.setText(dbDriver.loadCommentbyUserID(userID, courseID));
+                submitReviewButton.setText("Edit Review");
+                screentitle.setText("Edit Review");
             }
+            dbDriver.disconnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+    //public void updatereview trhows SQL
+    //edit review from db driver
+
+    private void handleUpdateReview() throws SQLException{
+
+        try{
+            dbDriver.connect();
+            dbDriver.editReview(userID, courseID,inputComment.getText(), inputRating.getText() );
+            dbDriver.commit();
+            Platform.runLater(() -> {
+                errorMessage.setText("Review Edited!");
+            });
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
+
     private int getUserID() throws SQLException {
         try {
             dbDriver.connect();
-            dbDriver.createTables();
 
-            return dbDriver.getUserIDbyusername(activeUser.getUsername());
+            int id=  dbDriver.getUserIDbyusername(activeUser.getUsername());
+            dbDriver.disconnect();
+            return id;
         } catch (SQLException e) {
             throw e;
         }
@@ -124,13 +160,16 @@ public class AddReviewController {
 
     private int getCourseID() throws SQLException {
         try {
-            dbDriver.connect();
-            dbDriver.createTables();
+            if (dbDriver.connection.isClosed()){
+                dbDriver.connect();
+            }
             String[] parts = mnemonicAndNumberLabel.getText().split("\\s+");
-
             var mnemonic = parts[0];
             var number = parts[1];
-            return dbDriver.getCourseIDbyCourseTitleandMnemonic(courseTitleLabel.getText(), mnemonic, number);
+
+            int id =  dbDriver.getCourseIDbyCourseTitleandMnemonic(courseTitleLabel.getText(), mnemonic, number);
+            dbDriver.disconnect();
+            return id;
         } catch (SQLException e) {
             throw e;
         }

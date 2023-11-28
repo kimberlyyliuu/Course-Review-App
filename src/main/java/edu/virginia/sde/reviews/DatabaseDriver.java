@@ -625,7 +625,7 @@ public class DatabaseDriver {
 
     public String loadRatingbyUserID(int userID, int courseID) throws SQLException{
         if(connection.isClosed()) {
-            throw new IllegalStateException("Connection is not open.");
+            connect();
         }
         try{
             var statement = connection.prepareStatement("SELECT Rating FROM Reviews WHERE UserID = ? AND CourseID = ?");
@@ -666,4 +666,30 @@ public class DatabaseDriver {
     }
 
 
+    //update database with changes
+    public void editReview(int userID, int courseID, String comment, String rating) throws SQLException{
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
+        try{
+            var statement = connection.prepareStatement("SELECT * FROM Reviews WHERE UserID = ? AND CourseID = ?");
+            statement.setString(1, String.valueOf(userID));
+            statement.setString(2, String.valueOf(courseID));
+            var resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                var updateStatement = connection.prepareStatement("UPDATE Reviews SET Comment = ?, Rating = ? WHERE UserID = ? AND CourseID = ?");
+                updateStatement.setString(1, comment);
+                updateStatement.setString(2, rating);
+                updateStatement.setInt(3, userID);
+                updateStatement.setInt(4, courseID);
+
+                updateStatement.executeUpdate();
+            }
+
+        } catch (SQLException e){
+            rollback();
+            throw e;
+        }
+    }
 }
