@@ -83,6 +83,7 @@ public class CourseSearchController {
                 }
             }
         });
+        //System.out.println(activeUser.getUsername());
 
     }
 
@@ -92,6 +93,7 @@ public class CourseSearchController {
             Parent root = loader.load();
             CourseReviewController controller = loader.getController();
             controller.setData(selectedCourse);
+            controller.setActiveUser(this.activeUser);
 
             Stage stage = (Stage) courseListView.getScene().getWindow();
             Scene newScene = new Scene(root);

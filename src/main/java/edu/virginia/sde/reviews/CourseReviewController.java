@@ -42,6 +42,7 @@ public class CourseReviewController {
     protected void initialize() {
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
         addReviewButton.setOnAction(event -> openAddReviewControllerScene());
+        System.out.println(activeUser.getUsername());
     }
 
 
