@@ -91,6 +91,7 @@ public class AddReviewController {
             if (comment != null && isValidRating(rating)) {
                 Review review = new Review(userID, courseID, rating, comment);
                 dbDriver.addReview(review);
+                dbDriver.updateAverageRating(courseID, rating);
                 dbDriver.commit();
                 inputComment.clear();
                 inputRating.clear();
@@ -100,6 +101,7 @@ public class AddReviewController {
             } else if (comment == null) {
                 Review review = new Review(userID, courseID, rating);
                 dbDriver.addReview(review);
+                dbDriver.updateAverageRating(courseID, rating);
                 dbDriver.commit();
                 inputComment.clear();
                 inputRating.clear();
