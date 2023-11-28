@@ -551,4 +551,71 @@ public class DatabaseDriver {
         }
 
     }
+
+    public boolean userIDAlreadyReviewedCourse(int userID, int courseID) throws SQLException{
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
+        try{
+            var statement = connection.prepareStatement("SELECT count(*) FROM Reviews WHERE UserID = ? AND CourseID = ?");
+            statement.setString(1, String.valueOf(userID));
+            statement.setString(2, String.valueOf(courseID));
+            var resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                // User has already reviewed an item
+                return true;
+            } else {
+                // User has not reviewed any item
+                return false;
+            }
+        } catch (SQLException e){
+            rollback();
+            throw e;
+        }
+    }
+
+    public String loadRatingbyUserID(int userID, int courseID) throws SQLException{
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
+        try{
+            var statement = connection.prepareStatement("SELECT Rating FROM Reviews WHERE UserID = ? AND CourseID = ?");
+            statement.setString(1, String.valueOf(userID));
+            statement.setString(2, String.valueOf(courseID));
+            var resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("Rating");
+            } else {
+                return "";
+            }
+        } catch (SQLException e){
+            rollback();
+            throw e;
+        }
+    }
+
+    public String loadCommentbyUserID(int userID, int courseID) throws SQLException{
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
+        try{
+            var statement = connection.prepareStatement("SELECT Comment FROM Reviews WHERE UserID = ? AND CourseID = ?");
+            statement.setString(1, String.valueOf(userID));
+            statement.setString(2, String.valueOf(courseID));
+            var resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("Comment");
+            } else {
+                return null;
+            }
+        } catch (SQLException e){
+            rollback();
+            throw e;
+        }
+    }
+
+
 }
