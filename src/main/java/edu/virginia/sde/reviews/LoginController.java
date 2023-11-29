@@ -29,7 +29,7 @@ public class LoginController {
     private Button exitButton;
     @FXML
     private Label errorMessage;
-    private User activeUser1 = new User("", "");;
+    //private User activeUser1 = new User("", "");;
 
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
 
@@ -77,7 +77,7 @@ public class LoginController {
             } else if (dbDriver.checkUserExists(username) && dbDriver.checkUserPassword(username,password)) {
                try {
                    dbDriver.commit();
-                   activeUser1 = new User(username, password);
+                   //activeUser1 = new User(username, password);
                    //System.out.println(activeUser.getUsername());
                    Platform.runLater(() -> {
                        errorMessage.setText("Logging In...");
