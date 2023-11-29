@@ -30,7 +30,6 @@ public class CourseReviewController {
     private TableView<Review> reviewsTableView;
 
     private User activeUser = new User("", "");
-    private Course currentCourse;
     public void setActiveUser(User user){
         activeUser.setUsername(user.getUsername());
         activeUser.setPassword(user.getPassword());
@@ -39,22 +38,6 @@ public class CourseReviewController {
 
     @FXML
     protected void initialize() {
-        try {
-            dbDriver.connect();
-            dbDriver.createTables();
-
-            loadReviews();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        finally{
-            try{
-                dbDriver.disconnect();
-            }
-            catch (SQLException e){
-                e.printStackTrace();
-            }
-        }
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
         addReviewButton.setOnAction(event -> openAddReviewControllerScene());
         System.out.println(activeUser.getUsername());
@@ -64,8 +47,7 @@ public class CourseReviewController {
     public void setData(Course course){
         courseTitleLabel.setText(course.getCourseName());
         mnemonicAndNumberLabel.setText(course.getMnemonic() + " " + course.getCourseNumber());
-        averageRatingLabel.setText(String.valueOf("Average Rating: " + course.getAverageRating()));
-        currentCourse = course;
+        averageRatingLabel.setText("Average Rating: " + course.getAverageRating());
     }
 
 
@@ -121,6 +103,7 @@ public class CourseReviewController {
             controller.setActiveUser(activeUser);
             controller.setData(courseTitleLabel.getText(), mnemonicAndNumberLabel.getText(), averageRatingLabel.getText());
             controller.initialize();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -128,12 +111,15 @@ public class CourseReviewController {
 
     public void loadReviews() {
         try {
-            var courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(currentCourse.getCourseName(), currentCourse.getMnemonic(), String.valueOf(currentCourse.getCourseNumber()));
+            dbDriver.connect();
+            var courseName = courseTitleLabel.getText();
+            var courseMnemonic = mnemonicAndNumberLabel.getText().split(" ")[0];
+            var courseNumber = Integer.parseInt(mnemonicAndNumberLabel.getText().split(" ")[1]);
+            var courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(courseName, courseMnemonic, courseNumber);
             List<Review> reviewsList = dbDriver.getReviewsByCourseID(courseID);
             ObservableList<Review> observableReviewsList = FXCollections.observableList(reviewsList);
             reviewsTableView.getItems().clear();
             reviewsTableView.getItems().addAll(observableReviewsList);
-            System.out.println(currentCourse);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

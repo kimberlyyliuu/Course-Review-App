@@ -91,15 +91,19 @@ public class CourseSearchController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("courseReviewScreen.fxml"));
             Parent root = loader.load();
+
             CourseReviewController controller = loader.getController();
             controller.setData(selectedCourse);
             controller.setActiveUser(this.activeUser);
+            controller.loadReviews();
+            controller.initialize();
 
-            Stage stage = (Stage) courseListView.getScene().getWindow();
             Scene newScene = new Scene(root);
+            Stage stage = (Stage) courseListView.getScene().getWindow();
             stage.setScene(newScene);
             stage.setTitle("Course Review");
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -518,7 +518,7 @@ public class DatabaseDriver {
         else return false;
     }
 
-    public int getCourseIDbyCourseTitleandMnemonic(String courseTitle, String mnemonic, String courseNum) throws SQLException{
+    public int getCourseIDbyCourseTitleandMnemonic(String courseTitle, String mnemonic, int courseNum) throws SQLException{
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
@@ -526,7 +526,7 @@ public class DatabaseDriver {
             var statement = connection.prepareStatement("SELECT CourseID FROM Courses WHERE CourseName = ? AND Mnemonic = ? AND CourseNumber = ?");
             statement.setString(1, courseTitle);
             statement.setString(2, mnemonic);
-            statement.setString(3, courseNum);
+            statement.setInt(3, courseNum);
             var resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -702,7 +702,8 @@ public class DatabaseDriver {
             var rating = resultSet.getInt("Rating");
             var courseMnemonic = resultSet.getString("Mnemonic");
             var courseNumber = resultSet.getInt("CourseNumber");
-            var myReview = new MyReviewsResult(rating, courseMnemonic, courseNumber);
+            var courseID = resultSet.getInt("CourseID");
+            var myReview = new MyReviewsResult(rating, courseMnemonic, courseNumber, courseID);
             userReviews.add(myReview);
         }
         return userReviews;

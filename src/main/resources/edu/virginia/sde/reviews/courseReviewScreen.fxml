@@ -30,13 +30,13 @@
       </Label>
       <TableView fx:id="reviewsTableView" layoutX="193.0" layoutY="157.0" prefHeight="378.0" prefWidth="881.0">
         <columns>
-            <TableColumn prefWidth="92.0" text="Rating">
-               <cellValueFactory><PropertyValueFactory property="rating" />
-               </cellValueFactory></TableColumn>
-            <TableColumn prefWidth="121.33334350585938" text="Timestamp">
+            <TableColumn prefWidth="185.0" text="Timestamp">
                <cellValueFactory><PropertyValueFactory property="timestamp" />
                </cellValueFactory></TableColumn>
-            <TableColumn prefWidth="667.0000305175781" text="Comment">
+            <TableColumn prefWidth="86.33334350585938" text="Rating">
+               <cellValueFactory><PropertyValueFactory property="rating" />
+               </cellValueFactory></TableColumn>
+            <TableColumn prefWidth="610.3333129882812" text="Comment">
                <cellValueFactory><PropertyValueFactory property="comment" />
                </cellValueFactory></TableColumn>
         </columns>

@@ -52,14 +52,25 @@ public class MyReviewsController {
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
 
         // Set up the click action on the table rows
-        tableView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {  // Double-click
-                MyReviewsResult selectedReview = tableView.getSelectionModel().getSelectedItem();
-                if (selectedReview != null) {
-                    openCourseReviewScene(selectedReview);
-                }
-            }
-        });
+//        tableView.setOnMouseClicked(event -> {
+//            if (event.getClickCount() == 1) {
+//                MyReviewsResult selectedReview = tableView.getSelectionModel().getSelectedItem();
+//                if (selectedReview != null) {
+//                    openCourseReviewScene(selectedReview);
+//                }
+//            }
+//        });
+
+//        tableView.setOnMouseClicked(event -> {
+//            MyReviewsResult selectedReview = tableView.getSelectionModel().getSelectedItem();
+//            if(selectedReview!=null){
+//                try {
+//                    handleReviewClick(selectedReview);
+//                } catch (SQLException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//        });
     }
 
     private void populateTable() {
@@ -74,6 +85,26 @@ public class MyReviewsController {
             e.printStackTrace();
         }
     }
+
+//    private void handleReviewClick(MyReviewsResult selectedReviewResult) throws SQLException{
+//        try {
+//            //Course selectedReview = selectedReviewResult.getCourseByCourseID();
+//
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("courseReviewScreen.fxml"));
+//            Parent root = loader.load();
+//            CourseReviewController controller = loader.getController();
+//            controller.setData(selectedReviewResult);
+//            controller.setActiveUser(this.activeUser);
+//
+//            Stage stage = (Stage) tableView.getScene().getWindow();
+//            Scene newScene = new Scene(root);
+//            stage.setScene(newScene);
+//            stage.setTitle("Course Review");
+//            stage.show();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
     private void openCourseReviewScene(MyReviewsResult selectedReview) {

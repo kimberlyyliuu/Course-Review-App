@@ -163,7 +163,7 @@ public class AddReviewController {
             }
             String[] parts = mnemonicAndNumberLabel.getText().split("\\s+");
             var mnemonic = parts[0];
-            var number = parts[1];
+            var number = Integer.parseInt(parts[1]);
 
             int id =  dbDriver.getCourseIDbyCourseTitleandMnemonic(courseTitleLabel.getText(), mnemonic, number);
             dbDriver.disconnect();
