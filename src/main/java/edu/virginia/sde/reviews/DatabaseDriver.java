@@ -666,8 +666,8 @@ public class DatabaseDriver {
         }
         try{
             var statement = connection.prepareStatement("SELECT * FROM Reviews WHERE UserID = ? AND CourseID = ?");
-            statement.setString(1, String.valueOf(userID));
-            statement.setString(2, String.valueOf(courseID));
+            statement.setInt(1, userID);
+            statement.setInt(2, courseID);
             var resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -684,5 +684,27 @@ public class DatabaseDriver {
             rollback();
             throw e;
         }
+    }
+
+    public List<MyReviewsResult> getUserReviews(int userID) throws SQLException{
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
+        var userReviews = new ArrayList<MyReviewsResult>();
+        var statement = connection.prepareStatement("""
+                             SELECT * FROM Reviews
+                             JOIN Courses ON Reviews.CourseID = Courses.CourseID
+                             WHERE UserID = ?
+                             """);
+        statement.setInt(1, userID);
+        var resultSet = statement.executeQuery();
+        while(resultSet.next()) {
+            var rating = resultSet.getInt("Rating");
+            var courseMnemonic = resultSet.getString("Mnemonic");
+            var courseNumber = resultSet.getInt("CourseNumber");
+            var myReview = new MyReviewsResult(rating, courseMnemonic, courseNumber);
+            userReviews.add(myReview);
+        }
+        return userReviews;
     }
 }

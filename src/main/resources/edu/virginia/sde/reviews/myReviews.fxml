@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.MyReviewsController">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.MyReviewsController">
     <children>
         <Label layoutX="460.0" layoutY="14.0" text="My Reviews" textFill="#004dff">
             <font>
@@ -22,7 +22,7 @@
             <columns>
                 <TableColumn fx:id="mnemonicColumn" prefWidth="280.67">
                     <graphic>
-                        <Label text="Mnemonic">
+                        <Label text="Course Mnemonic">
                             <font>
                                 <Font name="Cambria" size="18.0" />
                             </font>
@@ -31,7 +31,7 @@
                 </TableColumn>
                 <TableColumn fx:id="numberColumn" prefWidth="280.67">
                     <graphic>
-                        <Label text="Number">
+                        <Label text="Course Number">
                             <font>
                                 <Font name="Cambria" size="18.0" />
                             </font>
