@@ -110,7 +110,8 @@ public class NewUserController {
             Stage stage = (Stage) errorMessage.getScene().getWindow();
             stage.setScene(newScene);
             CourseSearchController controller = loader.getController();
-            controller.setActiveUser(this.activeUser);
+            //controller.setActiveUser(this.activeUser);
+            controller.setActiveUser(new User(newUsernameField.getText() , newPasswordField.getText()));
         } catch (IOException e) {
             e.printStackTrace();
         }
