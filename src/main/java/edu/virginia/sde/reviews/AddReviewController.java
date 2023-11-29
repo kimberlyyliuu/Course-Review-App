@@ -43,6 +43,7 @@ public class AddReviewController {
     private Button deleteReviewButton;
     private int userID;
     private int courseID;
+    private Course currentCourse;
     private User activeUser = new User("", "");
     public void setActiveUser(User user){
         activeUser.setUsername(user.getUsername());
@@ -86,10 +87,11 @@ public class AddReviewController {
     }
 
 
-    public void setData(String courseTitle, String mnemonicAndNumber, String rating){
-        courseTitleLabel.setText(courseTitle);
-        mnemonicAndNumberLabel.setText(mnemonicAndNumber);
-        averageRatingLabel.setText(rating);
+    public void setData(Course course){
+        courseTitleLabel.setText(course.getCourseName());
+        mnemonicAndNumberLabel.setText(course.getMnemonic() + " " + course.getCourseNumber());
+        averageRatingLabel.setText("Average Rating: " + course.getAverageRating());
+        currentCourse = course;
     }
 
     private boolean userReviewed() throws SQLException{
@@ -106,7 +108,6 @@ public class AddReviewController {
             } catch (SQLException e) {
                 throw e;
             }
-
         }
     }
 
@@ -125,7 +126,7 @@ public class AddReviewController {
         }
     }
 
-    //public void updatereview trhows SQL
+    //public void update review throws SQL
     //edit review from db driver
 
     private void handleUpdateReview() throws SQLException{
@@ -191,8 +192,8 @@ public class AddReviewController {
             dbDriver.connect();
             dbDriver.createTables();
 
-//            var userID = dbDriver.getUserIDbyusername(activeUser.getUsername());
-//            var courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(courseTitleLabel.getText(), mnemonic, number);
+            var userID = dbDriver.getUserIDbyusername(activeUser.getUsername());
+            var courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(courseTitleLabel.getText(), mnemonic, Integer.parseInt(number));
             if (comment != null && isValidRating(rating)) {
                 Review review = new Review(userID, courseID, rating, comment);
                 dbDriver.addReview(review);
