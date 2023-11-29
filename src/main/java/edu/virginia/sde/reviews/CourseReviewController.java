@@ -1,6 +1,6 @@
 package edu.virginia.sde.reviews;
-import javafx.animation.PauseTransition;
-import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,12 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 
 public class CourseReviewController {
@@ -29,9 +26,11 @@ public class CourseReviewController {
     private Button addReviewButton;
     @FXML
     private Button backtoCourseSearchButton;
-
+    @FXML
+    private TableView<Review> reviewsTableView;
 
     private User activeUser = new User("", "");
+    private Course currentCourse;
     public void setActiveUser(User user){
         activeUser.setUsername(user.getUsername());
         activeUser.setPassword(user.getPassword());
@@ -40,6 +39,22 @@ public class CourseReviewController {
 
     @FXML
     protected void initialize() {
+        try {
+            dbDriver.connect();
+            dbDriver.createTables();
+
+            loadReviews();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        finally{
+            try{
+                dbDriver.disconnect();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
         addReviewButton.setOnAction(event -> openAddReviewControllerScene());
         System.out.println(activeUser.getUsername());
@@ -50,7 +65,7 @@ public class CourseReviewController {
         courseTitleLabel.setText(course.getCourseName());
         mnemonicAndNumberLabel.setText(course.getMnemonic() + " " + course.getCourseNumber());
         averageRatingLabel.setText(String.valueOf("Average Rating: " + course.getAverageRating()));
-
+        currentCourse = course;
     }
 
 
@@ -111,6 +126,18 @@ public class CourseReviewController {
         }
     }
 
+    public void loadReviews() {
+        try {
+            var courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(currentCourse.getCourseName(), currentCourse.getMnemonic(), String.valueOf(currentCourse.getCourseNumber()));
+            List<Review> reviewsList = dbDriver.getReviewsByCourseID(courseID);
+            ObservableList<Review> observableReviewsList = FXCollections.observableList(reviewsList);
+            reviewsTableView.getItems().clear();
+            reviewsTableView.getItems().addAll(observableReviewsList);
+            System.out.println(currentCourse);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 
 

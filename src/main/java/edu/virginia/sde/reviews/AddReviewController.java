@@ -83,9 +83,6 @@ public class AddReviewController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
-
     }
 
 

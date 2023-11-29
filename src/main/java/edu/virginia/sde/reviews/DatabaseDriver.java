@@ -308,24 +308,17 @@ public class DatabaseDriver {
     /**
      * Gets all reviews for a given course
      */
-    public List<Review> getReviewsByCourse(Course course) throws SQLException {
+    public List<Review> getReviewsByCourseID(int courseID) throws SQLException {
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
         var reviewsList = new ArrayList<Review>();
-        PreparedStatement statement = connection.prepareStatement("""
-                                SELECT * FROM Reviews 
-                                JOIN Courses ON Reviews.CourseID = Courses.CourseID 
-                                WHERE Mnemonic = ? AND CourseNumber = ? AND CourseName = ?
-                                """);
-        statement.setString(1, course.getMnemonic());
-        statement.setInt(2, course.getCourseNumber());
-        statement.setString(3, course.getCourseName());
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Reviews WHERE CourseID = ?");
+        statement.setInt(1, courseID);
         ResultSet resultSet = statement.executeQuery();
 
         while(resultSet.next()) {
             var userID = resultSet.getInt("UserID");
-            var courseID = resultSet.getInt("CourseID");
             var rating = resultSet.getInt("Rating");
             var comment = resultSet.getString("Comment");
             var timestamp = resultSet.getTimestamp("ReviewTimestamp");
@@ -591,7 +584,7 @@ public class DatabaseDriver {
     }
 
     public void updateAverageRating(int courseID, int newRating) throws SQLException {
-        int numReviews = getReviewsByCourse(getCourseByCourseID(courseID)).size();
+        int numReviews = getReviewsByCourseID(courseID).size();
         int sumRatings = getSumOfRatings(courseID);
         double newAverage = (double) (sumRatings + newRating) / (numReviews + 1);
         var statement = connection.prepareStatement("UPDATE Courses SET AverageRating = ? WHERE CourseID = ?");
@@ -605,9 +598,9 @@ public class DatabaseDriver {
             throw new IllegalStateException("Connection is not open.");
         }
         try{
-            var statement = connection.prepareStatement("SELECT count(*) FROM Reviews WHERE UserID = ? AND CourseID = ?");
-            statement.setString(1, String.valueOf(userID));
-            statement.setString(2, String.valueOf(courseID));
+            var statement = connection.prepareStatement("SELECT * FROM Reviews WHERE UserID = ? AND CourseID = ?");
+            statement.setInt(1, userID);
+            statement.setInt(2, courseID);
             var resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
