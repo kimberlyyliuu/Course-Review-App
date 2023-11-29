@@ -608,14 +608,15 @@ public class DatabaseDriver {
             var statement = connection.prepareStatement("SELECT count(*) FROM Reviews WHERE UserID = ? AND CourseID = ?");
             statement.setString(1, String.valueOf(userID));
             statement.setString(2, String.valueOf(courseID));
-            var resultSet = statement.executeQuery();
 
-            if (resultSet.next()) {
-                // User has already reviewed an item
-                return true;
-            } else {
-                // User has not reviewed any item
-                return false;
+            try (var resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    // User has already reviewed an item
+                    return resultSet.getInt(1) > 0;
+                } else {
+                    // User has not reviewed any item
+                    return false;
+                }
             }
         } catch (SQLException e){
             rollback();
