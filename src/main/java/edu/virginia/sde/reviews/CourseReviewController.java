@@ -29,6 +29,8 @@ public class CourseReviewController {
     @FXML
     private TableView<Review> reviewsTableView;
 
+    private Course currentCourse;
+
     private User activeUser = new User("", "");
     public void setActiveUser(User user){
         activeUser.setUsername(user.getUsername());
@@ -40,32 +42,15 @@ public class CourseReviewController {
     protected void initialize() {
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
         addReviewButton.setOnAction(event -> openAddReviewControllerScene());
-        System.out.println(activeUser.getUsername());
     }
-
 
     public void setData(Course course){
         courseTitleLabel.setText(course.getCourseName());
         mnemonicAndNumberLabel.setText(course.getMnemonic() + " " + course.getCourseNumber());
         averageRatingLabel.setText("Average Rating: " + course.getAverageRating());
+        currentCourse = course;
+        loadReviews(course);
     }
-
-
-//    private void setDeleteReviewButton() throws SQLException {
-//        try {
-//            dbDriver.connect();
-//            if ()
-//
-//        } catch (SQLException e) {
-//            throw e;
-//        } finally {
-//            try {
-//                dbDriver.disconnect();
-//            } catch (SQLException e) {
-//                throw e;
-//            }
-//        }
-//    }
 
     private void openCourseSearchScene() {
         try {
@@ -90,31 +75,30 @@ public class CourseReviewController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AddReviewScreen.fxml"));
             Parent root = loader.load();
+
+            AddReviewController controller = loader.getController();
+            controller.setActiveUser(activeUser);
+            controller.setData(currentCourse);
+
             // Create a new scene
             Scene newScene = new Scene(root);
             // Stage and new scene for new user
             Stage stage = (Stage) addReviewButton.getScene().getWindow();
             stage.setScene(newScene);
             stage.setTitle("Add Review");
-            stage.setScene(newScene);
             stage.show();
-
-            AddReviewController controller = loader.getController();
-            controller.setActiveUser(activeUser);
-            controller.setData(courseTitleLabel.getText(), mnemonicAndNumberLabel.getText(), averageRatingLabel.getText());
-            controller.initialize();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadReviews() {
+    public void loadReviews(Course course) {
         try {
             dbDriver.connect();
-            var courseName = courseTitleLabel.getText();
-            var courseMnemonic = mnemonicAndNumberLabel.getText().split(" ")[0];
-            var courseNumber = Integer.parseInt(mnemonicAndNumberLabel.getText().split(" ")[1]);
+            var courseName = course.getCourseName();
+            var courseMnemonic = course.getMnemonic();
+            var courseNumber = course.getCourseNumber();
             var courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(courseName, courseMnemonic, courseNumber);
             List<Review> reviewsList = dbDriver.getReviewsByCourseID(courseID);
             ObservableList<Review> observableReviewsList = FXCollections.observableList(reviewsList);
@@ -125,7 +109,4 @@ public class CourseReviewController {
         }
     }
 }
-
-
-
 

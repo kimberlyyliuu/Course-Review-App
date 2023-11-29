@@ -148,6 +148,7 @@ public class DatabaseDriver {
                 reviewStatement.setTimestamp(5, review.getTimestamp());
                 reviewStatement.executeUpdate();
                 reviewStatement.close();
+                updateAverageRating(review.getCourseID(), review.getRating());
         } catch (SQLException e){
             rollback();
             throw e;

@@ -95,8 +95,6 @@ public class CourseSearchController {
             CourseReviewController controller = loader.getController();
             controller.setData(selectedCourse);
             controller.setActiveUser(this.activeUser);
-            controller.loadReviews();
-            controller.initialize();
 
             Scene newScene = new Scene(root);
             Stage stage = (Stage) courseListView.getScene().getWindow();

@@ -114,7 +114,7 @@ public class MyReviewsController {
 
             // Pass the selected review to the next controller
             CourseReviewController controller = loader.getController();
-            controller.initialize();
+//            controller.initialize(); need to pass course for selectedReview
 
 
             // Create a new scene
