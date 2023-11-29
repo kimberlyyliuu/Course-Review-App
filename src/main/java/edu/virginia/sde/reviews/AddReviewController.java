@@ -181,6 +181,7 @@ public class AddReviewController {
         var mnemonic = parts[0];
         var number = parts[1];
 
+
         var rating = Integer.parseInt(inputRating.getText());
 
         // Agent: ChatGPT
