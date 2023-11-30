@@ -66,7 +66,9 @@ public class AddReviewController {
             if (userReviewed()){
                 submitReviewButton.setOnAction(event -> {
                     try {
+                        openCourseSearchScene();
                         handleUpdateReview();
+
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -74,7 +76,9 @@ public class AddReviewController {
             } else{
                 submitReviewButton.setOnAction(event -> {
                     try {
+                        openCourseSearchScene();
                         handleAddReview();
+
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -136,7 +140,7 @@ public class AddReviewController {
         try{
             dbDriver.connect();
             dbDriver.editReview(userID, courseID,inputComment.getText(), inputRating.getText() );
-            //dbDriver.updateAverageRating(courseID, Integer.parseInt(inputRating.getText()));
+            dbDriver.updateAverageRating(courseID, Integer.parseInt(inputRating.getText()));
             dbDriver.commit();
             Platform.runLater(() -> {
                 errorMessage.setText("Review Edited!");
@@ -202,6 +206,7 @@ public class AddReviewController {
             if (comment != null && isValidRating(rating)) {
                 Review review = new Review(userID, courseID, rating, comment);
                 dbDriver.addReview(review);
+                dbDriver.updateAverageRating(courseID, rating);
                 dbDriver.commit();
                 inputComment.clear();
                 inputRating.clear();
@@ -211,6 +216,7 @@ public class AddReviewController {
             } else if (comment == null) {
                 Review review = new Review(userID, courseID, rating);
                 dbDriver.addReview(review);
+                dbDriver.updateAverageRating(courseID, rating);
                 dbDriver.commit();
                 inputComment.clear();
                 inputRating.clear();

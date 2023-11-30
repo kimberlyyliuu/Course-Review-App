@@ -572,23 +572,7 @@ public class DatabaseDriver {
 
     }
 
-    /**
-     * Gets the sum of all ratings for a particular course
-     */
 
-    public int getSumOfRatings(int courseID) throws SQLException {
-        if(connection.isClosed()) {
-            throw new IllegalStateException("Connection is not open.");
-        }
-        var statement = connection.prepareStatement("SELECT Rating FROM Reviews WHERE CourseID = ?");
-        statement.setInt(1, courseID);
-        var resultSet = statement.executeQuery();
-        int sum = 0;
-        while(resultSet.next()) {
-            sum += resultSet.getInt("Rating");
-        }
-        return sum;
-    }
 
     public void updateAverageRating(int courseID, int newRating) throws SQLException {
         int numReviews = getReviewsByCourse(getCourseByCourseID(courseID)).size();
@@ -693,4 +677,25 @@ public class DatabaseDriver {
             throw e;
         }
     }
+
+    /**
+     * Gets the sum of all ratings for a particular course
+     */
+
+    public int getSumOfRatings(int courseID) throws SQLException {
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
+        var statement = connection.prepareStatement("SELECT Rating FROM Reviews WHERE CourseID = ?");
+        statement.setInt(1, courseID);
+        var resultSet = statement.executeQuery();
+        int sum = 0;
+        while(resultSet.next()) {
+            sum += resultSet.getInt("Rating");
+        }
+        return sum;
+    }
+
+
+
 }
