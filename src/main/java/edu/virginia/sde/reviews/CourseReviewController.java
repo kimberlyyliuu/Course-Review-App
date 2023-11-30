@@ -88,7 +88,7 @@ public class CourseReviewController {
             stage.setTitle("Add Review");
             stage.show();
 
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
     }

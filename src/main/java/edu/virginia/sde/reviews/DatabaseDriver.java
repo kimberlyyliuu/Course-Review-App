@@ -100,7 +100,6 @@ public class DatabaseDriver {
             userStatement.executeUpdate();
             userStatement.close();
         } catch (SQLException e){
-            rollback();
             throw e;
         }
     }
@@ -137,18 +136,19 @@ public class DatabaseDriver {
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
+
         try{
             var insertReviewQuery = "INSERT INTO Reviews (UserID, CourseID, Rating, Comment, ReviewTimestamp) VALUES (?, ?, ?, ?, ?)";
             var reviewStatement = connection.prepareStatement(insertReviewQuery);
 
                 reviewStatement.setInt(1, review.getUserID());
                 reviewStatement.setInt(2, review.getCourseID());
-                reviewStatement.setDouble(3, review.getRating());
+                reviewStatement.setInt(3, review.getRating());
                 reviewStatement.setString(4, review.getComment());
                 reviewStatement.setTimestamp(5, review.getTimestamp());
                 reviewStatement.executeUpdate();
                 reviewStatement.close();
-                updateAverageRating(review.getCourseID(), review.getRating());
+                //updateAverageRating(review.getCourseID(), review.getRating());
         } catch (SQLException e){
             rollback();
             throw e;
@@ -538,6 +538,28 @@ public class DatabaseDriver {
             throw e;
         }
     }
+
+    public int getCourseIDByCourse(Course course) throws SQLException{
+        try {
+            var statement = connection.prepareStatement("SELECT CourseID FROM Courses WHERE Mnemonic = ? AND CourseNumber = ? AND CourseName = ?");
+            statement.setString(1, course.getMnemonic());
+            statement.setInt(2, course.getCourseNumber());
+            statement.setString(3, course.getCourseName());
+
+            var resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("CourseID");
+            } else {
+                return -1;
+            }
+            }
+            catch(SQLException e){
+                throw e;
+            }
+        }
+
+
 
     public int getUserIDbyusername(String username) throws SQLException{
         try{
