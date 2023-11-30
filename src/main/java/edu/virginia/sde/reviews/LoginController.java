@@ -114,6 +114,8 @@ public class LoginController {
             }
         } catch (SQLException e) {
             throw e;
+        } finally{
+            dbDriver.disconnect();
         }
     }
 
