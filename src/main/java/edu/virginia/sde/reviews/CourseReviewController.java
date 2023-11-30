@@ -51,7 +51,7 @@ public class CourseReviewController {
     public void setData(Course course){
         courseTitleLabel.setText(course.getCourseName());
         mnemonicAndNumberLabel.setText(course.getMnemonic() + " " + course.getCourseNumber());
-        averageRatingLabel.setText("Average Rating: " + course.getAverageRating());
+        averageRatingLabel.setText(String.valueOf(course.getAverageRating()));
         loadReviews(course);
     }
 
