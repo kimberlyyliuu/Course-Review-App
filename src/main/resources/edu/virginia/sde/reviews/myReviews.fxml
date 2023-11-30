@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.MyReviewsController">
     <children>
         <Label layoutX="460.0" layoutY="14.0" text="My Reviews" textFill="#004dff">
@@ -20,33 +21,15 @@
 
         <TableView fx:id="tableView" layoutX="180.0" layoutY="122.0" prefHeight="430.0" prefWidth="842.0">
             <columns>
-                <TableColumn fx:id="mnemonicColumn" prefWidth="280.67">
-                    <graphic>
-                        <Label text="Mnemonic">
-                            <font>
-                                <Font name="Cambria" size="18.0" />
-                            </font>
-                        </Label>
-                    </graphic>
-                </TableColumn>
-                <TableColumn fx:id="numberColumn" prefWidth="280.67">
-                    <graphic>
-                        <Label text="Number">
-                            <font>
-                                <Font name="Cambria" size="18.0" />
-                            </font>
-                        </Label>
-                    </graphic>
-                </TableColumn>
-                <TableColumn fx:id="ratingColumn" prefWidth="280.67">
-                    <graphic>
-                        <Label text="Your Rating">
-                            <font>
-                                <Font name="Cambria" size="18.0" />
-                            </font>
-                        </Label>
-                    </graphic>
-                </TableColumn>
+                <TableColumn fx:id="mnemonicColumn" prefWidth="280.67" text = "Course Mnemonic">
+                    <cellValueFactory><PropertyValueFactory property="courseMnemonic" />
+                    </cellValueFactory></TableColumn>
+                <TableColumn fx:id="numberColumn" prefWidth="280.67" text = "Course Number">
+                    <cellValueFactory><PropertyValueFactory property="courseNumber" />
+                    </cellValueFactory></TableColumn>
+                <TableColumn fx:id="ratingColumn" prefWidth="280.67" text = "Your Rating">
+                    <cellValueFactory><PropertyValueFactory property="rating" />
+                    </cellValueFactory></TableColumn>
             </columns>
         </TableView>
     </children>

@@ -572,7 +572,23 @@ public class DatabaseDriver {
 
     }
 
+    /**
+     * Gets the sum of all ratings for a particular course
+     */
 
+    public int getSumOfRatings(int courseID) throws SQLException {
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
+        var statement = connection.prepareStatement("SELECT Rating FROM Reviews WHERE CourseID = ?");
+        statement.setInt(1, courseID);
+        var resultSet = statement.executeQuery();
+        int sum = 0;
+        while(resultSet.next()) {
+            sum += resultSet.getInt("Rating");
+        }
+        return sum;
+    }
 
     public void updateAverageRating(int courseID, int newRating) throws SQLException {
         int numReviews = getReviewsByCourse(getCourseByCourseID(courseID)).size();
@@ -679,24 +695,34 @@ public class DatabaseDriver {
         }
     }
 
-    /**
-     * Gets the sum of all ratings for a particular course
-     */
-
-    public int getSumOfRatings(int courseID) throws SQLException {
+    public List<MyReviewsResult> getUserReviews(int userID) throws SQLException{
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
-        var statement = connection.prepareStatement("SELECT Rating FROM Reviews WHERE CourseID = ?");
-        statement.setInt(1, courseID);
+        var userReviews = new ArrayList<MyReviewsResult>();
+        var statement = connection.prepareStatement("""
+                             SELECT * FROM Reviews
+                             JOIN Courses ON Reviews.CourseID = Courses.CourseID
+                             WHERE UserID = ?
+                             """);
+        statement.setInt(1, userID);
         var resultSet = statement.executeQuery();
-        int sum = 0;
         while(resultSet.next()) {
-            sum += resultSet.getInt("Rating");
+            var rating = resultSet.getInt("Rating");
+            var courseMnemonic = resultSet.getString("Mnemonic");
+            var courseNumber = resultSet.getInt("CourseNumber");
+            var courseID = resultSet.getInt("CourseID");
+            var myReview = new MyReviewsResult(rating, courseMnemonic, courseNumber, courseID);
+            userReviews.add(myReview);
         }
-        return sum;
+        return userReviews;
     }
 
-
-
+    public Course getCourseForMyReviewResult(MyReviewsResult selectedReview) throws SQLException {
+        if(connection.isClosed()){
+            throw new IllegalStateException("Connection is not open.");
+        }
+        int courseID = selectedReview.getCourseID();
+        return getCourseByCourseID(courseID);
+    }
 }

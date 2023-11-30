@@ -22,7 +22,7 @@ public class MyReviewsController {
     @FXML
     private Button backtoCourseSearchButton;
     @FXML
-    private TableView<Review> tableView;
+    private TableView<MyReviewsResult> tableView;
     @FXML
     private TableColumn mnemonicColumn;
     @FXML
@@ -40,12 +40,6 @@ public class MyReviewsController {
 
     protected void myReviewsIntialize(){
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
-
-        // Set up the columns
-        mnemonicColumn.setCellValueFactory(new PropertyValueFactory<>("mnemonic")); //I dont think this is correct, pls help
-        numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));//I dont think this is correct, pls help
-        ratingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));//I dont think this is correct, pls help
-
         populateTable();
 
         // Set up the button action
@@ -53,8 +47,8 @@ public class MyReviewsController {
 
         // Set up the click action on the table rows
         tableView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {  // Double-click
-                Review selectedReview = tableView.getSelectionModel().getSelectedItem();
+            if (event.getClickCount() == 1) {
+                MyReviewsResult selectedReview = tableView.getSelectionModel().getSelectedItem();
                 if (selectedReview != null) {
                     openCourseReviewScene(selectedReview);
                 }
@@ -65,8 +59,9 @@ public class MyReviewsController {
     private void populateTable() {
         try {
             databaseDriver.connect();
-            List<Review> reviewList = databaseDriver.getReviewsByUser(activeUser);
-            ObservableList<Review> observableReviewList = FXCollections.observableArrayList(reviewList);
+            int userID = databaseDriver.getUserIDbyusername(activeUser.getUsername());
+            List<MyReviewsResult> reviewList = databaseDriver.getUserReviews(userID);
+            ObservableList<MyReviewsResult> observableReviewList = FXCollections.observableArrayList(reviewList);
             tableView.setItems(observableReviewList);
             databaseDriver.disconnect();
         } catch (SQLException e) {
@@ -75,15 +70,16 @@ public class MyReviewsController {
     }
 
 
-    private void openCourseReviewScene(Review selectedReview) {
+    private void openCourseReviewScene(MyReviewsResult selectedReview) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("courseReviewScreen.fxml"));
             Parent root = loader.load();
 
             // Pass the selected review to the next controller
             CourseReviewController controller = loader.getController();
-            controller.initialize();
-
+            databaseDriver.connect();
+            controller.setData(databaseDriver.getCourseForMyReviewResult(selectedReview));
+            databaseDriver.disconnect();
 
             // Create a new scene
             Scene newScene = new Scene(root);
@@ -95,6 +91,8 @@ public class MyReviewsController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
