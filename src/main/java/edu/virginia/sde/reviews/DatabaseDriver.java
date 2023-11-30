@@ -693,4 +693,35 @@ public class DatabaseDriver {
             throw e;
         }
     }
+
+    public List<MyReviewsResult> getUserReviews(int userID) throws SQLException{
+        if(connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
+        var userReviews = new ArrayList<MyReviewsResult>();
+        var statement = connection.prepareStatement("""
+                             SELECT * FROM Reviews
+                             JOIN Courses ON Reviews.CourseID = Courses.CourseID
+                             WHERE UserID = ?
+                             """);
+        statement.setInt(1, userID);
+        var resultSet = statement.executeQuery();
+        while(resultSet.next()) {
+            var rating = resultSet.getInt("Rating");
+            var courseMnemonic = resultSet.getString("Mnemonic");
+            var courseNumber = resultSet.getInt("CourseNumber");
+            var courseID = resultSet.getInt("CourseID");
+            var myReview = new MyReviewsResult(rating, courseMnemonic, courseNumber, courseID);
+            userReviews.add(myReview);
+        }
+        return userReviews;
+    }
+
+    public Course getCourseForMyReviewResult(MyReviewsResult selectedReview) throws SQLException {
+        if(connection.isClosed()){
+            throw new IllegalStateException("Connection is not open.");
+        }
+        int courseID = selectedReview.getCourseID();
+        return getCourseByCourseID(courseID);
+    }
 }
