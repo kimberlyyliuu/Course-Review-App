@@ -57,7 +57,7 @@ public class AddReviewController {
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
         try {
             userID = getUserID();
-            courseID = getCourseID();
+         //   courseID = getCourseID();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -157,22 +157,22 @@ public class AddReviewController {
         }
     }
 
-    private int getCourseID() throws SQLException {
-        try {
-            if (dbDriver.connection.isClosed()){
-                dbDriver.connect();
-            }
-            String[] parts = mnemonicAndNumberLabel.getText().split("\\s+");
-            var mnemonic = parts[0];
-            var number = Integer.parseInt(parts[1]);
-
-            int id =  dbDriver.getCourseIDbyCourseTitleandMnemonic(courseTitleLabel.getText(), mnemonic, number);
-            dbDriver.disconnect();
-            return id;
-        } catch (SQLException e) {
-            throw e;
-        }
-    }
+//    private int getCourseID() throws SQLException {
+//        try {
+//            if (dbDriver.connection.isClosed()){
+//                dbDriver.connect();
+//            }
+//            String[] parts = mnemonicAndNumberLabel.getText().split("\\s+");
+//            var mnemonic = parts[0];
+//            var number = Integer.parseInt(parts[1]);
+//
+//            int id =  dbDriver.getCourseIDbyCourseTitleandMnemonic(courseTitleLabel.getText(), mnemonic, number);
+//            dbDriver.disconnect();
+//            return id;
+//        } catch (SQLException e) {
+//            throw e;
+//        }
+//    }
 
     private void handleAddReview() throws SQLException {
         // Split the mnemonicAndNumberLabel content into mnemonic and number
