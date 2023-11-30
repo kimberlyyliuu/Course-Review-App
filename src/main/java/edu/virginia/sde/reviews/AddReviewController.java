@@ -141,8 +141,11 @@ public class AddReviewController {
             Platform.runLater(() -> {
                 errorMessage.setText("Review Edited!");
             });
+
         } catch (SQLException e) {
             throw e;
+        } finally {
+            dbDriver.disconnect();
         }
     }
 
