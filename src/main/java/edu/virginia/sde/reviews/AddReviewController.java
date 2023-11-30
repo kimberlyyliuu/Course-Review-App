@@ -66,8 +66,9 @@ public class AddReviewController {
             if (userReviewed()){
                 submitReviewButton.setOnAction(event -> {
                     try {
-                        //openCourseSearchScene();
+
                         handleUpdateReview();
+                        openCourseSearchScene();
 
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
@@ -76,8 +77,9 @@ public class AddReviewController {
             } else{
                 submitReviewButton.setOnAction(event -> {
                     try {
-                        //openCourseSearchScene();
+
                         handleAddReview();
+                        openCourseSearchScene();
 
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
