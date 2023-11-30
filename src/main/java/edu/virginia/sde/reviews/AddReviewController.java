@@ -57,7 +57,7 @@ public class AddReviewController {
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
         try {
             userID = getUserID();
-         //   courseID = getCourseID();
+            //courseID = getCourseID();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

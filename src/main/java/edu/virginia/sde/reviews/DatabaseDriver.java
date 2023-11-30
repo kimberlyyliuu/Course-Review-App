@@ -520,9 +520,6 @@ public class DatabaseDriver {
     }
 
     public int getCourseIDbyCourseTitleandMnemonic(String courseTitle, String mnemonic, int courseNum) throws SQLException{
-        if(connection.isClosed()) {
-            throw new IllegalStateException("Connection is not open.");
-        }
         try{
             var statement = connection.prepareStatement("SELECT CourseID FROM Courses WHERE CourseName = ? AND Mnemonic = ? AND CourseNumber = ?");
             statement.setString(1, courseTitle);
@@ -531,11 +528,10 @@ public class DatabaseDriver {
             var resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                // Assuming CourseID is an integer column in your database
                 return resultSet.getInt("CourseID");
-            } else {
-                // Handle the case when no result is found
-                return -1; // Or some other appropriate value
+            }
+            else{
+                return -1;
             }
         } catch (SQLException e){
             rollback();
@@ -544,20 +540,16 @@ public class DatabaseDriver {
     }
 
     public int getUserIDbyusername(String username) throws SQLException{
-        if(connection.isClosed()) {
-            throw new IllegalStateException("Connection is not open.");
-        }
         try{
             var statement = connection.prepareStatement("SELECT UserID FROM Users WHERE Username = ?");
             statement.setString(1, username);
             var resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                // Assuming UserID is an integer column in your database
                 return resultSet.getInt("UserID");
-            } else {
-                // Handle the case when no result is found
-                return -1; // Or some other appropriate value
+            }
+            else{
+                return -1;
             }
         } catch (SQLException e){
             rollback();
