@@ -612,6 +612,7 @@ public class DatabaseDriver {
         if(connection.isClosed()) {
             connect();
         }
+
         try{
             var statement = connection.prepareStatement("SELECT Rating FROM Reviews WHERE UserID = ? AND CourseID = ?");
             statement.setString(1, String.valueOf(userID));
