@@ -4,7 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseReviewController">
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseReviewController">
    <children>
       <Label fx:id="courseTitleLabel" alignment="TOP_CENTER" layoutX="12.0" layoutY="22.0" prefHeight="78.0" prefWidth="1182.0" text="Course Title" textAlignment="CENTER" textFill="#004dff">
          <font>
@@ -27,7 +28,19 @@
             <Font name="Roboto Light" size="16.0" />
          </font>
       </Label>
-      <ListView fx:id="courseListView" layoutX="193.0" layoutY="157.0" prefHeight="378.0" prefWidth="881.0" />
+      <TableView fx:id="reviewsTableView" layoutX="193.0" layoutY="157.0" prefHeight="378.0" prefWidth="881.0">
+         <columns>
+            <TableColumn prefWidth="92.0" text="Rating">
+               <cellValueFactory><PropertyValueFactory property="rating" />
+               </cellValueFactory></TableColumn>
+            <TableColumn prefWidth="121.33334350585938" text="Timestamp">
+               <cellValueFactory><PropertyValueFactory property="timestamp" />
+               </cellValueFactory></TableColumn>
+            <TableColumn prefWidth="667.0000305175781" text="Comment">
+               <cellValueFactory><PropertyValueFactory property="comment" />
+               </cellValueFactory></TableColumn>
+         </columns>
+      </TableView>
 
 
    </children>

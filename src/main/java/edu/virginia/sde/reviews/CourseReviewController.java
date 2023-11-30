@@ -1,6 +1,8 @@
 package edu.virginia.sde.reviews;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,7 +31,8 @@ public class CourseReviewController {
     private Button addReviewButton;
     @FXML
     private Button backtoCourseSearchButton;
-
+    @FXML
+    private TableView<Review> reviewsTableView;
 
     private User activeUser = new User("", "");
     public void setActiveUser(User user){
@@ -42,15 +45,14 @@ public class CourseReviewController {
     protected void initialize() {
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
         addReviewButton.setOnAction(event -> openAddReviewControllerScene());
-        System.out.println(activeUser.getUsername());
     }
 
 
     public void setData(Course course){
         courseTitleLabel.setText(course.getCourseName());
         mnemonicAndNumberLabel.setText(course.getMnemonic() + " " + course.getCourseNumber());
-        averageRatingLabel.setText(String.valueOf("Average Rating: " + course.getAverageRating()));
-
+        averageRatingLabel.setText("Average Rating: " + course.getAverageRating());
+        loadReviews(course);
     }
 
 
@@ -108,6 +110,20 @@ public class CourseReviewController {
             controller.initialize();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void loadReviews(Course course) {
+        try {
+            dbDriver.connect();
+            //var courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(course.getCourseName(), course.getMnemonic(), String.valueOf(course.getCourseNumber()));
+            List<Review> reviewsList = dbDriver.getReviewsByCourse(course);
+            ObservableList<Review> observableReviewsList = FXCollections.observableList(reviewsList);
+            reviewsTableView.getItems().clear();
+            reviewsTableView.getItems().addAll(observableReviewsList);
+            dbDriver.disconnect();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
