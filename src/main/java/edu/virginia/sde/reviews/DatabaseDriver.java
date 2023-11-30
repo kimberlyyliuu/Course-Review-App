@@ -608,7 +608,7 @@ public class DatabaseDriver {
         }
     }
 
-    public String loadRatingbyUserID(int userID, int courseID) throws SQLException{
+    public Double loadRatingbyUserID(int userID, int courseID) throws SQLException{
         if(connection.isClosed()) {
             connect();
         }
@@ -619,9 +619,9 @@ public class DatabaseDriver {
             var resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return resultSet.getString("Rating");
+                return resultSet.getDouble("Rating");
             } else {
-                return "";
+                return 0.0;
             }
         } catch (SQLException e){
             rollback();

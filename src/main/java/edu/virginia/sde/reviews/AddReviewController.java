@@ -66,7 +66,7 @@ public class AddReviewController {
             if (userReviewed()){
                 submitReviewButton.setOnAction(event -> {
                     try {
-                        openCourseSearchScene();
+                        //openCourseSearchScene();
                         handleUpdateReview();
 
                     } catch (SQLException e) {
@@ -76,7 +76,7 @@ public class AddReviewController {
             } else{
                 submitReviewButton.setOnAction(event -> {
                     try {
-                        openCourseSearchScene();
+                        //openCourseSearchScene();
                         handleAddReview();
 
                     } catch (SQLException e) {
@@ -121,7 +121,9 @@ public class AddReviewController {
         try {
             dbDriver.connect();
             if (userReviewed()){
-                inputRating.setText(dbDriver.loadRatingbyUserID(userID, courseID));
+                double rate = dbDriver.loadRatingbyUserID(userID, courseID);
+                int rating = (int) rate;
+                inputRating.setText(String.valueOf(rating));
                 inputComment.setText(dbDriver.loadCommentbyUserID(userID, courseID));
                 submitReviewButton.setText("Edit Review");
                 screentitle.setText("Edit Review");
@@ -141,6 +143,7 @@ public class AddReviewController {
             dbDriver.connect();
             dbDriver.editReview(userID, courseID,inputComment.getText(), inputRating.getText() );
             dbDriver.updateAverageRating(courseID, Integer.parseInt(inputRating.getText()));
+            //setData(courseTitleLabel.getText(), mnemonicAndNumberLabel.getText(), String.valueOf(dbDriver.getCourseByCourseID(courseID).getAverageRating()));
             dbDriver.commit();
             Platform.runLater(() -> {
                 errorMessage.setText("Review Edited!");
@@ -207,6 +210,8 @@ public class AddReviewController {
                 Review review = new Review(userID, courseID, rating, comment);
                 dbDriver.addReview(review);
                 dbDriver.updateAverageRating(courseID, rating);
+
+                //setData(courseTitleLabel.getText(), mnemonicAndNumberLabel.getText(), String.valueOf(dbDriver.getCourseByCourseID(courseID).getAverageRating()));
                 dbDriver.commit();
                 inputComment.clear();
                 inputRating.clear();
@@ -217,6 +222,7 @@ public class AddReviewController {
                 Review review = new Review(userID, courseID, rating);
                 dbDriver.addReview(review);
                 dbDriver.updateAverageRating(courseID, rating);
+                //setData(courseTitleLabel.getText(), mnemonicAndNumberLabel.getText(), String.valueOf(dbDriver.getCourseByCourseID(courseID).getAverageRating()));
                 dbDriver.commit();
                 inputComment.clear();
                 inputRating.clear();
