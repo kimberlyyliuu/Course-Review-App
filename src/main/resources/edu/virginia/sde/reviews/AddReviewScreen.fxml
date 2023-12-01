@@ -19,7 +19,7 @@
     <TextField fx:id="inputRating" layoutX="561.0" layoutY="256.0" prefHeight="26.0" prefWidth="34.0" />
     <TextField fx:id="inputComment" layoutX="561.0" layoutY="323.0" prefHeight="200.0" prefWidth="300.0" />
 
-    <Label fx:id = "screentitle" alignment="TOP_CENTER" layoutX="12.0" layoutY="22.0" prefHeight="78.0" prefWidth="1182.0" text="Add Review" textAlignment="CENTER" textFill="#004dff">
+    <Label fx:id="screentitle" alignment="TOP_CENTER" layoutX="12.0" layoutY="22.0" prefHeight="78.0" prefWidth="1182.0" text="Add Review" textAlignment="CENTER" textFill="#004dff">
         <font>
             <Font name="Cambria" size="56.0" />
         </font></Label>
@@ -42,7 +42,7 @@
         <font>
             <Font name="Cambria" size="17.0" />
         </font></Button>
-    <Label fx:id="averageRatingLabel" alignment="TOP_CENTER" layoutX="152.0" layoutY="130.0" prefHeight="20.0" prefWidth="896.0" text="Average Rating:">
+    <Label fx:id="averageRatingLabel" alignment="TOP_CENTER" layoutX="631.0" layoutY="141.0" prefHeight="22.0" prefWidth="80.0">
         <font>
             <Font name="Roboto Light" size="16.0" />
         </font>
@@ -56,6 +56,11 @@
             <Font name="Microsoft Sans Serif" size="26.0" />
         </font>
     </Label>
+   <Label layoutX="485.0" layoutY="141.0" text="Average Rating: ">
+      <font>
+         <Font name="Roboto Light" size="16.0" />
+      </font>
+   </Label>
 
 
 
