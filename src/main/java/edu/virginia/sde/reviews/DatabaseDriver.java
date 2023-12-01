@@ -528,7 +528,7 @@ public class DatabaseDriver {
                 deleteStatement.executeUpdate();
                 deleteStatement.close();
 
-                updateAverageRating(courseID, ratingToDelete);
+                updateAverageRating(courseID);
             }
         }
         catch(SQLException e){
@@ -644,7 +644,7 @@ public class DatabaseDriver {
         return sum;
     }
 
-    public void updateAverageRating(int courseID, int newRating) throws SQLException {
+    public void updateAverageRating(int courseID) throws SQLException {
         int numReviews = getReviewsByCourse(getCourseByCourseID(courseID)).size();
         int sumRatings = getSumOfRatings(courseID);
         double newAverage = Math.round(((double) sumRatings / numReviews) * 100) / 100.0;
