@@ -500,6 +500,58 @@ public class DatabaseDriver {
     }
 
     /**
+     * Checks to see if review exists in database
+     */
+    public boolean reviewExists(int userID, int courseID) throws SQLException{
+        var statement = connection.prepareStatement("SELECT * FROM Reviews WHERE UserID = ? AND CourseID = ?");
+        statement.setInt(1, userID);
+        statement.setInt(2, courseID);
+        var resultSet = statement.executeQuery();
+        var reviewExists = resultSet.next();
+        statement.close();
+
+        return reviewExists;
+    }
+
+    /**
+     * Used to delete review
+     */
+    public void deleteReview(int userID, int courseID) throws SQLException{
+        try{
+            if(reviewExists(userID, courseID)){
+                var ratingToDelete = 0 - getRatingForReview(userID, courseID);
+                var deleteQuery = "DELETE FROM Reviews WHERE UserID = ? AND CourseID = ?";
+                var deleteStatement = connection.prepareStatement(deleteQuery);
+
+                deleteStatement.setInt(1, userID);
+                deleteStatement.setInt(2, courseID);
+                deleteStatement.executeUpdate();
+                deleteStatement.close();
+
+                updateAverageRating(courseID, ratingToDelete);
+            }
+        }
+        catch(SQLException e){
+            rollback();
+            throw e;
+        }
+    }
+
+    private int getRatingForReview(int userID, int courseID) throws SQLException{
+        var statement = connection.prepareStatement("SELECT Rating FROM Reviews WHERE UserID = ? AND CourseID = ?");
+        statement.setInt(1, userID);
+        statement.setInt(2, courseID);
+        var resultSet = statement.executeQuery();
+
+        if(resultSet.next()){
+            return resultSet.getInt("Rating");
+        }else{
+            return 0;
+        }
+    }
+
+
+    /**
      * Removes all data from the tables, leaving the tables empty (but still existing!).
      */
     public void clearTables() throws SQLException {

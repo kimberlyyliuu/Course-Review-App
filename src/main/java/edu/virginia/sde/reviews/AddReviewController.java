@@ -187,6 +187,8 @@ public class AddReviewController {
         }
     }
 
+
+
     private void handleAddReview() throws SQLException {
         // Split the mnemonicAndNumberLabel content into mnemonic and number
         String[] parts = mnemonicAndNumberLabel.getText().split("\\s+");
