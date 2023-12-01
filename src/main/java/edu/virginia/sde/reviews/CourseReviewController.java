@@ -50,13 +50,29 @@ public class CourseReviewController {
     }
 
 
-    public void setData(Course course){
+    public void setData(Course course, User user){
         courseTitleLabel.setText(course.getCourseName());
         mnemonicAndNumberLabel.setText(course.getMnemonic() + " " + course.getCourseNumber());
         averageRatingLabel.setText(String.valueOf(course.getAverageRating()));
         currentCourse = course;
         try {
             loadReviews(course);
+            activeUser = user;
+            setDeleteReviewButtonVisibility(activeUser);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void setDeleteReviewButtonVisibility(User user){
+        try{
+            dbDriver.connect();
+            userID = dbDriver.getUserIDbyusername(user.getUsername());
+            System.out.print(user.getUsername());
+            courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(currentCourse.getCourseName(), currentCourse.getMnemonic(), String.valueOf(currentCourse.getCourseNumber()));
+            var userReviewedCourse = dbDriver.userIDAlreadyReviewedCourse(userID, courseID);
+            deleteReviewButton.setVisible(userReviewedCourse);
+            dbDriver.disconnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -73,7 +89,7 @@ public class CourseReviewController {
             dbDriver.commit();
             var currentCourse = dbDriver.getCourseByCourseID(courseID);
             dbDriver.disconnect();
-            setData(currentCourse);
+            setData(currentCourse, activeUser);
         } catch (SQLException e){
             throw e;
         }

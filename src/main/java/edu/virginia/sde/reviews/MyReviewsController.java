@@ -78,8 +78,8 @@ public class MyReviewsController {
             // Pass the selected review to the next controller
             CourseReviewController controller = loader.getController();
             databaseDriver.connect();
-            controller.setData(databaseDriver.getCourseForMyReviewResult(selectedReview));
             controller.setActiveUser(activeUser);
+            controller.setData(databaseDriver.getCourseForMyReviewResult(selectedReview), activeUser);
             databaseDriver.disconnect();
 
             // Create a new scene

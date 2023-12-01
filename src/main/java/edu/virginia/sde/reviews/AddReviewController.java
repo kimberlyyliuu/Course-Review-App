@@ -37,6 +37,7 @@ public class AddReviewController {
     private Button backtoCourseReviewButton;
     private int userID;
     private int courseID;
+    private Course currentCourse;
     private User activeUser = new User("", "");
     public void setActiveUser(User user){
         activeUser.setUsername(user.getUsername());
@@ -286,6 +287,8 @@ public class AddReviewController {
     }
 
 
+
+
     private void openCourseReviewScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("courseReviewScreen.fxml"));
@@ -301,7 +304,7 @@ public class AddReviewController {
             CourseReviewController controller = loader.getController();
             controller.setActiveUser(activeUser);
             dbDriver.connect();
-            controller.setData(dbDriver.getCourseByCourseID(courseID));
+            controller.setData(dbDriver.getCourseByCourseID(courseID), activeUser);
             dbDriver.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
