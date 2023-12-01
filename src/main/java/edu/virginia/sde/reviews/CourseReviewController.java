@@ -91,6 +91,7 @@ public class CourseReviewController {
             userID = dbDriver.getUserIDbyusername(activeUser.getUsername());
             courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(currentCourse.getCourseName(), currentCourse.getMnemonic(), String.valueOf(currentCourse.getCourseNumber()));
             dbDriver.deleteReview(userID, courseID);
+            dbDriver.updateAverageRating(courseID);
             dbDriver.commit();
             var currentCourse = dbDriver.getCourseByCourseID(courseID);
             dbDriver.disconnect();
