@@ -95,7 +95,8 @@ public class CourseReviewController {
             dbDriver.commit();
             var currentCourse = dbDriver.getCourseByCourseID(courseID);
             dbDriver.disconnect();
-            loadReviews(currentCourse);
+            //loadReviews(currentCourse);
+            setData(currentCourse);
         } catch (SQLException e){
             throw e;
         }
