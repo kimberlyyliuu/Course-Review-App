@@ -86,6 +86,7 @@ public class CourseReviewController {
             stage.show();
             CourseSearchController controller = loader.getController();
             controller.courseSearchInitialize();
+            controller.setActiveUser(activeUser);
         } catch (IOException e) {
             e.printStackTrace();
         }

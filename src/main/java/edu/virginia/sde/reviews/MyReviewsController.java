@@ -79,6 +79,7 @@ public class MyReviewsController {
             CourseReviewController controller = loader.getController();
             databaseDriver.connect();
             controller.setData(databaseDriver.getCourseForMyReviewResult(selectedReview));
+            controller.setActiveUser(activeUser);
             databaseDriver.disconnect();
 
             // Create a new scene
@@ -111,6 +112,7 @@ public class MyReviewsController {
             stage.show();
             CourseSearchController controller = loader.getController();
             controller.courseSearchInitialize();
+            controller.setActiveUser(activeUser);
         } catch (IOException e) {
             e.printStackTrace();
         }

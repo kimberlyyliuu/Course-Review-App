@@ -40,6 +40,7 @@ public class CourseSearchController {
     protected void courseSearchInitialize(){
         // Agent: ChatGPT
         // Usage: Handling disconnections correctly
+//        System.out.println(activeUser.getUsername());
         try {
             dbDriver.connect();
             dbDriver.createTables();
@@ -83,8 +84,6 @@ public class CourseSearchController {
                 }
             }
         });
-        //System.out.println(activeUser.getUsername());
-
     }
 
     private void handleCourseClick(Course selectedCourse) throws SQLException {
@@ -231,9 +230,6 @@ public class CourseSearchController {
             e.printStackTrace();
         }
     }
-
-
-
 
 }
 
