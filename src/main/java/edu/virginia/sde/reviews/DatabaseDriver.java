@@ -519,7 +519,7 @@ public class DatabaseDriver {
     public void deleteReview(int userID, int courseID) throws SQLException{
         try{
             if(reviewExists(userID, courseID)){
-                var ratingToDelete = 0 - getRatingForReview(userID, courseID);
+                //var ratingToDelete = 0 - getRatingForReview(userID, courseID);
                 var deleteQuery = "DELETE FROM Reviews WHERE UserID = ? AND CourseID = ?";
                 var deleteStatement = connection.prepareStatement(deleteQuery);
 
@@ -528,7 +528,7 @@ public class DatabaseDriver {
                 deleteStatement.executeUpdate();
                 deleteStatement.close();
 
-                updateAverageRating(courseID, ratingToDelete);
+                updateAverageRating(courseID);
             }
         }
         catch(SQLException e){
@@ -644,7 +644,7 @@ public class DatabaseDriver {
         return sum;
     }
 
-    public void updateAverageRating(int courseID, int newRating) throws SQLException {
+    public void updateAverageRating(int courseID) throws SQLException {
         int numReviews = getReviewsByCourse(getCourseByCourseID(courseID)).size();
         int sumRatings = getSumOfRatings(courseID);
         double newAverage = Math.round(((double) sumRatings / numReviews) * 100) / 100.0;

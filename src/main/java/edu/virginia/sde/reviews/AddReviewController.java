@@ -143,7 +143,7 @@ public class AddReviewController {
         try{
             dbDriver.connect();
             dbDriver.editReview(userID, courseID,inputComment.getText(), inputRating.getText() );
-            dbDriver.updateAverageRating(courseID, Integer.parseInt(inputRating.getText()));
+            dbDriver.updateAverageRating(courseID);
             //setData(courseTitleLabel.getText(), mnemonicAndNumberLabel.getText(), String.valueOf(dbDriver.getCourseByCourseID(courseID).getAverageRating()));
             dbDriver.commit();
             Platform.runLater(() -> {
@@ -212,7 +212,7 @@ public class AddReviewController {
             if (comment != null && isValidRating(rating)) {
                 Review review = new Review(userID, courseID, rating, comment);
                 dbDriver.addReview(review);
-                dbDriver.updateAverageRating(courseID, rating);
+                dbDriver.updateAverageRating(courseID);
 
                 //setData(courseTitleLabel.getText(), mnemonicAndNumberLabel.getText(), String.valueOf(dbDriver.getCourseByCourseID(courseID).getAverageRating()));
                 dbDriver.commit();
@@ -224,7 +224,7 @@ public class AddReviewController {
             } else if (comment == null) {
                 Review review = new Review(userID, courseID, rating);
                 dbDriver.addReview(review);
-                dbDriver.updateAverageRating(courseID, rating);
+                dbDriver.updateAverageRating(courseID);
                 //setData(courseTitleLabel.getText(), mnemonicAndNumberLabel.getText(), String.valueOf(dbDriver.getCourseByCourseID(courseID).getAverageRating()));
                 dbDriver.commit();
                 inputComment.clear();
