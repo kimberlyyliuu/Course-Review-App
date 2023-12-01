@@ -47,7 +47,7 @@
             <Font name="Roboto Light" size="16.0" />
         </font>
     </Label>
-    <Button fx:id="deleteReviewButton" layoutX="338.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Delete Review" textFill="#1100ff">
+    <Button fx:id="backtoCourseReviewButton" layoutX="338.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Back to Reviews" textFill="#1100ff">
         <font>
             <Font name="Cambria" size="17.0" />
         </font></Button>

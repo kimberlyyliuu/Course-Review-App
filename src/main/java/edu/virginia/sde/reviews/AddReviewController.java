@@ -40,7 +40,7 @@ public class AddReviewController {
     @FXML
     private Button backtoCourseSearchButton;
     @FXML
-    private Button deleteReviewButton;
+    private Button backtoCourseReviewButton;
     private int userID;
     private int courseID;
     private User activeUser = new User("", "");
@@ -54,6 +54,7 @@ public class AddReviewController {
     @FXML
     protected void initialize(){
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
+        backtoCourseReviewButton.setOnAction(event -> openCourseReviewScene());
         try {
             userID = getUserID();
             courseID = getCourseID();
@@ -287,6 +288,31 @@ public class AddReviewController {
             controller.courseSearchInitialize();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    private void openCourseReviewScene() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("courseReviewScreen.fxml"));
+            Parent root = loader.load();
+            // Create a new scene
+            Scene newScene = new Scene(root);
+            // Stage and new scene for new user
+            Stage stage = (Stage) backtoCourseReviewButton.getScene().getWindow();
+            stage.setScene(newScene);
+            stage.setTitle("Course Review");
+            stage.setScene(newScene);
+            stage.show();
+            CourseReviewController controller = loader.getController();
+            controller.setActiveUser(activeUser);
+            dbDriver.connect();
+            controller.setData(dbDriver.getCourseByCourseID(courseID));
+            dbDriver.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
