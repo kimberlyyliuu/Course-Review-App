@@ -1,7 +1,6 @@
 package edu.virginia.sde.reviews;
 
 import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

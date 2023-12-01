@@ -10,10 +10,8 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 public class LoginController {
 

@@ -1,5 +1,4 @@
 package edu.virginia.sde.reviews;
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,13 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import org.w3c.dom.Text;
-
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.List;
 
 
 public class AddReviewController {

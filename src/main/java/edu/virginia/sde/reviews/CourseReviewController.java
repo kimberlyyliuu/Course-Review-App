@@ -1,6 +1,5 @@
 package edu.virginia.sde.reviews;
-import javafx.animation.PauseTransition;
-import javafx.application.Platform;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,12 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import org.w3c.dom.Text;
-
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 
 public class CourseReviewController {
@@ -67,25 +62,8 @@ public class CourseReviewController {
         }
     }
 
-
-//    private void setDeleteReviewButton() throws SQLException {
-//        try {
-//            dbDriver.connect();
-//            if ()
-//
-//        } catch (SQLException e) {
-//            throw e;
-//        } finally {
-//            try {
-//                dbDriver.disconnect();
-//            } catch (SQLException e) {
-//                throw e;
-//            }
-//        }
-//    }
     @FXML
     private void handleDeleteReviewButton() throws SQLException {
-       // TODO:
         try{
             dbDriver.connect();
             userID = dbDriver.getUserIDbyusername(activeUser.getUsername());
@@ -95,7 +73,6 @@ public class CourseReviewController {
             dbDriver.commit();
             var currentCourse = dbDriver.getCourseByCourseID(courseID);
             dbDriver.disconnect();
-            //loadReviews(currentCourse);
             setData(currentCourse);
         } catch (SQLException e){
             throw e;

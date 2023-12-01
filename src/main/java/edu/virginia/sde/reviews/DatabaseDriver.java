@@ -3,7 +3,6 @@ package edu.virginia.sde.reviews;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.math.*;
 
 public class DatabaseDriver {
     private final String sqliteFilename;

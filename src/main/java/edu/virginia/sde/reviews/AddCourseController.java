@@ -25,22 +25,7 @@ public class AddCourseController {
     private TextField courseNumber;
     @FXML
     private TextField courseTitle;
-    @FXML
-    private Label MnemonicLabel;
-    @FXML
-    private Label numberLabel;
-    @FXML
-    private Label titlelabel;
-    @FXML
-    private Label ratingLabel;
-    @FXML
-    private TextField ratingTextfield;
-    @FXML
-    private Label commentsLabel;
-    @FXML
-    private TextField commentsTextfield;
 
-    private ListView<Course> courseListView;
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
     @FXML
     private Button addButton;
