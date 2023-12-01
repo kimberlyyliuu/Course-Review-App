@@ -23,9 +23,11 @@ List the primary contributions of each author. It is recommended to update this 
 
 ### Mia Ark
 
-* Author 2 contributions
-* as a bulleted list
-* each line starts with an asterisk and a space
+* Database Driver general methods (i.e. createTables, clearTables)
+* Helped implement LoginController
+* Implemented AddCourseController
+* Implemented the course search screen to show clickable course objects
+* Delete button functionality
 
 ### Kimberly Liu
 
