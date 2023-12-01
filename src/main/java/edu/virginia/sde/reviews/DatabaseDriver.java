@@ -650,7 +650,6 @@ public class DatabaseDriver {
         var statement = connection.prepareStatement("UPDATE Courses SET AverageRating = ? WHERE CourseID = ?");
         statement.setDouble(1, newAverage);
         statement.setInt(2, courseID);
-        System.out.println(newAverage);
         statement.executeUpdate();
     }
 
