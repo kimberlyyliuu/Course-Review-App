@@ -47,7 +47,7 @@
             <Font name="Microsoft Sans Serif" size="26.0" />
          </font>
       </Label>
-      <Button fx:id="exitButton" layoutX="556.0" layoutY="626.0" mnemonicParsing="false" onAction="#initialize" prefHeight="42.0" prefWidth="148.0" text="CLOSE APP">
+      <Button fx:id="exitButton" layoutX="556.0" layoutY="626.0" mnemonicParsing="false" onAction="#initialize" prefHeight="42.0" prefWidth="148.0" text="Close App">
          <font>
             <Font name="Cambria" size="22.0" />
          </font>
