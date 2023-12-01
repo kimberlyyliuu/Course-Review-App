@@ -3,6 +3,7 @@ package edu.virginia.sde.reviews;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.math.*;
 
 public class DatabaseDriver {
     private final String sqliteFilename;
@@ -587,16 +588,18 @@ public class DatabaseDriver {
         while(resultSet.next()) {
             sum += resultSet.getInt("Rating");
         }
+
         return sum;
     }
 
     public void updateAverageRating(int courseID, int newRating) throws SQLException {
         int numReviews = getReviewsByCourse(getCourseByCourseID(courseID)).size();
         int sumRatings = getSumOfRatings(courseID);
-        double newAverage = (double) (sumRatings + newRating) / (numReviews + 1);
+        double newAverage = Math.round(((double) sumRatings / numReviews) * 100) / 100.0;
         var statement = connection.prepareStatement("UPDATE Courses SET AverageRating = ? WHERE CourseID = ?");
         statement.setDouble(1, newAverage);
         statement.setInt(2, courseID);
+        System.out.println(newAverage);
         statement.executeUpdate();
     }
 
