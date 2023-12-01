@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.AddReviewController">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.AddReviewController" style="-fx-background-color: #FFFFFF;">
 
     <Label fx:id="courseTitleLabel" alignment="TOP_CENTER" layoutX="9.0" layoutY="85.0" prefHeight="22.0" prefWidth="1182.0" text="Course Title" textAlignment="CENTER" textFill="#004dff">
         <font>
