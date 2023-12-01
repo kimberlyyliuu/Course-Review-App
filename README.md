@@ -23,7 +23,7 @@ List the primary contributions of each author. It is recommended to update this 
 
 ### Mia Ark
 
-* Database Driver general methods (i.e. createTables, clearTables)
+* Database Driver general methods (i.e. createTables, clearTables, getters)
 * Helped implement LoginController
 * Implemented AddCourseController
 * Implemented the course search screen to show clickable course objects
