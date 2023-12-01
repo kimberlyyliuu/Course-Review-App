@@ -27,6 +27,8 @@ public class NewUserController {
     @FXML
     private Label passRequirements;
     @FXML
+    private Button backToLoginButton;
+    @FXML
     private Label errorMessage;
     @FXML
     private Button exitButton;
@@ -37,7 +39,13 @@ public class NewUserController {
     protected void newUserInitialize() {
         exitButton.setOnAction(event -> Platform.exit());
         createUserButton.setOnAction(event -> createNewUser());
-
+        backToLoginButton.setOnAction(event -> {
+            try {
+                returnLogInScene();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
     }
     private void createNewUser() {
@@ -109,8 +117,7 @@ public class NewUserController {
             // Stage and new scene for new user
             Stage stage = (Stage) errorMessage.getScene().getWindow();
             stage.setScene(newScene);
-            CourseSearchController controller = loader.getController();
-            controller.setActiveUser(this.activeUser);
+            LoginController controller = loader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }

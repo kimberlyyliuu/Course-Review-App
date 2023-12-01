@@ -27,7 +27,7 @@
                 <Font name="Microsoft Sans Serif" size="26.0" />
             </font>
         </Label>
-        <Button fx:id="createUserButton" layoutX="511.0" layoutY="457.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="90.0" prefWidth="246.0" text="Create New User">
+        <Button fx:id="createUserButton" layoutX="674.0" layoutY="457.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="90.0" prefWidth="246.0" text="Create New User">
             <font>
                 <Font name="Cambria" size="21.0" />
             </font></Button>
@@ -47,5 +47,10 @@
                 <Font name="Cambria" size="22.0" />
             </font>
         </Button>
+      <Button fx:id="backToLoginButton" layoutX="356.0" layoutY="457.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="90.0" prefWidth="246.0" text="Back To Login">
+         <font>
+            <Font name="Cambria" size="21.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>
