@@ -32,8 +32,8 @@ List the primary contributions of each author. It is recommended to update this 
 ### Kimberly Liu
 
 * Implemented AddReviewController methods and other supplementary methods in Database Driver
-* Wrote Object Classes
-* each line starts with an asterisk and a space
+* Modified AddReviewController to include EditReview and averageRating as well 
+* Wrote Object Classes (User, Review, Course)
 
 ### [Author 4 - replace this with their name]
 
