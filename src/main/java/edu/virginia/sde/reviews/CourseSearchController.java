@@ -20,7 +20,7 @@ public class CourseSearchController {
     @FXML
     private TextField courseTitle;
     @FXML
-    private ListView<Course> courseListView;
+    private TableView<Course> courseTableView;
     @FXML
     private Button exitButton;
     @FXML
@@ -37,7 +37,6 @@ public class CourseSearchController {
     protected void courseSearchInitialize(){
         // Agent: ChatGPT
         // Usage: Handling disconnections correctly
-//        System.out.println(activeUser.getUsername());
         try {
             dbDriver.connect();
             dbDriver.createTables();
@@ -71,10 +70,10 @@ public class CourseSearchController {
 
 
         //Clickable courses
-        courseListView.setOnMouseClicked(event -> {
-            Course selectedCourse = courseListView.getSelectionModel().getSelectedItem();
-            if(selectedCourse!=null){
-                try {
+        courseTableView.setOnMouseClicked(event -> {
+            Course selectedCourse = courseTableView.getSelectionModel().getSelectedItem();
+            if(selectedCourse!=null) {
+                try{
                     handleCourseClick(selectedCourse);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
@@ -91,7 +90,7 @@ public class CourseSearchController {
             controller.setActiveUser(this.activeUser);
             controller.setData(selectedCourse, activeUser);
 
-            Stage stage = (Stage) courseListView.getScene().getWindow();
+            Stage stage = (Stage) courseTableView.getScene().getWindow();
             Scene newScene = new Scene(root);
             stage.setScene(newScene);
             stage.setTitle("Course Review");
@@ -108,30 +107,14 @@ public class CourseSearchController {
 
             // Agent: ChatGPT
             // Usage: Help making courses clickable
-            courseListView.setCellFactory(param -> new ListCell<Course>() {
-                @Override
-                protected void updateItem(Course item, boolean empty){
-                    super.updateItem(item, empty);
-
-                    if(empty || item == null){
-                        setText(null);
-                    }
-                    else{
-                        setText(item.toString());
-                    }
-                }
-            });
-            // Update the existing courseListView with the new data
             ObservableList<Course> observableCourseList = FXCollections.observableList(courses);
-            courseListView.setItems(observableCourseList);
-
-            courseListView.setOnMouseClicked(event -> {
-                Course selectedCourse = courseListView.getSelectionModel().getSelectedItem();
-                if(selectedCourse != null){
+            courseTableView.setItems(observableCourseList);
+            courseTableView.setOnMouseClicked(event -> {
+                Course selectedCourse = courseTableView.getSelectionModel().getSelectedItem();
+                if(selectedCourse!= null){
                     try{
                         handleCourseClick(selectedCourse);
-                    }
-                    catch(SQLException e){
+                    } catch(SQLException e) {
                         throw new RuntimeException(e);
                     }
                 }
@@ -182,7 +165,7 @@ public class CourseSearchController {
         // For simplicity, assuming all courses are shown in this example
         List<Course> coursesList = dbDriver.getSearchedCourses(subject, number, title);
         ObservableList<Course> observableCourseList = FXCollections.observableList(coursesList);
-        courseListView.setItems(observableCourseList);
+        courseTableView.setItems(observableCourseList);
     }
 
     /**

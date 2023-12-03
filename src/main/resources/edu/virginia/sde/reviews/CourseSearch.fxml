@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 
 <AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseSearchController" style="-fx-background-color: #FFFFFF;">
    <children>
@@ -34,7 +35,6 @@
             <Font name="Cambria" size="22.0" />
          </font>
       </Button>
-      <ListView fx:id="courseListView" layoutX="193.0" layoutY="157.0" prefHeight="482.0" prefWidth="932.0" />
       <Button fx:id="searchButton" layoutX="563.0" layoutY="116.0" mnemonicParsing="false" onAction="#courseSearchInitialize" prefHeight="27.0" prefWidth="134.0" text="Search" textFill="#0022ff">
          <font>
             <Font name="Cambria" size="19.0" />
@@ -50,5 +50,21 @@
             <Font name="Cambria" size="22.0" />
          </font>
       </Button>
+      <TableView fx:id="courseTableView" layoutX="193.0" layoutY="157.0" prefHeight="482.0" prefWidth="932.0">
+        <columns>
+          <TableColumn prefWidth="178.3333282470703" text="Course Mnemonic" >
+           <cellValueFactory><PropertyValueFactory property="mnemonic" />
+           </cellValueFactory></TableColumn>
+          <TableColumn prefWidth="180.33334350585938" text="Course Number" >
+             <cellValueFactory><PropertyValueFactory property="courseNumber" />
+             </cellValueFactory></TableColumn>
+            <TableColumn prefWidth="403.33331298828125" text="Course Title" >
+               <cellValueFactory><PropertyValueFactory property="courseName" />
+               </cellValueFactory></TableColumn>
+            <TableColumn prefWidth="168.666748046875" text="Average Rating" >
+               <cellValueFactory><PropertyValueFactory property="averageRating" />
+               </cellValueFactory></TableColumn>
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
