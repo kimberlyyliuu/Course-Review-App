@@ -16,7 +16,7 @@ public class AddReviewController {
     @FXML
     private TextField inputRating;
     @FXML
-    private TextField inputComment;
+    private TextArea inputComment;
 
     @FXML
     private Label courseTitleLabel;
@@ -137,14 +137,42 @@ public class AddReviewController {
     private void handleUpdateReview() throws SQLException{
 
         try{
-            dbDriver.connect();
-            dbDriver.editReview(userID, courseID,inputComment.getText(), inputRating.getText() );
-            dbDriver.updateAverageRating(courseID);
-            //setData(courseTitleLabel.getText(), mnemonicAndNumberLabel.getText(), String.valueOf(dbDriver.getCourseByCourseID(courseID).getAverageRating()));
-            dbDriver.commit();
-            Platform.runLater(() -> {
-                errorMessage.setText("Review Edited!");
-            });
+            var ratingText = inputRating.getText();
+
+
+            // Agent: ChatGPT
+            // Usage: Asked how to check if field is filled or not
+            // Check if inputComment is not empty before using its value
+            var comment = inputComment.getText().isEmpty() ? null : inputComment.getText();
+
+
+            if(!checkForDecimals(ratingText) && ratingText.matches("\\d+")) {
+                var rating = Integer.parseInt(inputRating.getText());
+                if (comment != null && isValidRating(rating)) {
+                    dbDriver.connect();
+                    dbDriver.editReview(userID, courseID,inputComment.getText(), inputRating.getText() );
+                    dbDriver.updateAverageRating(courseID);
+                    dbDriver.commit();
+                    dbDriver.disconnect();
+                    openCourseReviewScene();
+                } else if (comment == null && isValidRating(rating)) {
+                    dbDriver.connect();
+                    dbDriver.editReview(userID, courseID,inputComment.getText(), inputRating.getText() );
+                    dbDriver.updateAverageRating(courseID);
+                    dbDriver.commit();
+                    dbDriver.disconnect();
+                    openCourseReviewScene();
+                } else if (!isValidRating(rating)) {
+                    Platform.runLater(() -> {
+                        errorMessage.setText("Rating must be a whole number integer between 1 and 5");
+                    });
+                }
+            }else{
+                Platform.runLater(() -> {
+                    errorMessage.setText("Rating must be a whole number integer between 1 and 5");
+                });
+            }
+
 
         } catch (SQLException e) {
             throw e;
@@ -213,9 +241,8 @@ public class AddReviewController {
                     dbDriver.commit();
                     inputComment.clear();
                     inputRating.clear();
-                    Platform.runLater(() -> {
-                        errorMessage.setText("Review Added!");
-                    });
+                    dbDriver.disconnect();
+                    openCourseReviewScene();
                 } else if (comment == null && isValidRating(rating)) {
                     Review review = new Review(userID, courseID, rating);
                     dbDriver.addReview(review);
@@ -223,9 +250,8 @@ public class AddReviewController {
                     dbDriver.commit();
                     inputComment.clear();
                     inputRating.clear();
-                    Platform.runLater(() -> {
-                        errorMessage.setText("Review Added!");
-                    });
+                    dbDriver.disconnect();
+                    openCourseSearchScene();
                 } else if (!isValidRating(rating)) {
                     Platform.runLater(() -> {
                         errorMessage.setText("Rating must be a whole number integer between 1 and 5");
