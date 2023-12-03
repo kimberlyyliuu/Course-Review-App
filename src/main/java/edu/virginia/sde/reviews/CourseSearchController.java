@@ -105,10 +105,24 @@ public class CourseSearchController {
         try {
             List<Course> courses = dbDriver.getAllCourses(); // Retrieve the list of courses from the database
 
-            // Agent: ChatGPT
-            // Usage: Help making courses clickable
             ObservableList<Course> observableCourseList = FXCollections.observableList(courses);
             courseTableView.setItems(observableCourseList);
+            //Agent: ChatGPT
+            //Usage: Asked how to display average rating column to 2 decimal places
+            TableColumn<Course, Double> averageRatingColumn = (TableColumn<Course, Double>) courseTableView.getColumns().get(3); // Assuming 3 is the index of the "Average Rating" column
+            averageRatingColumn.setCellFactory(tc -> new TableCell<>() {
+                @Override
+                protected void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                    } else {
+                        setText(String.format("%.2f", item));
+                    }
+                }
+            });
+            // Agent: ChatGPT
+            // Usage: Help making courses clickable
             courseTableView.setOnMouseClicked(event -> {
                 Course selectedCourse = courseTableView.getSelectionModel().getSelectedItem();
                 if(selectedCourse!= null){
