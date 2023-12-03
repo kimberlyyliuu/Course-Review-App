@@ -66,7 +66,18 @@ public class NewUserController {
                     }
                     newUserInitialize();
                 });
-            } else if (!dbDriver.checkUserExists(username) && dbDriver.isValidPassword(password)) {
+            } else if (username == null || username.isEmpty()){
+                    Platform.runLater(() -> {
+                        errorMessage.setText("Username cannot be empty");
+                        try {
+                            dbDriver.disconnect();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                        newUserInitialize();
+                    });
+                }
+             else if (!dbDriver.checkUserExists(username) && dbDriver.isValidPassword(password)) {
                 User newUser = new User(username, password);
                 activeUser = new User(username, password);
                 dbDriver.addUser(newUser);

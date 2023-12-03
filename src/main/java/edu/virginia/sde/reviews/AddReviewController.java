@@ -122,7 +122,7 @@ public class AddReviewController {
                 int rating = (int) rate;
                 inputRating.setText(String.valueOf(rating));
                 inputComment.setText(dbDriver.loadCommentbyUserID(userID, courseID));
-                submitReviewButton.setText("Edit Review");
+                submitReviewButton.setText("Save Review");
                 screentitle.setText("Edit Review");
             }
             dbDriver.disconnect();

@@ -162,7 +162,7 @@ public class AddCourseController {
             // Stage and new scene for new user
             Stage stage = (Stage) backtoCourseSearchButton.getScene().getWindow();
             stage.setScene(newScene);
-            stage.setTitle("Course Reviews");
+            stage.setTitle("Course Search");
             stage.setScene(newScene);
             stage.show();
             CourseSearchController controller = loader.getController();
