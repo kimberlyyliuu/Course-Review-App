@@ -677,29 +677,6 @@ public class DatabaseDriver {
         }
     }
 
-
-    public boolean courseHasReviews(int courseID) throws SQLException{
-        if(connection.isClosed()) {
-            throw new IllegalStateException("Connection is not open.");
-        }
-        try{
-            var statement = connection.prepareStatement("SELECT count(*) FROM Reviews WHERE  CourseID = ?");
-            statement.setString(1, String.valueOf(courseID));
-
-            try (var resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getInt(1) > 0;
-                } else {
-                    // No one reviewed
-                    return false;
-                }
-            }
-        } catch (SQLException e){
-            rollback();
-            throw e;
-        }
-    }
-
     public Double loadRatingbyUserID(int userID, int courseID) throws SQLException{
         if(connection.isClosed()) {
             connect();

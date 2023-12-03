@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.NewUserController" style="-fx-background-color: #FFFFFF;">
+<AnchorPane prefHeight="700" prefWidth="1200.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.NewUserController">
     <children>
         <Label alignment="TOP_CENTER" layoutX="291.0" layoutY="14.0" text="Welcome to Course Review" textFill="#004dff">
             <font>
@@ -27,7 +27,7 @@
                 <Font name="Microsoft Sans Serif" size="26.0" />
             </font>
         </Label>
-        <Button fx:id="createUserButton" layoutX="674.0" layoutY="457.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="90.0" prefWidth="246.0" text="Create New User">
+        <Button fx:id="createUserButton" layoutX="674.0" layoutY="457.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="90.0" prefWidth="246.0" text="Create New User" textFill="#0d00ff">
             <font>
                 <Font name="Cambria" size="21.0" />
             </font></Button>
@@ -42,12 +42,12 @@
                 <Font name="Cambria" size="26.0" />
             </font>
         </Label>
-        <Button fx:id="exitButton" layoutX="556.0" layoutY="626.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="42.0" prefWidth="148.0" text="Close App">
+        <Button fx:id="exitButton" layoutX="556.0" layoutY="626.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="42.0" prefWidth="148.0" text="Close App" textFill="#001eff">
             <font>
                 <Font name="Cambria" size="22.0" />
             </font>
         </Button>
-      <Button fx:id="backToLoginButton" layoutX="356.0" layoutY="457.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="90.0" prefWidth="246.0" text="Back To Login">
+      <Button fx:id="backToLoginButton" layoutX="356.0" layoutY="457.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="90.0" prefWidth="246.0" text="Back To Login" textFill="#001eff">
          <font>
             <Font name="Cambria" size="21.0" />
          </font>
