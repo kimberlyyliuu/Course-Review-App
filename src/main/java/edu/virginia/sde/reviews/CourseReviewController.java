@@ -56,7 +56,7 @@ public class CourseReviewController {
         if(course.getAverageRating() < 1){
             averageRatingLabel.setText(" ");
         }else{
-            averageRatingLabel.setText(String.valueOf(course.getAverageRating()));
+            averageRatingLabel.setText(String.format("%.2f", course.getAverageRating()));
         }
         currentCourse = course;
         try {
