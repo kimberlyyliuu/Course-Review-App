@@ -138,7 +138,7 @@ public class LoginController {
             stage.show();
             NewUserController controller = loader.getController();
             controller.newUserInitialize();
-            System.out.println("Stage set, switching now");
+            //System.out.println("Stage set, switching now");
         } catch (IOException e) {
             e.printStackTrace();
         }
