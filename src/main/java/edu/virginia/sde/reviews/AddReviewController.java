@@ -157,7 +157,7 @@ public class AddReviewController {
                     openCourseReviewScene();
                 } else if (comment == null && isValidRating(rating)) {
                     dbDriver.connect();
-                    dbDriver.editReview(userID, courseID,inputComment.getText(), inputRating.getText() );
+                    dbDriver.editReview(userID, courseID,"", inputRating.getText() );
                     dbDriver.updateAverageRating(courseID);
                     dbDriver.commit();
                     dbDriver.disconnect();
