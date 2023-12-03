@@ -53,7 +53,11 @@ public class CourseReviewController {
     public void setData(Course course, User user){
         courseTitleLabel.setText(course.getCourseName());
         mnemonicAndNumberLabel.setText(course.getMnemonic() + " " + course.getCourseNumber());
-        averageRatingLabel.setText(String.valueOf(course.getAverageRating()));
+        if(course.getAverageRating() < 1){
+            averageRatingLabel.setText(" ");
+        }else{
+            averageRatingLabel.setText(String.valueOf(course.getAverageRating()));
+        }
         currentCourse = course;
         try {
             loadReviews(course);
