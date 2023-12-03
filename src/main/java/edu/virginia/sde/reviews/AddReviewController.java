@@ -64,7 +64,7 @@ public class AddReviewController {
                     try {
 
                         handleUpdateReview();
-                        openCourseSearchScene();
+                       // openCourseSearchScene();
 
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
@@ -75,7 +75,7 @@ public class AddReviewController {
                     try {
 
                         handleAddReview();
-                        openCourseSearchScene();
+                       // openCourseSearchScene();
 
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
@@ -192,7 +192,8 @@ public class AddReviewController {
         var mnemonic = parts[0];
         var number = parts[1];
 
-        var rating = Integer.parseInt(inputRating.getText());
+        var ratingText = inputRating.getText();
+
 
         // Agent: ChatGPT
         // Usage: Asked how to check if field is filled or not
@@ -203,34 +204,37 @@ public class AddReviewController {
             dbDriver.connect();
             dbDriver.createTables();
 
-//            var userID = dbDriver.getUserIDbyusername(activeUser.getUsername());
-//            var courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(courseTitleLabel.getText(), mnemonic, number);
-            if (comment != null && isValidRating(rating)) {
-                Review review = new Review(userID, courseID, rating, comment);
-                dbDriver.addReview(review);
-                dbDriver.updateAverageRating(courseID);
-
-                //setData(courseTitleLabel.getText(), mnemonicAndNumberLabel.getText(), String.valueOf(dbDriver.getCourseByCourseID(courseID).getAverageRating()));
-                dbDriver.commit();
-                inputComment.clear();
-                inputRating.clear();
+            if(!checkForDecimals(ratingText) && ratingText.matches("\\d+")) {
+                var rating = Integer.parseInt(inputRating.getText());
+                if (comment != null && isValidRating(rating)) {
+                    Review review = new Review(userID, courseID, rating, comment);
+                    dbDriver.addReview(review);
+                    dbDriver.updateAverageRating(courseID);
+                    dbDriver.commit();
+                    inputComment.clear();
+                    inputRating.clear();
+                    Platform.runLater(() -> {
+                        errorMessage.setText("Review Added!");
+                    });
+                } else if (comment == null && isValidRating(rating)) {
+                    Review review = new Review(userID, courseID, rating);
+                    dbDriver.addReview(review);
+                    dbDriver.updateAverageRating(courseID);
+                    dbDriver.commit();
+                    inputComment.clear();
+                    inputRating.clear();
+                    Platform.runLater(() -> {
+                        errorMessage.setText("Review Added!");
+                    });
+                } else if (!isValidRating(rating)) {
+                    Platform.runLater(() -> {
+                        errorMessage.setText("Rating must be a whole number integer between 1 and 5");
+                    });
+                }
+            }
+            else{
                 Platform.runLater(() -> {
-                    errorMessage.setText("Review Added!");
-                });
-            } else if (comment == null) {
-                Review review = new Review(userID, courseID, rating);
-                dbDriver.addReview(review);
-                dbDriver.updateAverageRating(courseID);
-                //setData(courseTitleLabel.getText(), mnemonicAndNumberLabel.getText(), String.valueOf(dbDriver.getCourseByCourseID(courseID).getAverageRating()));
-                dbDriver.commit();
-                inputComment.clear();
-                inputRating.clear();
-                Platform.runLater(() -> {
-                    errorMessage.setText("Review Added!");
-                });
-            } else if (!isValidRating(rating)) {
-                Platform.runLater(() -> {
-                    errorMessage.setText("Rating must be between 1 and 5");
+                    errorMessage.setText("Rating must be a whole number integer between 1 and 5");
                 });
             }
 
@@ -246,12 +250,19 @@ public class AddReviewController {
         }
     }
 
+    private boolean checkForDecimals(String ratingText){
+        return ratingText.contains(".");
+    }
+
+
 
     private boolean isValidRating(Integer ratingText){
         try {
             int rating = Integer.parseInt(String.valueOf(ratingText));
 
-            // Check if the rating is within the valid range (1 to 5)
+            //Check # is whole number integer
+
+            //Check if the rating is within the valid range (1 to 5)
             if (rating >= 1 && rating <= 5) {
                 return true;
             } else {
@@ -261,7 +272,6 @@ public class AddReviewController {
                 return false;
             }
         } catch (NumberFormatException e) {
-            // Handle the case where the input is not a valid integer
             return false;
         }
     }

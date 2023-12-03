@@ -68,7 +68,6 @@ public class CourseReviewController {
         try{
             dbDriver.connect();
             userID = dbDriver.getUserIDbyusername(user.getUsername());
-            System.out.print(user.getUsername());
             courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(currentCourse.getCourseName(), currentCourse.getMnemonic(), String.valueOf(currentCourse.getCourseNumber()));
             var userReviewedCourse = dbDriver.userIDAlreadyReviewedCourse(userID, courseID);
             deleteReviewButton.setVisible(userReviewedCourse);
