@@ -51,6 +51,9 @@ public class Course {
     public String toString(){
         // Agent: ChatGPT
         // Usage: Formatting flags
+        if(averageRating < 1){
+            return String.format("%s %04d  |  %s  |  Average Rating: ", mnemonic, courseNumber, courseName);
+        }
         return String.format("%s %04d  |  %s  |  Average Rating: %.2f", mnemonic, courseNumber, courseName, averageRating);
     }
 
