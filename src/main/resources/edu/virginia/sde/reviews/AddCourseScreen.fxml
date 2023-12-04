@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.AddCourseController" style="-fx-background-color: #FFFFFF;">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.AddCourseController">
    <children>
       <Label layoutX="482.0" layoutY="22.0" prefHeight="78.0" prefWidth="380.0" text="Add a Course" textFill="#004dff">
          <font>
@@ -40,7 +40,7 @@
          <font>
             <Font name="Cambria" size="17.0" />
          </font></Button>
-      <Label fx:id="errorMessage" alignment="TOP_CENTER" layoutX="-3.0" layoutY="224.0" prefHeight="20.0" prefWidth="1206.0" textFill="#ea0909">
+      <Label fx:id="errorMessage" alignment="CENTER" layoutX="62.0" layoutY="225.0" prefHeight="20.0" prefWidth="1075.0" textFill="#ea0909">
          <font>
             <Font name="Roboto Light" size="14.0" />
          </font>

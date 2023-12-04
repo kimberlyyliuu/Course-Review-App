@@ -100,8 +100,8 @@ public class AddCourseController {
     }
 
     private boolean isValidCourseTitle(String courseTitle) {
-        if (courseTitle.length() > 50) {
-            Platform.runLater(() -> errorMessage.setText("Please make sure the entered course name is no more than 50 characters long"));
+        if (courseTitle.length() > 50 || courseTitle.length() < 1) {
+            Platform.runLater(() -> errorMessage.setText("Please make sure the entered course name is between 1 and 50 characters long"));
             return false;
         } else {
             return true;
