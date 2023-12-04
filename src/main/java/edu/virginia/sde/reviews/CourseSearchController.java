@@ -31,8 +31,8 @@ public class CourseSearchController {
     private Button myReviewsButton;
     @FXML
     private Button logoutButton;
-    private User activeUser = new User("", "");
-    private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
+    private final User activeUser = new User("", "");
+    private final DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
     @FXML
     protected void courseSearchInitialize(){
         // Agent: ChatGPT

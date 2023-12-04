@@ -37,13 +37,13 @@ public class AddReviewController {
     private Button backToCourseReviewButton;
     private int userID;
     private int courseID;
-    private User activeUser = new User("", "");
+    private final User activeUser = new User("", "");
     public void setActiveUser(User user){
         activeUser.setUsername(user.getUsername());
         activeUser.setPassword(user.getPassword());
     }
 
-    private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
+    private final DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
 
     @FXML
     protected void initialize(){

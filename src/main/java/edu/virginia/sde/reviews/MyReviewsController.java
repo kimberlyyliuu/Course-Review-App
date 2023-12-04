@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
@@ -22,13 +21,7 @@ public class MyReviewsController {
     private Button backToCourseSearchButton;
     @FXML
     private TableView<MyReviewsResult> tableView;
-    @FXML
-    private TableColumn mnemonicColumn;
-    @FXML
-    private TableColumn numberColumn;
-    @FXML
-    private TableColumn ratingColumn;
-    private User activeUser = new User("", "");
+    private final User activeUser = new User("", "");
     public void setActiveUser(User user){
         activeUser.setUsername(user.getUsername());
         activeUser.setPassword(user.getPassword());
