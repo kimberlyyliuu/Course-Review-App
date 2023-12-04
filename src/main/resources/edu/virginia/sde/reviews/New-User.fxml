@@ -39,7 +39,7 @@
       </Label>
         <Label fx:id="errorMessage" alignment="TOP_CENTER" layoutX="357.0" layoutY="404.0" prefHeight="38.0" prefWidth="554.0" textAlignment="CENTER">
             <font>
-                <Font name="Cambria" size="26.0" />
+                <Font name="Cambria" size="24.0" />
             </font>
         </Label>
         <Button fx:id="exitButton" layoutX="556.0" layoutY="626.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="42.0" prefWidth="148.0" text="Close App" textFill="#001eff">

@@ -42,9 +42,9 @@
             <Font name="Microsoft Sans Serif" size="26.0" />
          </font>
       </Label>
-      <Label fx:id="errorMessage" alignment="CENTER" layoutX="480.0" layoutY="394.0" prefHeight="0.0" prefWidth="318.0">
+      <Label fx:id="errorMessage" alignment="TOP_CENTER" layoutX="471.0" layoutY="409.0" prefHeight="0.0" prefWidth="318.0">
          <font>
-            <Font name="Roboto Light" size="26.0" />
+            <Font name="Cambria" size="23.0" />
          </font>
       </Label>
       <Button fx:id="exitButton" layoutX="556.0" layoutY="626.0" mnemonicParsing="false" onAction="#initialize" prefHeight="42.0" prefWidth="148.0" text="Close App" textFill="#002bff">
