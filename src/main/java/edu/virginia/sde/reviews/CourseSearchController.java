@@ -116,7 +116,10 @@ public class CourseSearchController {
                     super.updateItem(item, empty);
                     if (item == null || empty) {
                         setText(null);
-                    } else {
+                    } else if(item < 1) {
+                        setText("");
+                    }
+                    else {
                         setText(String.format("%.2f", item));
                     }
                 }
