@@ -32,7 +32,7 @@
             <Font name="Roboto Light" size="16.0" />
          </font>
       </Label>
-      <Button fx:id="backtoCourseSearchButton" layoutX="538.0" layoutY="144.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="190.0" text="Back to Search" textFill="#1100ff">
+      <Button fx:id="backToCourseSearchButton" layoutX="538.0" layoutY="144.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="190.0" text="Back to Search" textFill="#1100ff">
          <font>
             <Font name="Cambria" size="17.0" />
          </font></Button>

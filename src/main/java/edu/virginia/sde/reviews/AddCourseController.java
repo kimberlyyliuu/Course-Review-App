@@ -1,22 +1,15 @@
 package edu.virginia.sde.reviews;
 
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.collections.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AddCourseController {
     @FXML
@@ -30,7 +23,7 @@ public class AddCourseController {
     @FXML
     private Button addButton;
     @FXML
-    private Button backtoCourseSearchButton;
+    private Button backToCourseSearchButton;
     @FXML
     private Label errorMessage;
 
@@ -42,7 +35,7 @@ public class AddCourseController {
 
     @FXML
     protected void addCourseInitialize(){
-        backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
+        backToCourseSearchButton.setOnAction(event -> openCourseSearchScene());
         addButton.setOnAction(event -> {
             try {
                 handleAddCourse();
@@ -160,7 +153,7 @@ public class AddCourseController {
             // Create a new scene
             Scene newScene = new Scene(root);
             // Stage and new scene for new user
-            Stage stage = (Stage) backtoCourseSearchButton.getScene().getWindow();
+            Stage stage = (Stage) backToCourseSearchButton.getScene().getWindow();
             stage.setScene(newScene);
             stage.setTitle("Course Search");
             stage.setScene(newScene);

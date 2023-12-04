@@ -37,7 +37,7 @@
             <Font name="Cambria" size="21.0" />
          </font></Button>
       <PasswordField fx:id="passwordField" layoutX="479.0" layoutY="340.0" prefHeight="51.0" prefWidth="318.0" />
-      <Label fx:id="userNotExist" alignment="CENTER" layoutX="480.0" layoutY="396.0" prefHeight="0.0" prefWidth="318.0">
+      <Label alignment="CENTER" layoutX="480.0" layoutY="396.0" prefHeight="0.0" prefWidth="318.0">
          <font>
             <Font name="Microsoft Sans Serif" size="26.0" />
          </font>

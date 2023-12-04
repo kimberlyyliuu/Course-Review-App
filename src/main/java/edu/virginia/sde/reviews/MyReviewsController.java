@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,7 +19,7 @@ import java.util.List;
 public class MyReviewsController {
 
     @FXML
-    private Button backtoCourseSearchButton;
+    private Button backToCourseSearchButton;
     @FXML
     private TableView<MyReviewsResult> tableView;
     @FXML
@@ -39,11 +38,11 @@ public class MyReviewsController {
 
 
     protected void myReviewsIntialize(){
-        backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
+        backToCourseSearchButton.setOnAction(event -> openCourseSearchScene());
         populateTable();
 
         // Set up the button action
-        backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
+        backToCourseSearchButton.setOnAction(event -> openCourseSearchScene());
 
         // Set up the click action on the table rows
         tableView.setOnMouseClicked(event -> {
@@ -86,7 +85,7 @@ public class MyReviewsController {
             Scene newScene = new Scene(root);
 
             // Stage and new scene for new user
-            Stage stage = (Stage) backtoCourseSearchButton.getScene().getWindow();
+            Stage stage = (Stage) backToCourseSearchButton.getScene().getWindow();
             stage.setScene(newScene);
             stage.setTitle("Course Review");
             stage.show();
@@ -105,7 +104,7 @@ public class MyReviewsController {
             // Create a new scene
             Scene newScene = new Scene(root);
             // Stage and new scene for new user
-            Stage stage = (Stage) backtoCourseSearchButton.getScene().getWindow();
+            Stage stage = (Stage) backToCourseSearchButton.getScene().getWindow();
             stage.setScene(newScene);
             stage.setTitle("Course Search");
             stage.setScene(newScene);

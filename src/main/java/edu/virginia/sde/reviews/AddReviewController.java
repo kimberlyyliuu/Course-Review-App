@@ -29,12 +29,12 @@ public class AddReviewController {
     @FXML
     private Button submitReviewButton;
     @FXML
-    private Label screentitle;
+    private Label screenTitle;
 
     @FXML
-    private Button backtoCourseSearchButton;
+    private Button backToCourseSearchButton;
     @FXML
-    private Button backtoCourseReviewButton;
+    private Button backToCourseReviewButton;
     private int userID;
     private int courseID;
     private User activeUser = new User("", "");
@@ -47,8 +47,8 @@ public class AddReviewController {
 
     @FXML
     protected void initialize(){
-        backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
-        backtoCourseReviewButton.setOnAction(event -> openCourseReviewScene());
+        backToCourseSearchButton.setOnAction(event -> openCourseSearchScene());
+        backToCourseReviewButton.setOnAction(event -> openCourseReviewScene());
         try {
             userID = getUserID();
             courseID = getCourseID();
@@ -117,7 +117,7 @@ public class AddReviewController {
                 inputRating.setText(String.valueOf(rating));
                 inputComment.setText(dbDriver.loadCommentbyUserID(userID, courseID));
                 submitReviewButton.setText("Save Review");
-                screentitle.setText("Edit Review");
+                screenTitle.setText("Edit Review");
             }
             dbDriver.disconnect();
         } catch (SQLException e) {
@@ -282,7 +282,7 @@ public class AddReviewController {
             // Create a new scene
             Scene newScene = new Scene(root);
             // Stage and new scene for new user
-            Stage stage = (Stage) backtoCourseSearchButton.getScene().getWindow();
+            Stage stage = (Stage) backToCourseSearchButton.getScene().getWindow();
             stage.setScene(newScene);
             stage.setTitle("Course Search");
             stage.setScene(newScene);
@@ -303,7 +303,7 @@ public class AddReviewController {
             // Create a new scene
             Scene newScene = new Scene(root);
             // Stage and new scene for new user
-            Stage stage = (Stage) backtoCourseReviewButton.getScene().getWindow();
+            Stage stage = (Stage) backToCourseReviewButton.getScene().getWindow();
             stage.setScene(newScene);
             stage.setTitle("Course Review");
             stage.setScene(newScene);
