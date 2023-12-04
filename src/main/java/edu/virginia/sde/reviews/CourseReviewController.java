@@ -27,7 +27,7 @@ public class CourseReviewController {
     @FXML
     private Button deleteReviewButton;
     @FXML
-    private Button backtoCourseSearchButton;
+    private Button backToCourseSearchButton;
     @FXML
     private TableView<Review> reviewsTableView;
 
@@ -45,7 +45,7 @@ public class CourseReviewController {
 
     @FXML
     protected void initialize() {
-        backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
+        backToCourseSearchButton.setOnAction(event -> openCourseSearchScene());
         addReviewButton.setOnAction(event -> openAddReviewControllerScene());
     }
 
@@ -105,7 +105,7 @@ public class CourseReviewController {
             // Create a new scene
             Scene newScene = new Scene(root);
             // Stage and new scene for new user
-            Stage stage = (Stage) backtoCourseSearchButton.getScene().getWindow();
+            Stage stage = (Stage) backToCourseSearchButton.getScene().getWindow();
             stage.setScene(newScene);
             stage.setTitle("Course Search");
             stage.setScene(newScene);

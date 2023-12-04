@@ -7,19 +7,19 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseSearchController" style="-fx-background-color: #FFFFFF;">
    <children>
-      <Label fx:id="mnemonicLabel" layoutX="24.0" layoutY="28.0" prefHeight="82.0" prefWidth="251.0" text="Course Mnemonic" textFill="#0044ff">
+      <Label layoutX="24.0" layoutY="28.0" prefHeight="82.0" prefWidth="251.0" text="Course Mnemonic" textFill="#0044ff">
          <font>
             <Font name="Cambria" size="23.0" />
          </font>
       </Label>
-      <Label fx:id="numberLabel" layoutX="445.0" layoutY="18.0" prefHeight="108.0" prefWidth="243.0" text="Course Code" textFill="#0004ff">
+      <Label layoutX="445.0" layoutY="18.0" prefHeight="108.0" prefWidth="243.0" text="Course Code" textFill="#0004ff">
          <font>
             <Font name="Cambria" size="23.0" />
          </font>
       </Label>
       <TextField fx:id="courseMnemonic" layoutX="216.0" layoutY="50.0" prefHeight="43.0" prefWidth="215.0" />
       <TextField fx:id="courseNumber" layoutX="579.0" layoutY="50.0" prefHeight="43.0" prefWidth="215.0" />
-      <Label fx:id="titlelabel" layoutX="811.0" layoutY="18.0" prefHeight="108.0" prefWidth="243.0" text="Course Title" textFill="#001eff">
+      <Label layoutX="811.0" layoutY="18.0" prefHeight="108.0" prefWidth="243.0" text="Course Title" textFill="#001eff">
          <font>
             <Font name="Cambria" size="22.0" />
          </font>

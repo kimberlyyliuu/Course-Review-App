@@ -18,11 +18,11 @@
 
     <TextField fx:id="inputRating" layoutX="561.0" layoutY="256.0" prefHeight="26.0" prefWidth="34.0" />
 
-    <Label fx:id="screentitle" alignment="TOP_CENTER" layoutX="12.0" layoutY="22.0" prefHeight="78.0" prefWidth="1182.0" text="Add Review" textAlignment="CENTER" textFill="#004dff">
+    <Label fx:id="screenTitle" alignment="TOP_CENTER" layoutX="12.0" layoutY="22.0" prefHeight="78.0" prefWidth="1182.0" text="Add Review" textAlignment="CENTER" textFill="#004dff">
         <font>
             <Font name="Cambria" size="56.0" />
         </font></Label>
-    <Button fx:id="backtoCourseSearchButton" layoutX="62.0" layoutY="45.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Back to Search" textFill="#1100ff">
+    <Button fx:id="backToCourseSearchButton" layoutX="62.0" layoutY="45.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Back to Search" textFill="#1100ff">
         <font>
             <Font name="Cambria" size="17.0" />
         </font></Button>
@@ -46,7 +46,7 @@
             <Font name="Roboto Light" size="16.0" />
         </font>
     </Label>
-    <Button fx:id="backtoCourseReviewButton" layoutX="338.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Back to Reviews" textFill="#1100ff">
+    <Button fx:id="backToCourseReviewButton" layoutX="338.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Back to Reviews" textFill="#1100ff">
         <font>
             <Font name="Cambria" size="17.0" />
         </font></Button>
