@@ -5,7 +5,7 @@
 1) Ashley Sokol, mqx4vk, mqx4vk
 2) Mia Ark, pzc4aq, MiaLA55
 3) Kimberly Liu, hfx6mh, kimberlyyliuu
-4) Name, netid, [GitHub profile name]
+4) Haley Andres, vwz2wb, haleyandres
 
 ## To Run
 
@@ -17,27 +17,35 @@ List the primary contributions of each author. It is recommended to update this 
 
 ### Ashley Sokol
 
-* Author 1 contributions
-* as a bulleted list
-* each line starts with an asterisk and a space
+* Implementation of New User Scene fxml and controller
+* Some implementation of Login Scene, Course Search
+* Implementation of Course Search function
+* Contributed dynamic population logic for textfields, 
+* Completed various Integration Testing, ensured instruction guidelines were adhered to
 
 ### Mia Ark
 
-* Author 2 contributions
-* as a bulleted list
-* each line starts with an asterisk and a space
+* Database Driver general methods (i.e. createTables, clearTables, getters)
+* Helped implement LoginController
+* Implemented AddCourseController
+* Implemented the course search screen to show clickable course objects
+* Delete button functionality
 
 ### Kimberly Liu
 
 * Implemented AddReviewController methods and other supplementary methods in Database Driver
-* Wrote Object Classes
-* each line starts with an asterisk and a space
+* Modified AddReviewController to include EditReview and averageRating as well
+* Wrote Object Classes (User, Review, Course)
+* Started basic foundation for MyReviewsScreen 
+* Tested and debugged along the way
 
-### [Author 4 - replace this with their name]
+### Haley Andres
 
-* Author 4 contributions
-* as a bulleted list
-* each line starts with an asterisk and a space
+* Helped implement methods in DatabaseDriver
+* Created table view for CourseReview scene
+* Populated data from database into table views in MyReview, CourseSearch, and CourseReview scenes
+* Helped implement search functionality in Course Search scene
+* Various bug fixes
 
 ## Issues
 

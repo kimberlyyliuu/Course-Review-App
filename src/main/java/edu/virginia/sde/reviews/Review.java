@@ -1,10 +1,8 @@
 package edu.virginia.sde.reviews;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.StringProperty;
 
 import java.sql.Timestamp;
-import java.util.Date;
+
 
 public class Review {
     private final int userID;

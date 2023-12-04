@@ -8,11 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.collections.*;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CourseSearchController {
@@ -23,7 +20,7 @@ public class CourseSearchController {
     @FXML
     private TextField courseTitle;
     @FXML
-    private ListView<Course> courseListView;
+    private TableView<Course> courseTableView;
     @FXML
     private Button exitButton;
     @FXML
@@ -73,35 +70,31 @@ public class CourseSearchController {
 
 
         //Clickable courses
-        courseListView.setOnMouseClicked(event -> {
-            Course selectedCourse = courseListView.getSelectionModel().getSelectedItem();
-            if(selectedCourse!=null){
-                try {
+        courseTableView.setOnMouseClicked(event -> {
+            Course selectedCourse = courseTableView.getSelectionModel().getSelectedItem();
+            if(selectedCourse!=null) {
+                try{
                     handleCourseClick(selectedCourse);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
             }
         });
-        //System.out.println(activeUser.getUsername());
-
     }
 
     private void handleCourseClick(Course selectedCourse) throws SQLException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("courseReviewScreen.fxml"));
             Parent root = loader.load();
-
             CourseReviewController controller = loader.getController();
-            controller.setData(selectedCourse);
             controller.setActiveUser(this.activeUser);
+            controller.setData(selectedCourse, activeUser);
 
+            Stage stage = (Stage) courseTableView.getScene().getWindow();
             Scene newScene = new Scene(root);
-            Stage stage = (Stage) courseListView.getScene().getWindow();
             stage.setScene(newScene);
             stage.setTitle("Course Review");
             stage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -112,32 +105,33 @@ public class CourseSearchController {
         try {
             List<Course> courses = dbDriver.getAllCourses(); // Retrieve the list of courses from the database
 
-            // Agent: ChatGPT
-            // Usage: Help making courses clickable
-            courseListView.setCellFactory(param -> new ListCell<Course>() {
+            ObservableList<Course> observableCourseList = FXCollections.observableList(courses);
+            courseTableView.setItems(observableCourseList);
+            //Agent: ChatGPT
+            //Usage: Asked how to display average rating column to 2 decimal places
+            TableColumn<Course, Double> averageRatingColumn = (TableColumn<Course, Double>) courseTableView.getColumns().get(3); // Assuming 3 is the index of the "Average Rating" column
+            averageRatingColumn.setCellFactory(tc -> new TableCell<>() {
                 @Override
-                protected void updateItem(Course item, boolean empty){
+                protected void updateItem(Double item, boolean empty) {
                     super.updateItem(item, empty);
-
-                    if(empty || item == null){
+                    if (item == null || empty) {
                         setText(null);
+                    } else if(item < 1) {
+                        setText("");
                     }
-                    else{
-                        setText(item.toString());
+                    else {
+                        setText(String.format("%.2f", item));
                     }
                 }
             });
-            // Update the existing courseListView with the new data
-            ObservableList<Course> observableCourseList = FXCollections.observableList(courses);
-            courseListView.setItems(observableCourseList);
-
-            courseListView.setOnMouseClicked(event -> {
-                Course selectedCourse = courseListView.getSelectionModel().getSelectedItem();
-                if(selectedCourse != null){
+            // Agent: ChatGPT
+            // Usage: Help making courses clickable
+            courseTableView.setOnMouseClicked(event -> {
+                Course selectedCourse = courseTableView.getSelectionModel().getSelectedItem();
+                if(selectedCourse!= null){
                     try{
                         handleCourseClick(selectedCourse);
-                    }
-                    catch(SQLException e){
+                    } catch(SQLException e) {
                         throw new RuntimeException(e);
                     }
                 }
@@ -188,7 +182,8 @@ public class CourseSearchController {
         // For simplicity, assuming all courses are shown in this example
         List<Course> coursesList = dbDriver.getSearchedCourses(subject, number, title);
         ObservableList<Course> observableCourseList = FXCollections.observableList(coursesList);
-        courseListView.setItems(observableCourseList);
+        courseTableView.setItems(observableCourseList);
+        dbDriver.disconnect();
     }
 
     /**
@@ -233,9 +228,6 @@ public class CourseSearchController {
             e.printStackTrace();
         }
     }
-
-
-
 
 }
 

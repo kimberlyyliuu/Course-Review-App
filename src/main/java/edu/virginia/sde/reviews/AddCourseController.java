@@ -25,22 +25,7 @@ public class AddCourseController {
     private TextField courseNumber;
     @FXML
     private TextField courseTitle;
-    @FXML
-    private Label MnemonicLabel;
-    @FXML
-    private Label numberLabel;
-    @FXML
-    private Label titlelabel;
-    @FXML
-    private Label ratingLabel;
-    @FXML
-    private TextField ratingTextfield;
-    @FXML
-    private Label commentsLabel;
-    @FXML
-    private TextField commentsTextfield;
 
-    private ListView<Course> courseListView;
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
     @FXML
     private Button addButton;
@@ -177,7 +162,7 @@ public class AddCourseController {
             // Stage and new scene for new user
             Stage stage = (Stage) backtoCourseSearchButton.getScene().getWindow();
             stage.setScene(newScene);
-            stage.setTitle("Course Reviews");
+            stage.setTitle("Course Search");
             stage.setScene(newScene);
             stage.show();
             CourseSearchController controller = loader.getController();

@@ -40,37 +40,20 @@ public class MyReviewsController {
 
     protected void myReviewsIntialize(){
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
-
-        // Set up the columns
-        mnemonicColumn.setCellValueFactory(new PropertyValueFactory<>("courseMnemonic")); //I dont think this is correct, pls help
-        numberColumn.setCellValueFactory(new PropertyValueFactory<>("courseNumber"));//I dont think this is correct, pls help
-        ratingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));//I dont think this is correct, pls help
-
         populateTable();
 
         // Set up the button action
         backtoCourseSearchButton.setOnAction(event -> openCourseSearchScene());
 
         // Set up the click action on the table rows
-//        tableView.setOnMouseClicked(event -> {
-//            if (event.getClickCount() == 1) {
-//                MyReviewsResult selectedReview = tableView.getSelectionModel().getSelectedItem();
-//                if (selectedReview != null) {
-//                    openCourseReviewScene(selectedReview);
-//                }
-//            }
-//        });
-
-//        tableView.setOnMouseClicked(event -> {
-//            MyReviewsResult selectedReview = tableView.getSelectionModel().getSelectedItem();
-//            if(selectedReview!=null){
-//                try {
-//                    handleReviewClick(selectedReview);
-//                } catch (SQLException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        });
+        tableView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                MyReviewsResult selectedReview = tableView.getSelectionModel().getSelectedItem();
+                if (selectedReview != null) {
+                    openCourseReviewScene(selectedReview);
+                }
+            }
+        });
     }
 
     private void populateTable() {
@@ -86,26 +69,6 @@ public class MyReviewsController {
         }
     }
 
-//    private void handleReviewClick(MyReviewsResult selectedReviewResult) throws SQLException{
-//        try {
-//            //Course selectedReview = selectedReviewResult.getCourseByCourseID();
-//
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("courseReviewScreen.fxml"));
-//            Parent root = loader.load();
-//            CourseReviewController controller = loader.getController();
-//            controller.setData(selectedReviewResult);
-//            controller.setActiveUser(this.activeUser);
-//
-//            Stage stage = (Stage) tableView.getScene().getWindow();
-//            Scene newScene = new Scene(root);
-//            stage.setScene(newScene);
-//            stage.setTitle("Course Review");
-//            stage.show();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
 
     private void openCourseReviewScene(MyReviewsResult selectedReview) {
         try {
@@ -114,8 +77,10 @@ public class MyReviewsController {
 
             // Pass the selected review to the next controller
             CourseReviewController controller = loader.getController();
-//            controller.initialize(); need to pass course for selectedReview
-
+            databaseDriver.connect();
+            controller.setActiveUser(activeUser);
+            controller.setData(databaseDriver.getCourseForMyReviewResult(selectedReview), activeUser);
+            databaseDriver.disconnect();
 
             // Create a new scene
             Scene newScene = new Scene(root);
@@ -127,6 +92,8 @@ public class MyReviewsController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -140,14 +107,18 @@ public class MyReviewsController {
             // Stage and new scene for new user
             Stage stage = (Stage) backtoCourseSearchButton.getScene().getWindow();
             stage.setScene(newScene);
-            stage.setTitle("Course Reviews");
+            stage.setTitle("Course Search");
             stage.setScene(newScene);
             stage.show();
             CourseSearchController controller = loader.getController();
             controller.courseSearchInitialize();
+            controller.setActiveUser(activeUser);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
+
 
 }

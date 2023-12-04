@@ -10,10 +10,8 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 public class LoginController {
 
@@ -29,7 +27,7 @@ public class LoginController {
     private Button exitButton;
     @FXML
     private Label errorMessage;
-    //private User activeUser1 = new User("", "");;
+    private User activeUser1 = new User("", "");
 
     private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
 
@@ -77,14 +75,14 @@ public class LoginController {
             } else if (dbDriver.checkUserExists(username) && dbDriver.checkUserPassword(username,password)) {
                try {
                    dbDriver.commit();
-                   //activeUser1 = new User(username, password);
+                   activeUser1 = new User(username, password);
                    //System.out.println(activeUser.getUsername());
                    Platform.runLater(() -> {
                        errorMessage.setText("Logging In...");
                        // Introduce a delay before switching scenes
                        PauseTransition delay = new PauseTransition(Duration.seconds(2)); // Adjust the duration as needed
                        delay.setOnFinished(event -> {
-                           openCourseReviewScene();
+                           openCourseSearchScene();
                        });
                        delay.play();
 
@@ -114,6 +112,8 @@ public class LoginController {
             }
         } catch (SQLException e) {
             throw e;
+        } finally{
+            dbDriver.disconnect();
         }
     }
 
@@ -138,12 +138,12 @@ public class LoginController {
             stage.show();
             NewUserController controller = loader.getController();
             controller.newUserInitialize();
-            System.out.println("Stage set, switching now");
+            //System.out.println("Stage set, switching now");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    private void openCourseReviewScene() {
+    private void openCourseSearchScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseSearch.fxml"));
             Parent root = loader.load();

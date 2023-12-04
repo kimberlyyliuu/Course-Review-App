@@ -1,7 +1,6 @@
 package edu.virginia.sde.reviews;
 
 import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +26,8 @@ public class NewUserController {
     @FXML
     private Label passRequirements;
     @FXML
+    private Button backToLoginButton;
+    @FXML
     private Label errorMessage;
     @FXML
     private Button exitButton;
@@ -37,7 +38,13 @@ public class NewUserController {
     protected void newUserInitialize() {
         exitButton.setOnAction(event -> Platform.exit());
         createUserButton.setOnAction(event -> createNewUser());
-
+        backToLoginButton.setOnAction(event -> {
+            try {
+                returnLogInScene();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
     }
     private void createNewUser() {
@@ -59,7 +66,18 @@ public class NewUserController {
                     }
                     newUserInitialize();
                 });
-            } else if (!dbDriver.checkUserExists(username) && dbDriver.isValidPassword(password)) {
+            } else if (username == null || username.isEmpty()){
+                    Platform.runLater(() -> {
+                        errorMessage.setText("Username cannot be empty");
+                        try {
+                            dbDriver.disconnect();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                        newUserInitialize();
+                    });
+                }
+             else if (!dbDriver.checkUserExists(username) && dbDriver.isValidPassword(password)) {
                 User newUser = new User(username, password);
                 activeUser = new User(username, password);
                 dbDriver.addUser(newUser);
@@ -109,9 +127,7 @@ public class NewUserController {
             // Stage and new scene for new user
             Stage stage = (Stage) errorMessage.getScene().getWindow();
             stage.setScene(newScene);
-            CourseSearchController controller = loader.getController();
-            //controller.setActiveUser(this.activeUser);
-            controller.setActiveUser(new User(newUsernameField.getText() , newPasswordField.getText()));
+            LoginController controller = loader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }

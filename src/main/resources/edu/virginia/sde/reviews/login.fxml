@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.LoginController">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.LoginController">
    <children>
       <Label alignment="TOP_CENTER" layoutX="291.0" layoutY="14.0" text="Welcome to Course Review" textFill="#004dff">
          <font>
@@ -17,22 +17,22 @@
          </font>
       </Label>
       <TextField fx:id="usernameField" layoutX="480.0" layoutY="259.0" prefHeight="51.0" prefWidth="318.0" />
-      <Button fx:id="loginButton" layoutX="657.0" layoutY="457.0" mnemonicParsing="false" onAction="#initialize" prefHeight="90.0" prefWidth="246.0" text="Log-In">
+      <Button fx:id="loginButton" layoutX="657.0" layoutY="457.0" mnemonicParsing="false" onAction="#initialize" prefHeight="90.0" prefWidth="246.0" text="Log-In" textFill="#000dff">
          <font>
             <Font name="Cambria" size="22.0" />
          </font>
       </Button>
       <Label alignment="CENTER" layoutX="315.0" layoutY="259.0" prefHeight="51.0" prefWidth="148.0" text="Username">
          <font>
-            <Font name="Microsoft Sans Serif" size="26.0" />
+            <Font name="Roboto Light" size="25.0" />
          </font>
       </Label>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="285.0" layoutY="336.0" prefHeight="60.0" prefWidth="207.0" text="Password" textAlignment="CENTER">
          <font>
-            <Font name="Microsoft Sans Serif" size="26.0" />
+            <Font name="Roboto Light" size="26.0" />
          </font>
       </Label>
-      <Button fx:id="newUserButton" layoutX="333.0" layoutY="457.0" mnemonicParsing="false" onAction="#initialize" prefHeight="90.0" prefWidth="246.0" text="Create New User">
+      <Button fx:id="newUserButton" layoutX="333.0" layoutY="457.0" mnemonicParsing="false" onAction="#initialize" prefHeight="90.0" prefWidth="246.0" text="Create New User" textFill="#0033ff">
          <font>
             <Font name="Cambria" size="21.0" />
          </font></Button>
@@ -44,10 +44,10 @@
       </Label>
       <Label fx:id="errorMessage" alignment="CENTER" layoutX="480.0" layoutY="394.0" prefHeight="0.0" prefWidth="318.0">
          <font>
-            <Font name="Microsoft Sans Serif" size="26.0" />
+            <Font name="Roboto Light" size="26.0" />
          </font>
       </Label>
-      <Button fx:id="exitButton" layoutX="556.0" layoutY="626.0" mnemonicParsing="false" onAction="#initialize" prefHeight="42.0" prefWidth="148.0" text="CLOSE APP">
+      <Button fx:id="exitButton" layoutX="556.0" layoutY="626.0" mnemonicParsing="false" onAction="#initialize" prefHeight="42.0" prefWidth="148.0" text="Close App" textFill="#002bff">
          <font>
             <Font name="Cambria" size="22.0" />
          </font>

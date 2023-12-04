@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.AddCourseController">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.AddCourseController" style="-fx-background-color: #FFFFFF;">
    <children>
       <Label layoutX="482.0" layoutY="22.0" prefHeight="78.0" prefWidth="380.0" text="Add a Course" textFill="#004dff">
          <font>
@@ -32,11 +32,11 @@
             <Font name="Roboto Light" size="16.0" />
          </font>
       </Label>
-      <Button fx:id="backtoCourseSearchButton" layoutX="538.0" layoutY="144.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="190.0" text="BACK TO SEARCH" textFill="#1100ff">
+      <Button fx:id="backtoCourseSearchButton" layoutX="538.0" layoutY="144.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="190.0" text="Back to Search" textFill="#1100ff">
          <font>
             <Font name="Cambria" size="17.0" />
          </font></Button>
-      <Button fx:id="addButton" layoutX="562.0" layoutY="482.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="144.0" text="ADD COURSE" textFill="#1100ff">
+      <Button fx:id="addButton" layoutX="562.0" layoutY="482.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="144.0" text="Add Course" textFill="#1100ff">
          <font>
             <Font name="Cambria" size="17.0" />
          </font></Button>

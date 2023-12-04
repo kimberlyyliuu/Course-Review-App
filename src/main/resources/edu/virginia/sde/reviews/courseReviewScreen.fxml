@@ -5,17 +5,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseReviewController">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseReviewController">
    <children>
       <Label fx:id="courseTitleLabel" alignment="TOP_CENTER" layoutX="12.0" layoutY="22.0" prefHeight="78.0" prefWidth="1182.0" text="Course Title" textAlignment="CENTER" textFill="#004dff">
          <font>
             <Font name="Cambria" size="40.0" />
          </font></Label>
-      <Button fx:id="backtoCourseSearchButton" layoutX="193.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="BACK TO SEARCH" textFill="#1100ff">
+      <Button fx:id="backtoCourseSearchButton" layoutX="193.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Back to Search" textFill="#1100ff">
          <font>
             <Font name="Cambria" size="17.0" />
          </font></Button>
-      <Button fx:id="addReviewButton" layoutX="893.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Add/Edit Review" textFill="#1100ff">
+      <Button fx:id="addReviewButton" layoutX="893.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Your Review" textFill="#1100ff">
          <font>
             <Font name="Cambria" size="17.0" />
          </font></Button>
@@ -23,24 +23,34 @@
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font></Label>
-      <Label fx:id="averageRatingLabel" alignment="TOP_CENTER" layoutX="156.0" layoutY="113.0" prefHeight="20.0" prefWidth="896.0" text="Average Rating:">
+      <Label fx:id="averageRatingLabel" alignment="TOP_CENTER" layoutX="609.0" layoutY="118.0" prefHeight="22.0" prefWidth="89.0">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font>
       </Label>
       <TableView fx:id="reviewsTableView" layoutX="193.0" layoutY="157.0" prefHeight="378.0" prefWidth="881.0">
-        <columns>
-            <TableColumn prefWidth="185.0" text="Timestamp">
-               <cellValueFactory><PropertyValueFactory property="timestamp" />
-               </cellValueFactory></TableColumn>
-            <TableColumn prefWidth="86.33334350585938" text="Rating">
+         <columns>
+            <TableColumn prefWidth="68.0" text="Rating">
                <cellValueFactory><PropertyValueFactory property="rating" />
                </cellValueFactory></TableColumn>
-            <TableColumn prefWidth="610.3333129882812" text="Comment">
+            <TableColumn prefWidth="166.99996948242188" text="Timestamp">
+               <cellValueFactory><PropertyValueFactory property="timestamp" />
+               </cellValueFactory></TableColumn>
+            <TableColumn prefWidth="646.3333129882812" text="Comment">
                <cellValueFactory><PropertyValueFactory property="comment" />
                </cellValueFactory></TableColumn>
-        </columns>
+         </columns>
       </TableView>
+      <Label layoutX="491.0" layoutY="121.0" text="Average Rating: ">
+         <font>
+            <Font name="Roboto Light" size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="deleteReviewButton" layoutX="543.0" layoutY="583.0" mnemonicParsing="false" onAction="#handleDeleteReviewButton" prefHeight="22.0" prefWidth="181.0" text="Delete Your Review" textFill="#1100ff">
+         <font>
+            <Font name="Cambria" size="17.0" />
+         </font>
+      </Button>
 
 
    </children>
