@@ -8,8 +8,9 @@
 4) Haley Andres, vwz2wb, haleyandres
 
 ## To Run
+Run CourseReviewsApplication.java with the following VM arguments:
 
-[Add a brief description of which .java file to run, and what vm arguments are needed]
+--module-path [Path to JavaFX folder] -- add-modules javafx.controls,javafx.fxml
 
 ## Contributions
 
@@ -45,8 +46,8 @@ List the primary contributions of each author. It is recommended to update this 
 * Populated data from database into table views in MyReview, CourseSearch, and CourseReview scenes
 * Helped implement search functionality in Course Search scene
 * Implemented clear search button
-* Various bug fixes
+* Various bug fixes and code cleanup
 
 ## Issues
 
-List any known issues (bugs, incorrect behavior, etc.) at the time of submission.
+None.
