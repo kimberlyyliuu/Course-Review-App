@@ -66,7 +66,7 @@ public class CourseSearchController {
         });
         addCourseButton.setOnAction(event -> addCourseScreen());
         myReviewsButton.setOnAction(event -> showMyReviews());
-        logoutButton.setOnAction(event -> setlogoutButton());
+        logoutButton.setOnAction(event -> setLogoutButton());
 
 
         //Clickable courses
@@ -102,43 +102,39 @@ public class CourseSearchController {
 
     //This method loads the update ListView
     private void loadCourses() throws SQLException {
-        try {
-            List<Course> courses = dbDriver.getAllCourses(); // Retrieve the list of courses from the database
+        List<Course> courses = dbDriver.getAllCourses(); // Retrieve the list of courses from the database
 
-            ObservableList<Course> observableCourseList = FXCollections.observableList(courses);
-            courseTableView.setItems(observableCourseList);
-            //Agent: ChatGPT
-            //Usage: Asked how to display average rating column to 2 decimal places
-            TableColumn<Course, Double> averageRatingColumn = (TableColumn<Course, Double>) courseTableView.getColumns().get(3); // Assuming 3 is the index of the "Average Rating" column
-            averageRatingColumn.setCellFactory(tc -> new TableCell<>() {
-                @Override
-                protected void updateItem(Double item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (item == null || empty) {
-                        setText(null);
-                    } else if(item < 1) {
-                        setText("");
-                    }
-                    else {
-                        setText(String.format("%.2f", item));
-                    }
+        ObservableList<Course> observableCourseList = FXCollections.observableList(courses);
+        courseTableView.setItems(observableCourseList);
+        //Agent: ChatGPT
+        //Usage: Asked how to display average rating column to 2 decimal places
+        TableColumn<Course, Double> averageRatingColumn = (TableColumn<Course, Double>) courseTableView.getColumns().get(3); // Assuming 3 is the index of the "Average Rating" column
+        averageRatingColumn.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                } else if(item < 1) {
+                    setText("");
                 }
-            });
-            // Agent: ChatGPT
-            // Usage: Help making courses clickable
-            courseTableView.setOnMouseClicked(event -> {
-                Course selectedCourse = courseTableView.getSelectionModel().getSelectedItem();
-                if(selectedCourse!= null){
-                    try{
-                        handleCourseClick(selectedCourse);
-                    } catch(SQLException e) {
-                        throw new RuntimeException(e);
-                    }
+                else {
+                    setText(String.format("%.2f", item));
                 }
-            });
-        } catch (SQLException e) {
-            throw e;
-        }
+            }
+        });
+        // Agent: ChatGPT
+        // Usage: Help making courses clickable
+        courseTableView.setOnMouseClicked(event -> {
+            Course selectedCourse = courseTableView.getSelectionModel().getSelectedItem();
+            if(selectedCourse!= null){
+                try{
+                    handleCourseClick(selectedCourse);
+                } catch(SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
 
@@ -214,7 +210,7 @@ public class CourseSearchController {
         activeUser.setPassword(user.getPassword());
     }
 
-    private void setlogoutButton() {
+    private void setLogoutButton() {
         // Implement logic to log the user out and return to the Log-In Screen
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));

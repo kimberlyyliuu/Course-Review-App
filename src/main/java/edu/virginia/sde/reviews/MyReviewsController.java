@@ -51,7 +51,7 @@ public class MyReviewsController {
     private void populateTable() {
         try {
             databaseDriver.connect();
-            int userID = databaseDriver.getUserIDbyusername(activeUser.getUsername());
+            int userID = databaseDriver.getUserIDByUsername(activeUser.getUsername());
             List<MyReviewsResult> reviewList = databaseDriver.getUserReviews(userID);
             ObservableList<MyReviewsResult> observableReviewList = FXCollections.observableArrayList(reviewList);
             tableView.setItems(observableReviewList);

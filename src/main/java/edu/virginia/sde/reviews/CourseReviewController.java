@@ -71,8 +71,8 @@ public class CourseReviewController {
     private void setDeleteReviewButtonVisibility(User user){
         try{
             dbDriver.connect();
-            userID = dbDriver.getUserIDbyusername(user.getUsername());
-            courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(currentCourse.getCourseName(), currentCourse.getMnemonic(), String.valueOf(currentCourse.getCourseNumber()));
+            userID = dbDriver.getUserIDByUsername(user.getUsername());
+            courseID = dbDriver.getCourseIDbyCourseTitleAndMnemonic(currentCourse.getCourseName(), currentCourse.getMnemonic(), String.valueOf(currentCourse.getCourseNumber()));
             var userReviewedCourse = dbDriver.userIDAlreadyReviewedCourse(userID, courseID);
             deleteReviewButton.setVisible(userReviewedCourse);
             dbDriver.disconnect();
@@ -83,18 +83,16 @@ public class CourseReviewController {
 
     @FXML
     private void handleDeleteReviewButton() throws SQLException {
-        try{
+        {
             dbDriver.connect();
-            userID = dbDriver.getUserIDbyusername(activeUser.getUsername());
-            courseID = dbDriver.getCourseIDbyCourseTitleandMnemonic(currentCourse.getCourseName(), currentCourse.getMnemonic(), String.valueOf(currentCourse.getCourseNumber()));
+            userID = dbDriver.getUserIDByUsername(activeUser.getUsername());
+            courseID = dbDriver.getCourseIDbyCourseTitleAndMnemonic(currentCourse.getCourseName(), currentCourse.getMnemonic(), String.valueOf(currentCourse.getCourseNumber()));
             dbDriver.deleteReview(userID, courseID);
             dbDriver.updateAverageRating(courseID);
             dbDriver.commit();
             var currentCourse = dbDriver.getCourseByCourseID(courseID);
             dbDriver.disconnect();
             setData(currentCourse, activeUser);
-        } catch (SQLException e){
-            throw e;
         }
     }
 
@@ -142,18 +140,15 @@ public class CourseReviewController {
 
 
     public void loadReviews(Course course) throws SQLException {
-        try {
             dbDriver.connect();
+
             List<Review> reviewsList = dbDriver.getReviewsByCourse(course);
             ObservableList<Review> observableReviewsList = FXCollections.observableList(reviewsList);
             reviewsTableView.getItems().clear();
             reviewsTableView.getItems().addAll(observableReviewsList);
             dbDriver.disconnect();
-        } catch (SQLException e) {
-            throw e;
-
-        }
     }
+
 }
 
 

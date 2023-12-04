@@ -1,7 +1,5 @@
 package edu.virginia.sde.reviews;
 
-import javafx.scene.input.Mnemonic;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,6 @@ public class DatabaseDriver {
 
     /**
      * Connect to a SQLite Database. This turns out Foreign Key enforcement, and disables auto-commits
-     * @throws SQLException
      */
     public void connect() throws SQLException {
         if (connection != null && !connection.isClosed()) {
@@ -53,7 +50,6 @@ public class DatabaseDriver {
 
     /**
      * Creates Users, Courses, and Reviews tables for database
-     * @throws SQLException
      */
     public void createTables() throws SQLException {
         if(connection.isClosed()) {
@@ -87,7 +83,6 @@ public class DatabaseDriver {
 
     /**
      * Adds users to the Users table
-     * @throws SQLException
      */
     public void addUser(User user) throws SQLException{
         if(connection.isClosed()) {
@@ -109,7 +104,6 @@ public class DatabaseDriver {
 
     /**
      * Adds courses to the Courses table
-     * @throws SQLException
      */
     public void addCourse(Course course) throws SQLException{
         if(connection.isClosed()) {
@@ -133,7 +127,6 @@ public class DatabaseDriver {
 
     /**
      * Adds reviews to the Reviews table
-     * @throws SQLException
      */
     public void addReview(Review review) throws SQLException{
         if(connection.isClosed()) {
@@ -158,228 +151,206 @@ public class DatabaseDriver {
 
     /**
      * Returns all users in the Users table
-     * @return
-     * @throws SQLException
      */
     public List<User> getAllUsers() throws SQLException{
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
-        try{
-            List<User> userList = new ArrayList<>();
-            var statement = connection.prepareStatement("SELECT * FROM Users");
+        List<User> userList = new ArrayList<>();
+        var statement = connection.prepareStatement("SELECT * FROM Users");
 
-            var resultSet = statement.executeQuery();
-            while(resultSet.next()){
-                var username = resultSet.getString("Username");
-                var password = resultSet.getString("Password");
-                var newUser = new User(username, password);
+        var resultSet = statement.executeQuery();
+        while(resultSet.next()){
+            var username = resultSet.getString("Username");
+            var password = resultSet.getString("Password");
+            var newUser = new User(username, password);
 
-                userList.add(newUser);
-            }
-            statement.close();
-            return userList;
-        } catch (SQLException e){
-            throw e;
+            userList.add(newUser);
         }
+        statement.close();
+        return userList;
     }
 
     /**
      * Returns all courses in the Courses table
-     * @return
-     * @throws SQLException
      */
     public List<Course> getAllCourses() throws SQLException{
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
-        try{
-            List<Course> courseList = new ArrayList<>();
-            var statement = connection.prepareStatement("SELECT * FROM Courses");
-            var resultSet = statement.executeQuery();
+        List<Course> courseList = new ArrayList<>();
+        var statement = connection.prepareStatement("SELECT * FROM Courses");
+        var resultSet = statement.executeQuery();
 
-            while(resultSet.next()){
-                var mnemonic = resultSet.getString("Mnemonic");
-                var courseNumber = resultSet.getInt("CourseNumber");
-                var courseName = resultSet.getString("CourseName");
-                var averageRating = resultSet.getDouble("AverageRating");
-                var newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+        while(resultSet.next()){
+            var mnemonic = resultSet.getString("Mnemonic");
+            var courseNumber = resultSet.getInt("CourseNumber");
+            var courseName = resultSet.getString("CourseName");
+            var averageRating = resultSet.getDouble("AverageRating");
+            var newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
 
-                courseList.add(newCourse);
-            }
-            statement.close();
-            return courseList;
-        } catch (SQLException e){
-            throw e;
+            courseList.add(newCourse);
         }
+        statement.close();
+        return courseList;
     }
     public List<Course> getSearchedCourses(String subject, String number, String title) throws SQLException {
         if (connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
-        ResultSet resultSet = null;
-        try {
-            List<Course> courseList = new ArrayList<>();
-            //all fields provided
-            if(!subject.equals("") && !number.equals("") && !title.equals("")) {
-                String sql = "SELECT * FROM Courses WHERE Mnemonic = ? AND CourseNumber = ? AND CourseName LIKE ?";
-                try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                    statement.setString(1, subject);
-                    statement.setString(2, number);
-                    statement.setString(3, "%" + title + "%");
-                    resultSet = statement.executeQuery();
-                    while (resultSet.next()) {
-                        String mnemonic = resultSet.getString("Mnemonic");
-                        int courseNumber = resultSet.getInt("CourseNumber");
-                        String courseName = resultSet.getString("CourseName");
-                        double averageRating = resultSet.getDouble("AverageRating");
+        ResultSet resultSet;
+        List<Course> courseList = new ArrayList<>();
+        //all fields provided
+        if(!subject.isEmpty() && !number.isEmpty() && !title.isEmpty()) {
+            String sql = "SELECT * FROM Courses WHERE Mnemonic = ? AND CourseNumber = ? AND CourseName LIKE ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, subject);
+                statement.setString(2, number);
+                statement.setString(3, "%" + title + "%");
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    String mnemonic = resultSet.getString("Mnemonic");
+                    int courseNumber = resultSet.getInt("CourseNumber");
+                    String courseName = resultSet.getString("CourseName");
+                    double averageRating = resultSet.getDouble("AverageRating");
 
-                        Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
-                        courseList.add(newCourse);
-                    }
+                    Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+                    courseList.add(newCourse);
                 }
             }
-            //only subject + number provided
-            else if(!subject.equals("") && !number.equals("") && title.equals("")) {
-                String sql = "SELECT * FROM Courses WHERE Mnemonic = ? AND CourseNumber = ?";
-                try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                    statement.setString(1, subject);
-                    statement.setString(2, number);
-                    resultSet = statement.executeQuery();
-                    while (resultSet.next()) {
-                        String mnemonic = resultSet.getString("Mnemonic");
-                        int courseNumber = resultSet.getInt("CourseNumber");
-                        String courseName = resultSet.getString("CourseName");
-                        double averageRating = resultSet.getDouble("AverageRating");
-
-                        Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
-                        courseList.add(newCourse);
-                    }
-                }
-            }
-            //only subject + title provided
-            else if(!subject.equals("") && number.equals("") && !title.equals("")) {
-                String sql = "SELECT * FROM Courses WHERE Mnemonic = ? AND CourseName LIKE ?";
-                try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                    statement.setString(1, subject);
-                    statement.setString(2, "%" + title + "%");
-                    resultSet = statement.executeQuery();
-                    while (resultSet.next()) {
-                        String mnemonic = resultSet.getString("Mnemonic");
-                        int courseNumber = resultSet.getInt("CourseNumber");
-                        String courseName = resultSet.getString("CourseName");
-                        double averageRating = resultSet.getDouble("AverageRating");
-
-                        Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
-                        courseList.add(newCourse);
-                    }
-                }
-            }
-            //only number + title provided
-            else if(subject.equals("") && !number.equals("") && !title.equals("")) {
-                String sql = "SELECT * FROM Courses WHERE CourseNumber = ? AND CourseName LIKE ?";
-                try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                    statement.setString(1, number);
-                    statement.setString(2, "%" + title + "%");
-                    resultSet = statement.executeQuery();
-                    while (resultSet.next()) {
-                        String mnemonic = resultSet.getString("Mnemonic");
-                        int courseNumber = resultSet.getInt("CourseNumber");
-                        String courseName = resultSet.getString("CourseName");
-                        double averageRating = resultSet.getDouble("AverageRating");
-
-                        Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
-                        courseList.add(newCourse);
-                    }
-                }
-            }
-            //only subject provided
-            else if(!subject.equals("") && number.equals("") && title.equals("")) {
-                String sql = "SELECT * FROM Courses WHERE Mnemonic = ?";
-                try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                    statement.setString(1, subject);
-                    resultSet = statement.executeQuery();
-                    while (resultSet.next()) {
-                        String mnemonic = resultSet.getString("Mnemonic");
-                        int courseNumber = resultSet.getInt("CourseNumber");
-                        String courseName = resultSet.getString("CourseName");
-                        double averageRating = resultSet.getDouble("AverageRating");
-
-                        Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
-                        courseList.add(newCourse);
-                    }
-                }
-            }
-            //only number provided
-            else if(subject.equals("") && !number.equals("") && title.equals("")) {
-                String sql = "SELECT * FROM Courses WHERE CourseNumber = ?";
-                try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                    statement.setString(1, number);
-                    resultSet = statement.executeQuery();
-                    while (resultSet.next()) {
-                        String mnemonic = resultSet.getString("Mnemonic");
-                        int courseNumber = resultSet.getInt("CourseNumber");
-                        String courseName = resultSet.getString("CourseName");
-                        double averageRating = resultSet.getDouble("AverageRating");
-
-                        Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
-                        courseList.add(newCourse);
-                    }
-                }
-            }
-            //only title provided
-            else if(subject.equals("") && number.equals("") && !title.equals("")) {
-                String sql = "SELECT * FROM Courses WHERE CourseName LIKE ?";
-                try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                    statement.setString(1, "%" + title + "%");
-                    resultSet = statement.executeQuery();
-                    while (resultSet.next()) {
-                        String mnemonic = resultSet.getString("Mnemonic");
-                        int courseNumber = resultSet.getInt("CourseNumber");
-                        String courseName = resultSet.getString("CourseName");
-                        double averageRating = resultSet.getDouble("AverageRating");
-
-                        Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
-                        courseList.add(newCourse);
-                    }
-                }
-            }
-            return courseList;
-        } catch (SQLException e) {
-            throw e;
         }
+        //only subject + number provided
+        else if(!subject.isEmpty() && !number.isEmpty()) {
+            String sql = "SELECT * FROM Courses WHERE Mnemonic = ? AND CourseNumber = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, subject);
+                statement.setString(2, number);
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    String mnemonic = resultSet.getString("Mnemonic");
+                    int courseNumber = resultSet.getInt("CourseNumber");
+                    String courseName = resultSet.getString("CourseName");
+                    double averageRating = resultSet.getDouble("AverageRating");
+
+                    Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+                    courseList.add(newCourse);
+                }
+            }
+        }
+        //only subject + title provided
+        else if(!subject.isEmpty() && !title.isEmpty()) {
+            String sql = "SELECT * FROM Courses WHERE Mnemonic = ? AND CourseName LIKE ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, subject);
+                statement.setString(2, "%" + title + "%");
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    String mnemonic = resultSet.getString("Mnemonic");
+                    int courseNumber = resultSet.getInt("CourseNumber");
+                    String courseName = resultSet.getString("CourseName");
+                    double averageRating = resultSet.getDouble("AverageRating");
+
+                    Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+                    courseList.add(newCourse);
+                }
+            }
+        }
+        //only number + title provided
+        else if(subject.isEmpty() && !number.isEmpty() && !title.isEmpty()) {
+            String sql = "SELECT * FROM Courses WHERE CourseNumber = ? AND CourseName LIKE ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, number);
+                statement.setString(2, "%" + title + "%");
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    String mnemonic = resultSet.getString("Mnemonic");
+                    int courseNumber = resultSet.getInt("CourseNumber");
+                    String courseName = resultSet.getString("CourseName");
+                    double averageRating = resultSet.getDouble("AverageRating");
+
+                    Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+                    courseList.add(newCourse);
+                }
+            }
+        }
+        //only subject provided
+        else if(!subject.isEmpty()) {
+            String sql = "SELECT * FROM Courses WHERE Mnemonic = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, subject);
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    String mnemonic = resultSet.getString("Mnemonic");
+                    int courseNumber = resultSet.getInt("CourseNumber");
+                    String courseName = resultSet.getString("CourseName");
+                    double averageRating = resultSet.getDouble("AverageRating");
+
+                    Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+                    courseList.add(newCourse);
+                }
+            }
+        }
+        //only number provided
+        else if(!number.isEmpty()) {
+            String sql = "SELECT * FROM Courses WHERE CourseNumber = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, number);
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    String mnemonic = resultSet.getString("Mnemonic");
+                    int courseNumber = resultSet.getInt("CourseNumber");
+                    String courseName = resultSet.getString("CourseName");
+                    double averageRating = resultSet.getDouble("AverageRating");
+
+                    Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+                    courseList.add(newCourse);
+                }
+            }
+        }
+        //only title provided
+        else if(!title.isEmpty()) {
+            String sql = "SELECT * FROM Courses WHERE CourseName LIKE ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, "%" + title + "%");
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    String mnemonic = resultSet.getString("Mnemonic");
+                    int courseNumber = resultSet.getInt("CourseNumber");
+                    String courseName = resultSet.getString("CourseName");
+                    double averageRating = resultSet.getDouble("AverageRating");
+
+                    Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+                    courseList.add(newCourse);
+                }
+            }
+        }
+        return courseList;
     }
 
 
     /**
      * Returns all reviews in the Reviews table
-     * @return
-     * @throws SQLException
      */
     public List<Review> getAllReviews() throws SQLException{
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
-        try{
-            List<Review> reviewsList = new ArrayList<>();
-            var statement = connection.prepareStatement("SELECT * FROM Reviews");
-            var resultSet = statement.executeQuery();
+        List<Review> reviewsList = new ArrayList<>();
+        var statement = connection.prepareStatement("SELECT * FROM Reviews");
+        var resultSet = statement.executeQuery();
 
-            while(resultSet.next()){
-               var userID = resultSet.getInt("UserID");
-               var courseID = resultSet.getInt("CourseID");
-               var rating = resultSet.getInt("Rating");
-               var comment = resultSet.getString("Comment");
-               var timestamp = resultSet.getTimestamp("ReviewTimestamp");
-               var newReview = new Review(userID, courseID, rating, comment, timestamp);
+        while(resultSet.next()){
+           var userID = resultSet.getInt("UserID");
+           var courseID = resultSet.getInt("CourseID");
+           var rating = resultSet.getInt("Rating");
+           var comment = resultSet.getString("Comment");
+           var timestamp = resultSet.getTimestamp("ReviewTimestamp");
+           var newReview = new Review(userID, courseID, rating, comment, timestamp);
 
-                reviewsList.add(newReview);
-            }
-            statement.close();
-            return reviewsList;
-        } catch (SQLException e){
-            throw e;
+            reviewsList.add(newReview);
         }
+        statement.close();
+        return reviewsList;
     }
 
     /**
@@ -390,7 +361,7 @@ public class DatabaseDriver {
             throw new IllegalStateException("Connection is not open.");
         }
         PreparedStatement statement = connection.prepareStatement("""
-            SELECT * FROM Reviews 
+            SELECT * FROM Reviews
             WHERE UserID IN(
             SELECT UserID FROM Users WHERE Username = ?)
             """);
@@ -421,8 +392,8 @@ public class DatabaseDriver {
         }
         var reviewsList = new ArrayList<Review>();
         PreparedStatement statement = connection.prepareStatement("""
-                                SELECT * FROM Reviews 
-                                JOIN Courses ON Reviews.CourseID = Courses.CourseID 
+                                SELECT * FROM Reviews
+                                JOIN Courses ON Reviews.CourseID = Courses.CourseID
                                 WHERE Mnemonic = ? AND CourseNumber = ? AND CourseName = ?
                                 """);
         statement.setString(1, course.getMnemonic());
@@ -535,8 +506,7 @@ public class DatabaseDriver {
         var courseNumber = resultSet.getInt("CourseNumber");
         var courseName = resultSet.getString("CourseName");
         var averageRating = resultSet.getDouble("AverageRating");
-        var course = new Course(mnemonic, courseNumber, courseName, averageRating);
-        return course;
+        return new Course(mnemonic, courseNumber, courseName, averageRating);
     }
 
     /**
@@ -548,36 +518,28 @@ public class DatabaseDriver {
         }
         // Agent: ChatGPT
         // Source: Asked how to return boolean from searching a table
-        try{
-            var statement = connection.prepareStatement("SELECT * FROM Users WHERE Username = ?");
-            statement.setString(1, username);
-            var resultSet = statement.executeQuery();
+        var statement = connection.prepareStatement("SELECT * FROM Users WHERE Username = ?");
+        statement.setString(1, username);
+        var resultSet = statement.executeQuery();
 
-            boolean hasUsername = resultSet.next();
-            statement.close();
-            return hasUsername; //returns true if there exists at a row w/the username
-        } catch (SQLException e){
-            throw e;
-        }
+        boolean hasUsername = resultSet.next();
+        statement.close();
+        return hasUsername; //returns true if there exists at a row w/the username
     }
 
     public boolean checkUserPassword(String username, String password) throws  SQLException{
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
-        try{
-            var statement = connection.prepareStatement("SELECT * FROM Users WHERE Username = ? AND Password = ?");
-            statement.setString(1, username);
-            statement.setString(2, password);
+        var statement = connection.prepareStatement("SELECT * FROM Users WHERE Username = ? AND Password = ?");
+        statement.setString(1, username);
+        statement.setString(2, password);
 
-            var resultSet = statement.executeQuery();
+        var resultSet = statement.executeQuery();
 
-            boolean hasPassword = resultSet.next();
-            statement.close();
-            return hasPassword; //returns true if there exists at a row w/the password
-        } catch (SQLException e){
-            throw e;
-        }
+        boolean hasPassword = resultSet.next();
+        statement.close();
+        return hasPassword; //returns true if there exists at a row w/the password
     }
 
 
@@ -588,21 +550,17 @@ public class DatabaseDriver {
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
-        try{
-            var statement = connection.prepareStatement("SELECT * FROM Courses WHERE Mnemonic = ? AND CourseNumber = ? AND CourseName = ?");
-            statement.setString(1, mnemonic);
-            statement.setString(2, courseNumber);
-            statement.setString(3, courseName);
+        var statement = connection.prepareStatement("SELECT * FROM Courses WHERE Mnemonic = ? AND CourseNumber = ? AND CourseName = ?");
+        statement.setString(1, mnemonic);
+        statement.setString(2, courseNumber);
+        statement.setString(3, courseName);
 
 
-            var resultSet = statement.executeQuery();
+        var resultSet = statement.executeQuery();
 
-            boolean exists = resultSet.next();
-            statement.close();
-            return exists; //returns true if there exists at a row w/the password
-        } catch (SQLException e){
-            throw e;
-        }
+        boolean exists = resultSet.next();
+        statement.close();
+        return exists; //returns true if there exists at a row w/the password
     }
 
     /**
@@ -684,7 +642,7 @@ public class DatabaseDriver {
         else return false;
     }
 
-    public int getCourseIDbyCourseTitleandMnemonic(String courseTitle, String mnemonic, String courseNum) throws SQLException{
+    public int getCourseIDbyCourseTitleAndMnemonic(String courseTitle, String mnemonic, String courseNum) throws SQLException{
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
@@ -708,7 +666,7 @@ public class DatabaseDriver {
         }
     }
 
-    public int getUserIDbyusername(String username) throws SQLException{
+    public int getUserIDByUsername(String username) throws SQLException{
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
@@ -784,7 +742,7 @@ public class DatabaseDriver {
         }
     }
 
-    public Double loadRatingbyUserID(int userID, int courseID) throws SQLException{
+    public Double loadRatingByUserID(int userID, int courseID) throws SQLException{
         if(connection.isClosed()) {
             connect();
         }
@@ -806,7 +764,7 @@ public class DatabaseDriver {
         }
     }
 
-    public String loadCommentbyUserID(int userID, int courseID) throws SQLException{
+    public String loadCommentByUserID(int userID, int courseID) throws SQLException{
         if(connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }

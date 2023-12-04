@@ -112,10 +112,10 @@ public class AddReviewController {
         try {
             dbDriver.connect();
             if (userReviewed()){
-                double rate = dbDriver.loadRatingbyUserID(userID, courseID);
+                double rate = dbDriver.loadRatingByUserID(userID, courseID);
                 int rating = (int) rate;
                 inputRating.setText(String.valueOf(rating));
-                inputComment.setText(dbDriver.loadCommentbyUserID(userID, courseID));
+                inputComment.setText(dbDriver.loadCommentByUserID(userID, courseID));
                 submitReviewButton.setText("Save Review");
                 screenTitle.setText("Edit Review");
             }
@@ -175,7 +175,7 @@ public class AddReviewController {
         try {
             dbDriver.connect();
 
-            int id=  dbDriver.getUserIDbyusername(activeUser.getUsername());
+            int id=  dbDriver.getUserIDByUsername(activeUser.getUsername());
             dbDriver.disconnect();
             return id;
         } catch (SQLException e) {
@@ -192,7 +192,7 @@ public class AddReviewController {
             var mnemonic = parts[0];
             var number = parts[1];
 
-            int id =  dbDriver.getCourseIDbyCourseTitleandMnemonic(courseTitleLabel.getText(), mnemonic, number);
+            int id =  dbDriver.getCourseIDbyCourseTitleAndMnemonic(courseTitleLabel.getText(), mnemonic, number);
             dbDriver.disconnect();
             return id;
         } catch (SQLException e) {
