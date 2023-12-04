@@ -37,7 +37,6 @@ public class AddReviewController {
     private Button backtoCourseReviewButton;
     private int userID;
     private int courseID;
-    private Course currentCourse;
     private User activeUser = new User("", "");
     public void setActiveUser(User user){
         activeUser.setUsername(user.getUsername());
@@ -101,16 +100,11 @@ public class AddReviewController {
             if (dbDriver.connection.isClosed()){
                 dbDriver.connect();
             }
-            return dbDriver.userIDAlreadyReviewedCourse(userID, courseID);
+            boolean result =  dbDriver.userIDAlreadyReviewedCourse(userID, courseID);
+            dbDriver.disconnect();
+            return result;
         } catch (SQLException e) {
             throw e;
-        } finally {
-            try {
-                dbDriver.disconnect();
-            } catch (SQLException e) {
-                throw e;
-            }
-
         }
     }
 
@@ -209,20 +203,11 @@ public class AddReviewController {
 
 
     private void handleAddReview() throws SQLException {
-        // Split the mnemonicAndNumberLabel content into mnemonic and number
-        String[] parts = mnemonicAndNumberLabel.getText().split("\\s+");
-
-        var mnemonic = parts[0];
-        var number = parts[1];
-
         var ratingText = inputRating.getText();
-
-
         // Agent: ChatGPT
         // Usage: Asked how to check if field is filled or not
         // Check if inputComment is not empty before using its value
         var comment = inputComment.getText().isEmpty() ? null : inputComment.getText();
-
         try {
             dbDriver.connect();
             dbDriver.createTables();
@@ -258,16 +243,9 @@ public class AddReviewController {
                     errorMessage.setText("Rating must be a whole number integer between 1 and 5");
                 });
             }
-
+            dbDriver.disconnect();
         } catch (SQLException e) {
             throw e;
-        } finally {
-            try {
-                dbDriver.disconnect();
-            } catch (SQLException e) {
-                throw e;
-            }
-
         }
     }
 
@@ -316,8 +294,6 @@ public class AddReviewController {
             e.printStackTrace();
         }
     }
-
-
 
 
     private void openCourseReviewScene() {

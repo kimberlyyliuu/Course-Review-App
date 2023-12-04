@@ -172,7 +172,7 @@ public class CourseSearchController {
      */
     private void submitSearch() throws SQLException {
         //TODO:
-        String subject = courseMnemonic.getText().trim();
+        String subject = courseMnemonic.getText().toUpperCase().trim();
         String number = courseNumber.getText().trim();
         String title = courseTitle.getText().trim();
 
