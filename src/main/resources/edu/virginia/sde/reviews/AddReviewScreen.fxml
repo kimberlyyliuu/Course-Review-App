@@ -6,19 +6,19 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.AddReviewController">
 
-    <Label fx:id="courseTitleLabel" alignment="TOP_CENTER" layoutX="9.0" layoutY="85.0" prefHeight="22.0" prefWidth="1182.0" text="Course Title" textAlignment="CENTER" textFill="#004dff">
+    <Label fx:id="courseTitleLabel" alignment="TOP_CENTER" layoutX="40.0" layoutY="89.0" prefHeight="22.0" prefWidth="1182.0" text="Course Title" textAlignment="CENTER" textFill="#004dff">
         <font>
             <Font name="Cambria" size="16.0" />
         </font></Label>
-    <Label fx:id="mnemonicAndNumberLabel" alignment="TOP_CENTER" layoutX="60.0" layoutY="108.0" prefHeight="18.0" prefWidth="1088.0" text="Course Mnemonic and Number">
+    <Label fx:id="mnemonicAndNumberLabel" alignment="TOP_CENTER" layoutX="87.0" layoutY="115.0" prefHeight="18.0" prefWidth="1088.0" text="Course Mnemonic and Number">
         <font>
             <Font name="Roboto Light" size="16.0" />
         </font></Label>
 
 
-    <TextField fx:id="inputRating" layoutX="561.0" layoutY="256.0" prefHeight="26.0" prefWidth="34.0" />
+    <TextField fx:id="inputRating" layoutX="561.0" layoutY="240.0" prefHeight="26.0" prefWidth="34.0" />
 
-    <Label fx:id="screenTitle" alignment="TOP_CENTER" layoutX="12.0" layoutY="22.0" prefHeight="78.0" prefWidth="1182.0" text="Add Review" textAlignment="CENTER" textFill="#004dff">
+    <Label fx:id="screenTitle" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="307.0" layoutY="21.0" prefHeight="66.0" prefWidth="648.0" text="Add Review" textAlignment="CENTER" textFill="#004dff">
         <font>
             <Font name="Cambria" size="56.0" />
         </font></Label>
@@ -27,40 +27,40 @@
             <Font name="Cambria" size="17.0" />
         </font></Button>
 
-    <Label layoutX="439.0" layoutY="258.0" text="Rating 1-5: ">
+    <Label layoutX="458.0" layoutY="242.0" text="Rating 1-5: ">
         <font>
             <Font name="Roboto Light" size="16.0" />
         </font>
     </Label>
-    <Label layoutX="396.0" layoutY="396.0" prefHeight="26.0" prefWidth="166.0" text="Comment (Optional):">
+    <Label layoutX="395.0" layoutY="315.0" prefHeight="26.0" prefWidth="166.0" text="Comment (Optional):">
         <font>
             <Font name="Roboto Light" size="16.0" />
         </font>
     </Label>
-    <Button fx:id="submitReviewButton" layoutX="861.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Submit Review" textFill="#1100ff">
+    <Button fx:id="submitReviewButton" layoutX="838.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Submit Review" textFill="#1100ff">
         <font>
             <Font name="Cambria" size="17.0" />
         </font></Button>
-    <Label fx:id="averageRatingLabel" alignment="TOP_CENTER" layoutX="631.0" layoutY="141.0" prefHeight="22.0" prefWidth="80.0">
+    <Label fx:id="averageRatingLabel" alignment="TOP_CENTER" layoutX="652.0" layoutY="141.0" prefHeight="22.0" prefWidth="80.0">
         <font>
             <Font name="Roboto Light" size="16.0" />
         </font>
     </Label>
-    <Button fx:id="backToCourseReviewButton" layoutX="338.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Back to Reviews" textFill="#1100ff">
+    <Button fx:id="backToCourseReviewButton" layoutX="380.0" layoutY="583.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="181.0" text="Back to Reviews" textFill="#1100ff">
         <font>
             <Font name="Cambria" size="17.0" />
         </font></Button>
-    <Label fx:id="errorMessage" alignment="CENTER" layoutX="10.0" layoutY="193.0" prefHeight="31.0" prefWidth="1182.0" textFill="#dc0f0f">
+    <Label fx:id="errorMessage" alignment="CENTER" layoutX="106.0" layoutY="187.0" prefHeight="31.0" prefWidth="1050.0" textFill="#dc0f0f">
         <font>
-            <Font name="Roboto Light" size="20.0" />
+            <Font name="Roboto Light" size="18.0" />
         </font>
     </Label>
-   <Label layoutX="485.0" layoutY="141.0" text="Average Rating: ">
+   <Label layoutX="538.0" layoutY="141.0" text="Average Rating: ">
       <font>
          <Font name="Roboto Light" size="16.0" />
       </font>
    </Label>
-   <TextArea fx:id="inputComment" layoutX="562.0" layoutY="332.0" prefHeight="200.0" prefWidth="276.0" wrapText="true"/>
+   <TextArea fx:id="inputComment" layoutX="562.0" layoutY="315.0" prefHeight="200.0" prefWidth="276.0" wrapText="true" />
 
 
 

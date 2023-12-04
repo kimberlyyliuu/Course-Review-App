@@ -6,48 +6,48 @@
 
 <AnchorPane prefHeight="700" prefWidth="1200.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.NewUserController">
     <children>
-        <Label alignment="TOP_CENTER" layoutX="291.0" layoutY="14.0" text="Welcome to Course Review" textFill="#004dff">
+        <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="304.0" layoutY="14.0" text="Welcome to Course Review" textFill="#004dff">
             <font>
                 <Font name="Cambria" size="56.0" />
             </font>
         </Label>
-        <Label alignment="TOP_CENTER" contentDisplay="TOP" layoutX="380.0" layoutY="164.0" text="Enter a new Username and Password below:" textAlignment="CENTER">
+        <Label alignment="TOP_CENTER" contentDisplay="TOP" layoutX="344.0" layoutY="159.0" text="Enter a new Username and Password below:" textAlignment="CENTER">
             <font>
                 <Font name="Cambria" size="30.0" />
             </font>
         </Label>
-        <TextField fx:id="newUsernameField" layoutX="480.0" layoutY="259.0" prefHeight="51.0" prefWidth="318.0" />
-        <Label alignment="CENTER" layoutX="315.0" layoutY="259.0" prefHeight="51.0" prefWidth="148.0" text="Username">
+        <TextField fx:id="newUsernameField" layoutX="479.0" layoutY="263.0" prefHeight="51.0" prefWidth="318.0" />
+        <Label alignment="CENTER" layoutX="315.0" layoutY="263.0" prefHeight="51.0" prefWidth="148.0" text="Username">
             <font>
                 <Font name="Roboto Light" size="25.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="285.0" layoutY="330.0" prefHeight="60.0" prefWidth="207.0" text="Password" textAlignment="CENTER">
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="285.0" layoutY="341.0" prefHeight="60.0" prefWidth="207.0" text="Password" textAlignment="CENTER">
             <font>
                 <Font name="Roboto Light" size="25.0" />
             </font>
         </Label>
-        <Button fx:id="createUserButton" layoutX="674.0" layoutY="457.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="90.0" prefWidth="246.0" text="Create New User" textFill="#0d00ff">
+        <Button fx:id="createUserButton" layoutX="674.0" layoutY="456.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="90.0" prefWidth="246.0" text="Create New User" textFill="#0d00ff">
             <font>
                 <Font name="Cambria" size="21.0" />
             </font></Button>
-        <PasswordField fx:id="newPasswordField" layoutX="479.0" layoutY="340.0" prefHeight="51.0" prefWidth="318.0" />
-      <Label fx:id="passRequirements" alignment="TOP_CENTER" layoutX="311.0" layoutY="215.0" text="Username must be unique. Password must be 8+ characters. Username and Password are case-sensitive">
+        <PasswordField fx:id="newPasswordField" layoutX="479.0" layoutY="349.0" prefHeight="51.0" prefWidth="318.0" />
+      <Label fx:id="passRequirements" alignment="TOP_CENTER" layoutX="285.0" layoutY="216.0" text="Username must be unique. Password must be 8+ characters. Username and Password are case-sensitive">
          <font>
             <Font name="Cambria" size="16.0" />
          </font>
       </Label>
         <Label fx:id="errorMessage" alignment="TOP_CENTER" layoutX="357.0" layoutY="404.0" prefHeight="38.0" prefWidth="554.0" textAlignment="CENTER">
             <font>
-                <Font name="Cambria" size="24.0" />
+                <Font name="Cambria" size="23.0" />
             </font>
         </Label>
-        <Button fx:id="exitButton" layoutX="556.0" layoutY="626.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="42.0" prefWidth="148.0" text="Close App" textFill="#001eff">
+        <Button fx:id="exitButton" layoutX="565.0" layoutY="612.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="42.0" prefWidth="148.0" text="Close App" textFill="#001eff">
             <font>
                 <Font name="Cambria" size="22.0" />
             </font>
         </Button>
-      <Button fx:id="backToLoginButton" layoutX="356.0" layoutY="457.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="90.0" prefWidth="246.0" text="Back To Login" textFill="#001eff">
+      <Button fx:id="backToLoginButton" layoutX="340.0" layoutY="456.0" mnemonicParsing="false" onAction="#newUserInitialize" prefHeight="90.0" prefWidth="246.0" text="Back To Login" textFill="#001eff">
          <font>
             <Font name="Cambria" size="21.0" />
          </font>

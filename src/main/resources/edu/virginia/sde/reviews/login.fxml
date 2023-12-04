@@ -11,9 +11,9 @@
             <Font name="Cambria" size="56.0" />
          </font>
       </Label>
-      <Label alignment="TOP_CENTER" contentDisplay="TOP" layoutX="422.0" layoutY="161.0" text="Please Log-In Below" textAlignment="CENTER">
+      <Label alignment="TOP_CENTER" contentDisplay="TOP" layoutX="500.0" layoutY="161.0" text="Please Log-In Below" textAlignment="CENTER">
          <font>
-            <Font name="Cambria" size="43.0" />
+            <Font name="Cambria" size="30.0" />
          </font>
       </Label>
       <TextField fx:id="usernameField" layoutX="480.0" layoutY="259.0" prefHeight="51.0" prefWidth="318.0" />
