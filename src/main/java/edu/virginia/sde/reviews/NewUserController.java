@@ -24,14 +24,11 @@ public class NewUserController {
     @FXML
     private Button createUserButton;
     @FXML
-    private Label passRequirements;
-    @FXML
     private Button backToLoginButton;
     @FXML
     private Label errorMessage;
     @FXML
     private Button exitButton;
-    private User activeUser;
 
     private DatabaseDriver dbDriver;
     @FXML
@@ -79,7 +76,6 @@ public class NewUserController {
                 }
              else if (!dbDriver.checkUserExists(username) && dbDriver.isValidPassword(password)) {
                 User newUser = new User(username, password);
-                activeUser = new User(username, password);
                 dbDriver.addUser(newUser);
                 dbDriver.commit();
                 dbDriver.disconnect();
@@ -113,13 +109,9 @@ public class NewUserController {
         }
     }
 
-    public void setActiveUser(User user){
-        activeUser.setUsername(user.getUsername());
-        activeUser.setPassword(user.getPassword());
-    }
 
     private void returnLogInScene() throws SQLException {
-        try {
+        try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
             Parent root = loader.load();
             // Create a new scene
@@ -127,7 +119,6 @@ public class NewUserController {
             // Stage and new scene for new user
             Stage stage = (Stage) errorMessage.getScene().getWindow();
             stage.setScene(newScene);
-            LoginController controller = loader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
