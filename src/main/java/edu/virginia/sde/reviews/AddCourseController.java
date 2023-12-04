@@ -19,7 +19,7 @@ public class AddCourseController {
     @FXML
     private TextField courseTitle;
 
-    private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
+    private final DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
     @FXML
     private Button addButton;
     @FXML
@@ -27,14 +27,15 @@ public class AddCourseController {
     @FXML
     private Label errorMessage;
 
-    private User activeUser = new User("", "");
-    public void setActiveUser(User user){
+    private final User activeUser = new User("", "");
+
+    public void setActiveUser(User user) {
         activeUser.setUsername(user.getUsername());
         activeUser.setPassword(user.getPassword());
     }
 
     @FXML
-    protected void addCourseInitialize(){
+    protected void addCourseInitialize() {
         backToCourseSearchButton.setOnAction(event -> openCourseSearchScene());
         addButton.setOnAction(event -> {
             try {
@@ -51,46 +52,33 @@ public class AddCourseController {
         var number = courseNumber.getText();
         var title = formatCourseTitle(courseTitle.getText());
 
-        try{
-            dbDriver.connect();
-            dbDriver.createTables();
+        dbDriver.connect();
+        dbDriver.createTables();
 
-            if(!dbDriver.checkCourseExists(mnemonicText, number, title) && isValidMnemonic(mnemonicText) && isValidCourseNumber(number) && isValidCourseTitle(title)){
-                Course newCourse = new Course(mnemonicText, Integer.parseInt(number), title, 0.0);
-                dbDriver.addCourse(newCourse);
+        if (!dbDriver.checkCourseExists(mnemonicText, number, title) && isValidMnemonic(mnemonicText) && isValidCourseNumber(number) && isValidCourseTitle(title)) {
+            Course newCourse = new Course(mnemonicText, Integer.parseInt(number), title, 0.0);
+            dbDriver.addCourse(newCourse);
 
-                dbDriver.commit();
-                openCourseSearchScene();
+            dbDriver.commit();
+            openCourseSearchScene();
 
-            }else{
-                Platform.runLater(() -> {
-                    errorMessage.setText("Course Already Exists");
-                    addCourseInitialize();
-                });
-                isValidCourseTitle(title);
-                isValidMnemonic(mnemonicText);
-                isValidCourseNumber(number);
-            }
-        }catch (SQLException e){
-            throw e;
-        } finally {
-            try{
-                dbDriver.disconnect();
-            }
-            catch(SQLException e){
-                throw e;
-            }
+        } else {
+            Platform.runLater(() -> {
+                errorMessage.setText("Course Already Exists");
+                addCourseInitialize();
+            });
+            isValidCourseTitle(title);
+            isValidMnemonic(mnemonicText);
+            isValidCourseNumber(number);
         }
-
+        dbDriver.disconnect();
     }
 
     private boolean isValidMnemonic(String mnemonicText) {
-        if(mnemonicText.length() > 4 || !mnemonicText.matches("[a-zA-Z]+")){
-            Platform.runLater(() -> {
-                errorMessage.setText("Please make sure the entered course mnemonic is no more than 4 characters that are letters. No spaces");
-            });
+        if (mnemonicText.length() > 4 || !mnemonicText.matches("[a-zA-Z]+")) {
+            Platform.runLater(() -> errorMessage.setText("Please make sure the entered course mnemonic is no more than 4 characters that are letters. No spaces"));
             return false;
-        }else{
+        } else {
             return true;
         }
     }
@@ -98,46 +86,38 @@ public class AddCourseController {
     private boolean isValidCourseNumber(String courseNumber) {
         // Agent: ChatGPT
         // Usage: Asked how to check what's entered are all digits
-        if(courseNumber.length() == 4) {
+        if (courseNumber.length() == 4) {
             if (courseNumber.matches("\\d+")) {
                 return true;
             } else {
-                Platform.runLater(() -> {
-                    errorMessage.setText("Please make sure the entered course number is 4 digits");
-                });
+                Platform.runLater(() -> errorMessage.setText("Please make sure the entered course number is 4 digits"));
                 return false;
             }
-        }
-        else{
-            Platform.runLater(() -> {
-                errorMessage.setText("Please make sure the entered course number is 4 digits long");
-            });
+        } else {
+            Platform.runLater(() -> errorMessage.setText("Please make sure the entered course number is 4 digits long"));
             return false;
         }
     }
 
     private boolean isValidCourseTitle(String courseTitle) {
-        if(courseTitle.length() > 50){
-            Platform.runLater(() -> {
-                errorMessage.setText("Please make sure the entered course name is no more than 50 characters long");
-            });
+        if (courseTitle.length() > 50) {
+            Platform.runLater(() -> errorMessage.setText("Please make sure the entered course name is no more than 50 characters long"));
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
 
-    private String formatCourseTitle(String courseTitle){
+    private String formatCourseTitle(String courseTitle) {
         // Agent: ChatGPT
         // Usage: Asked how to split string into individual words and capitalize first letter of each word
         String[] words = courseTitle.split("\\s+");
         StringBuilder reformattedTitle = new StringBuilder();
 
-        for(String word : words){
-            if(word.length() > 0){
+        for (String word : words) {
+            if (!word.isEmpty()) {
                 reformattedTitle.append(word.substring(0, 1).toUpperCase());
-                if(word.length() > 1){
+                if (word.length() > 1) {
                     reformattedTitle.append(word.substring(1).toLowerCase());
                 }
                 reformattedTitle.append(" ");
@@ -165,8 +145,6 @@ public class AddCourseController {
             e.printStackTrace();
         }
     }
-
-
 
 
 }
