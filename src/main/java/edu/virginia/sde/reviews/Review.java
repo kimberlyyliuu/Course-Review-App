@@ -6,10 +6,10 @@ import java.sql.Timestamp;
 
 public class Review {
     private final int userID;
-    private int courseID;
-    private int rating;  // should be 1-5
+    private final int courseID;
+    private final int rating;  // should be 1-5
     private String comment;
-    private Timestamp timestamp;
+    private final Timestamp timestamp;
 
     public Review(int userID, int courseID, int rating, String comment) {
         this.userID = userID;

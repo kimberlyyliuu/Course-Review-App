@@ -1,10 +1,10 @@
 package edu.virginia.sde.reviews;
 
 public class MyReviewsResult {
-    private int rating;
-    private String courseMnemonic;
-    private int courseNumber;
-    private int courseID;
+    private final int rating;
+    private final String courseMnemonic;
+    private final int courseNumber;
+    private final int courseID;
 
     public MyReviewsResult(int rating, String courseMnemonic, int courseNumber, int courseID) {
         this.rating = rating;
