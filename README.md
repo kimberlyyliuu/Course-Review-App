@@ -42,9 +42,9 @@ List the primary contributions of each author. It is recommended to update this 
 ### Haley Andres
 
 * Helped implement methods in DatabaseDriver
-* Created table view for CourseReview scene
 * Populated data from database into table views in MyReview, CourseSearch, and CourseReview scenes
 * Helped implement search functionality in Course Search scene
+* Implemented clear search button
 * Various bug fixes
 
 ## Issues

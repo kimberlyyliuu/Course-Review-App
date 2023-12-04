@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseSearchController" style="-fx-background-color: #FFFFFF;">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseSearchController">
    <children>
       <Label layoutX="24.0" layoutY="28.0" prefHeight="82.0" prefWidth="251.0" text="Course Mnemonic" textFill="#0044ff">
          <font>
@@ -35,7 +35,7 @@
             <Font name="Cambria" size="22.0" />
          </font>
       </Button>
-      <Button fx:id="searchButton" layoutX="563.0" layoutY="116.0" mnemonicParsing="false" onAction="#courseSearchInitialize" prefHeight="27.0" prefWidth="134.0" text="Search" textFill="#0022ff">
+      <Button fx:id="searchButton" layoutX="456.0" layoutY="108.0" mnemonicParsing="false" onAction="#courseSearchInitialize" prefHeight="27.0" prefWidth="134.0" text="Search" textFill="#0022ff">
          <font>
             <Font name="Cambria" size="19.0" />
          </font>
@@ -52,19 +52,24 @@
       </Button>
       <TableView fx:id="courseTableView" layoutX="193.0" layoutY="157.0" prefHeight="482.0" prefWidth="932.0">
         <columns>
-          <TableColumn prefWidth="178.3333282470703" text="Course Mnemonic" >
+          <TableColumn prefWidth="178.3333282470703" text="Course Mnemonic">
            <cellValueFactory><PropertyValueFactory property="mnemonic" />
            </cellValueFactory></TableColumn>
-          <TableColumn prefWidth="180.33334350585938" text="Course Number" >
+          <TableColumn prefWidth="180.33334350585938" text="Course Number">
              <cellValueFactory><PropertyValueFactory property="courseNumber" />
              </cellValueFactory></TableColumn>
-            <TableColumn prefWidth="403.33331298828125" text="Course Title" >
+            <TableColumn prefWidth="403.33331298828125" text="Course Title">
                <cellValueFactory><PropertyValueFactory property="courseName" />
                </cellValueFactory></TableColumn>
-            <TableColumn prefWidth="168.666748046875" text="Average Rating" >
+            <TableColumn prefWidth="168.666748046875" text="Average Rating">
                <cellValueFactory><PropertyValueFactory property="averageRating" />
                </cellValueFactory></TableColumn>
         </columns>
       </TableView>
+      <Button fx:id="clearSearchButton" layoutX="659.0" layoutY="108.0" mnemonicParsing="false" onAction="#courseSearchInitialize" prefHeight="27.0" prefWidth="134.0" text="Clear Search" textFill="#0022ff">
+         <font>
+            <Font name="Cambria" size="19.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

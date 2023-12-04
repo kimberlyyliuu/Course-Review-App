@@ -28,6 +28,8 @@ public class CourseSearchController {
     @FXML
     private Button searchButton;
     @FXML
+    private Button clearSearchButton;
+    @FXML
     private Button myReviewsButton;
     @FXML
     private Button logoutButton;
@@ -60,6 +62,16 @@ public class CourseSearchController {
                     dbDriver.connect();
                 }
                 submitSearch();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        clearSearchButton.setOnAction(event -> {
+            try {
+                if (dbDriver.connection.isClosed()){
+                    dbDriver.connect();
+                }
+                loadCourses();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
