@@ -41,7 +41,7 @@ public class CourseReviewController {
         activeUser.setUsername(user.getUsername());
         activeUser.setPassword(user.getPassword());
     }
-    private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
+    private final DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
 
     @FXML
     protected void initialize() {
@@ -144,8 +144,6 @@ public class CourseReviewController {
     public void loadReviews(Course course) throws SQLException {
         try {
             dbDriver.connect();
-
-
             List<Review> reviewsList = dbDriver.getReviewsByCourse(course);
             ObservableList<Review> observableReviewsList = FXCollections.observableList(reviewsList);
             reviewsTableView.getItems().clear();
@@ -153,15 +151,9 @@ public class CourseReviewController {
             dbDriver.disconnect();
         } catch (SQLException e) {
             throw e;
-        } finally {
-            try{
-                dbDriver.disconnect();
-            } catch (SQLException e){
-                throw e;
-            }
+
         }
     }
-
 }
 
 

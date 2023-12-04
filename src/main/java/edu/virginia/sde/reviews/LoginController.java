@@ -29,7 +29,7 @@ public class LoginController {
     private Label errorMessage;
     private User activeUser1 = new User("", "");
 
-    private DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
+    private final DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
 
     @FXML
     private void initialize(){
@@ -102,11 +102,6 @@ public class LoginController {
             } else if (dbDriver.checkUserExists(username) && !dbDriver.checkUserPassword(username,password)) {
                 Platform.runLater(() -> {
                     errorMessage.setText("Invalid Password");
-//                    try {
-//                        dbDriver.disconnect();
-//                    } catch (SQLException e) {
-//                        throw new RuntimeException(e);
-//                    }
                     initialize();
                 });
             }
