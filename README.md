@@ -17,9 +17,11 @@ List the primary contributions of each author. It is recommended to update this 
 
 ### Ashley Sokol
 
-* Author 1 contributions
-* as a bulleted list
-* each line starts with an asterisk and a space
+* Implementation of New User Scene fxml and controller
+* Some implementation of Login Scene, Course Search
+* Implementation of Course Search function
+* Contributed dynamic population logic for textfields, 
+* Completed various Integration Testing, ensured instruction guidelines were adhered to
 
 ### Mia Ark
 
