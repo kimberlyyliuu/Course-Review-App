@@ -1,5 +1,7 @@
 package edu.virginia.sde.reviews;
 
+import javafx.scene.input.Mnemonic;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -215,16 +217,17 @@ public class DatabaseDriver {
         if (connection.isClosed()) {
             throw new IllegalStateException("Connection is not open.");
         }
-
+        ResultSet resultSet = null;
         try {
             List<Course> courseList = new ArrayList<>();
-            String sql = "SELECT * FROM Courses WHERE Mnemonic LIKE ? AND CourseNumber LIKE ? AND CourseName LIKE ?";
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, "%" + subject + "%");
-                statement.setString(2, "%" + number + "%");
-                statement.setString(3, "%" + title + "%");
-
-                try (ResultSet resultSet = statement.executeQuery()) {
+            //all fields provided
+            if(!subject.equals("") && !number.equals("") && !title.equals("")) {
+                String sql = "SELECT * FROM Courses WHERE Mnemonic = ? AND CourseNumber = ? AND CourseName LIKE ?";
+                try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                    statement.setString(1, subject);
+                    statement.setString(2, number);
+                    statement.setString(3, "%" + title + "%");
+                    resultSet = statement.executeQuery();
                     while (resultSet.next()) {
                         String mnemonic = resultSet.getString("Mnemonic");
                         int courseNumber = resultSet.getInt("CourseNumber");
@@ -236,7 +239,111 @@ public class DatabaseDriver {
                     }
                 }
             }
+            //only subject + number provided
+            else if(!subject.equals("") && !number.equals("") && title.equals("")) {
+                String sql = "SELECT * FROM Courses WHERE Mnemonic = ? AND CourseNumber = ?";
+                try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                    statement.setString(1, subject);
+                    statement.setString(2, number);
+                    resultSet = statement.executeQuery();
+                    while (resultSet.next()) {
+                        String mnemonic = resultSet.getString("Mnemonic");
+                        int courseNumber = resultSet.getInt("CourseNumber");
+                        String courseName = resultSet.getString("CourseName");
+                        double averageRating = resultSet.getDouble("AverageRating");
 
+                        Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+                        courseList.add(newCourse);
+                    }
+                }
+            }
+            //only subject + title provided
+            else if(!subject.equals("") && number.equals("") && !title.equals("")) {
+                String sql = "SELECT * FROM Courses WHERE Mnemonic = ? AND CourseName LIKE ?";
+                try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                    statement.setString(1, subject);
+                    statement.setString(2, "%" + title + "%");
+                    resultSet = statement.executeQuery();
+                    while (resultSet.next()) {
+                        String mnemonic = resultSet.getString("Mnemonic");
+                        int courseNumber = resultSet.getInt("CourseNumber");
+                        String courseName = resultSet.getString("CourseName");
+                        double averageRating = resultSet.getDouble("AverageRating");
+
+                        Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+                        courseList.add(newCourse);
+                    }
+                }
+            }
+            //only number + title provided
+            else if(subject.equals("") && !number.equals("") && !title.equals("")) {
+                String sql = "SELECT * FROM Courses WHERE CourseNumber = ? AND CourseName LIKE ?";
+                try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                    statement.setString(1, number);
+                    statement.setString(2, "%" + title + "%");
+                    resultSet = statement.executeQuery();
+                    while (resultSet.next()) {
+                        String mnemonic = resultSet.getString("Mnemonic");
+                        int courseNumber = resultSet.getInt("CourseNumber");
+                        String courseName = resultSet.getString("CourseName");
+                        double averageRating = resultSet.getDouble("AverageRating");
+
+                        Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+                        courseList.add(newCourse);
+                    }
+                }
+            }
+            //only subject provided
+            else if(!subject.equals("") && number.equals("") && title.equals("")) {
+                String sql = "SELECT * FROM Courses WHERE Mnemonic = ?";
+                try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                    statement.setString(1, subject);
+                    resultSet = statement.executeQuery();
+                    while (resultSet.next()) {
+                        String mnemonic = resultSet.getString("Mnemonic");
+                        int courseNumber = resultSet.getInt("CourseNumber");
+                        String courseName = resultSet.getString("CourseName");
+                        double averageRating = resultSet.getDouble("AverageRating");
+
+                        Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+                        courseList.add(newCourse);
+                    }
+                }
+            }
+            //only number provided
+            else if(subject.equals("") && !number.equals("") && title.equals("")) {
+                String sql = "SELECT * FROM Courses WHERE CourseNumber = ?";
+                try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                    statement.setString(1, number);
+                    resultSet = statement.executeQuery();
+                    while (resultSet.next()) {
+                        String mnemonic = resultSet.getString("Mnemonic");
+                        int courseNumber = resultSet.getInt("CourseNumber");
+                        String courseName = resultSet.getString("CourseName");
+                        double averageRating = resultSet.getDouble("AverageRating");
+
+                        Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+                        courseList.add(newCourse);
+                    }
+                }
+            }
+            //only title provided
+            else if(subject.equals("") && number.equals("") && !title.equals("")) {
+                String sql = "SELECT * FROM Courses WHERE CourseName LIKE ?";
+                try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                    statement.setString(1, "%" + title + "%");
+                    resultSet = statement.executeQuery();
+                    while (resultSet.next()) {
+                        String mnemonic = resultSet.getString("Mnemonic");
+                        int courseNumber = resultSet.getInt("CourseNumber");
+                        String courseName = resultSet.getString("CourseName");
+                        double averageRating = resultSet.getDouble("AverageRating");
+
+                        Course newCourse = new Course(mnemonic, courseNumber, courseName, averageRating);
+                        courseList.add(newCourse);
+                    }
+                }
+            }
             return courseList;
         } catch (SQLException e) {
             throw e;
