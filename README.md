@@ -5,7 +5,7 @@
 1) Ashley Sokol, mqx4vk, mqx4vk
 2) Mia Ark, pzc4aq, MiaLA55
 3) Kimberly Liu, hfx6mh, kimberlyyliuu
-4) Name, netid, [GitHub profile name]
+4) Haley Andres, vwz2wb, haleyandres
 
 ## To Run
 
@@ -37,11 +37,13 @@ List the primary contributions of each author. It is recommended to update this 
 * Modified AddReviewController to include EditReview and averageRating as well 
 * Wrote Object Classes (User, Review, Course)
 
-### [Author 4 - replace this with their name]
+### Haley Andres
 
-* Author 4 contributions
-* as a bulleted list
-* each line starts with an asterisk and a space
+* Helped implement methods in DatabaseDriver
+* Created table view for CourseReview scene
+* Populated data from database into table views in MyReview, CourseSearch, and CourseReview scenes
+* Helped implement search functionality in Course Search scene
+* Various bug fixes
 
 ## Issues
 
