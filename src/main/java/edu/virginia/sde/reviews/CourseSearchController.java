@@ -183,6 +183,7 @@ public class CourseSearchController {
         List<Course> coursesList = dbDriver.getSearchedCourses(subject, number, title);
         ObservableList<Course> observableCourseList = FXCollections.observableList(coursesList);
         courseTableView.setItems(observableCourseList);
+        dbDriver.disconnect();
     }
 
     /**
