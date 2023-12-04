@@ -34,8 +34,10 @@ List the primary contributions of each author. It is recommended to update this 
 ### Kimberly Liu
 
 * Implemented AddReviewController methods and other supplementary methods in Database Driver
-* Modified AddReviewController to include EditReview and averageRating as well 
+* Modified AddReviewController to include EditReview and averageRating as well
 * Wrote Object Classes (User, Review, Course)
+* Started basic foundation for MyReviewsScreen 
+* Tested and debugged along the way
 
 ### Haley Andres
 

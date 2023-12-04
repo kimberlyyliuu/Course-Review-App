@@ -138,12 +138,7 @@ public class AddReviewController {
 
         try{
             var ratingText = inputRating.getText();
-
-
-            // Agent: ChatGPT
-            // Usage: Asked how to check if field is filled or not
-            // Check if inputComment is not empty before using its value
-            var comment = inputComment.getText().isEmpty() ? null : inputComment.getText();
+            var comment = inputComment.getText();
 
 
             if(!checkForDecimals(ratingText) && ratingText.matches("\\d+")) {
