@@ -212,7 +212,7 @@ public class CourseSearchController {
             stage.show();
             MyReviewsController controller = loader.getController();
             controller.setActiveUser(activeUser);
-            controller.myReviewsIntialize();
+            controller.myReviewsInitialize();
         } catch (IOException e) {
             e.printStackTrace();
         }

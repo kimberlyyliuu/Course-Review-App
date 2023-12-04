@@ -30,7 +30,7 @@ public class MyReviewsController {
 
 
 
-    protected void myReviewsIntialize(){
+    protected void myReviewsInitialize(){
         backToCourseSearchButton.setOnAction(event -> openCourseSearchScene());
         populateTable();
 

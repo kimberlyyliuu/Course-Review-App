@@ -1,4 +1,5 @@
 package edu.virginia.sde.reviews;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -38,7 +40,8 @@ public class AddReviewController {
     private int userID;
     private int courseID;
     private final User activeUser = new User("", "");
-    public void setActiveUser(User user){
+
+    public void setActiveUser(User user) {
         activeUser.setUsername(user.getUsername());
         activeUser.setPassword(user.getPassword());
     }
@@ -46,7 +49,7 @@ public class AddReviewController {
     private final DatabaseDriver dbDriver = new DatabaseDriver("course_app.sqlite");
 
     @FXML
-    protected void initialize(){
+    protected void initialize() {
         backToCourseSearchButton.setOnAction(event -> openCourseSearchScene());
         backToCourseReviewButton.setOnAction(event -> openCourseReviewScene());
         try {
@@ -55,27 +58,21 @@ public class AddReviewController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        handleReturningReviewer(); //loads the textfields
+        handleReturningReviewer(); //loads the text fields
 
         try {
-            if (userReviewed()){
+            if (userReviewed()) {
                 submitReviewButton.setOnAction(event -> {
                     try {
-
                         handleUpdateReview();
-                       // openCourseSearchScene();
-
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
                 });
-            } else{
+            } else {
                 submitReviewButton.setOnAction(event -> {
                     try {
-
                         handleAddReview();
-                       // openCourseSearchScene();
-
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -84,34 +81,28 @@ public class AddReviewController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
 
-    public void setData(String courseTitle, String mnemonicAndNumber, String rating){
+    public void setData(String courseTitle, String mnemonicAndNumber, String rating) {
         courseTitleLabel.setText(courseTitle);
         mnemonicAndNumberLabel.setText(mnemonicAndNumber);
         averageRatingLabel.setText(rating);
     }
 
-    private boolean userReviewed() throws SQLException{
-        try{
-            if (dbDriver.connection.isClosed()){
-                dbDriver.connect();
-            }
-            boolean result =  dbDriver.userIDAlreadyReviewedCourse(userID, courseID);
-            dbDriver.disconnect();
-            return result;
-        } catch (SQLException e) {
-            throw e;
+    private boolean userReviewed() throws SQLException {
+        if (dbDriver.connection.isClosed()) {
+            dbDriver.connect();
         }
+        boolean result = dbDriver.userIDAlreadyReviewedCourse(userID, courseID);
+        dbDriver.disconnect();
+        return result;
     }
 
-    private void handleReturningReviewer(){
+    private void handleReturningReviewer() {
         try {
             dbDriver.connect();
-            if (userReviewed()){
+            if (userReviewed()) {
                 double rate = dbDriver.loadRatingByUserID(userID, courseID);
                 int rating = (int) rate;
                 inputRating.setText(String.valueOf(rating));
@@ -125,81 +116,56 @@ public class AddReviewController {
         }
     }
 
-    //public void updatereview trhows SQL
-    //edit review from db driver
+    private void handleUpdateReview() throws SQLException {
 
-    private void handleUpdateReview() throws SQLException{
+        var ratingText = inputRating.getText();
+        var comment = inputComment.getText();
 
-        try{
-            var ratingText = inputRating.getText();
-            var comment = inputComment.getText();
-
-
-            if(!checkForDecimals(ratingText) && ratingText.matches("\\d+")) {
-                var rating = Integer.parseInt(inputRating.getText());
-                if (comment != null && isValidRating(rating)) {
-                    dbDriver.connect();
-                    dbDriver.editReview(userID, courseID,inputComment.getText(), inputRating.getText() );
-                    dbDriver.updateAverageRating(courseID);
-                    dbDriver.commit();
-                    dbDriver.disconnect();
-                    openCourseReviewScene();
-                } else if (comment == null && isValidRating(rating)) {
-                    dbDriver.connect();
-                    dbDriver.editReview(userID, courseID,"", inputRating.getText() );
-                    dbDriver.updateAverageRating(courseID);
-                    dbDriver.commit();
-                    dbDriver.disconnect();
-                    openCourseReviewScene();
-                } else if (!isValidRating(rating)) {
-                    Platform.runLater(() -> {
-                        errorMessage.setText("Rating must be a whole number integer between 1 and 5");
-                    });
-                }
-            }else{
-                Platform.runLater(() -> {
-                    errorMessage.setText("Rating must be a whole number integer between 1 and 5");
-                });
+        if (!checkForDecimals(ratingText) && ratingText.matches("\\d+")) {
+            var rating = Integer.parseInt(inputRating.getText());
+            if (comment != null && isValidRating(rating)) {
+                dbDriver.connect();
+                dbDriver.editReview(userID, courseID, inputComment.getText(), inputRating.getText());
+                dbDriver.updateAverageRating(courseID);
+                dbDriver.commit();
+                dbDriver.disconnect();
+                openCourseReviewScene();
+            } else if (comment == null && isValidRating(rating)) {
+                dbDriver.connect();
+                dbDriver.editReview(userID, courseID, "", inputRating.getText());
+                dbDriver.updateAverageRating(courseID);
+                dbDriver.commit();
+                dbDriver.disconnect();
+                openCourseReviewScene();
+            } else if (!isValidRating(rating)) {
+                Platform.runLater(() -> errorMessage.setText("Rating must be a whole number integer between 1 and 5"));
             }
-
-
-        } catch (SQLException e) {
-            throw e;
-        } finally {
-            dbDriver.disconnect();
+        } else {
+            Platform.runLater(() -> errorMessage.setText("Rating must be a whole number integer between 1 and 5"));
         }
+        dbDriver.disconnect();
     }
 
 
     private int getUserID() throws SQLException {
-        try {
-            dbDriver.connect();
-
-            int id=  dbDriver.getUserIDByUsername(activeUser.getUsername());
-            dbDriver.disconnect();
-            return id;
-        } catch (SQLException e) {
-            throw e;
-        }
+        dbDriver.connect();
+        int id = dbDriver.getUserIDByUsername(activeUser.getUsername());
+        dbDriver.disconnect();
+        return id;
     }
 
     private int getCourseID() throws SQLException {
-        try {
-            if (dbDriver.connection.isClosed()){
-                dbDriver.connect();
-            }
-            String[] parts = mnemonicAndNumberLabel.getText().split("\\s+");
-            var mnemonic = parts[0];
-            var number = parts[1];
-
-            int id =  dbDriver.getCourseIDbyCourseTitleAndMnemonic(courseTitleLabel.getText(), mnemonic, number);
-            dbDriver.disconnect();
-            return id;
-        } catch (SQLException e) {
-            throw e;
+        if (dbDriver.connection.isClosed()) {
+            dbDriver.connect();
         }
-    }
+        String[] parts = mnemonicAndNumberLabel.getText().split("\\s+");
+        var mnemonic = parts[0];
+        var number = parts[1];
 
+        int id = dbDriver.getCourseIDbyCourseTitleAndMnemonic(courseTitleLabel.getText(), mnemonic, number);
+        dbDriver.disconnect();
+        return id;
+    }
 
 
     private void handleAddReview() throws SQLException {
@@ -208,66 +174,51 @@ public class AddReviewController {
         // Usage: Asked how to check if field is filled or not
         // Check if inputComment is not empty before using its value
         var comment = inputComment.getText().isEmpty() ? null : inputComment.getText();
-        try {
-            dbDriver.connect();
-            dbDriver.createTables();
+        dbDriver.connect();
+        dbDriver.createTables();
 
-            if(!checkForDecimals(ratingText) && ratingText.matches("\\d+")) {
-                var rating = Integer.parseInt(inputRating.getText());
-                if (comment != null && isValidRating(rating)) {
-                    Review review = new Review(userID, courseID, rating, comment);
-                    dbDriver.addReview(review);
-                    dbDriver.updateAverageRating(courseID);
-                    dbDriver.commit();
-                    inputComment.clear();
-                    inputRating.clear();
-                    dbDriver.disconnect();
-                    openCourseReviewScene();
-                } else if (comment == null && isValidRating(rating)) {
-                    Review review = new Review(userID, courseID, rating);
-                    dbDriver.addReview(review);
-                    dbDriver.updateAverageRating(courseID);
-                    dbDriver.commit();
-                    inputComment.clear();
-                    inputRating.clear();
-                    dbDriver.disconnect();
-                    openCourseSearchScene();
-                } else if (!isValidRating(rating)) {
-                    Platform.runLater(() -> {
-                        errorMessage.setText("Rating must be a whole number integer between 1 and 5");
-                    });
-                }
+        if (!checkForDecimals(ratingText) && ratingText.matches("\\d+")) {
+            var rating = Integer.parseInt(inputRating.getText());
+            if (comment != null && isValidRating(rating)) {
+                Review review = new Review(userID, courseID, rating, comment);
+                dbDriver.addReview(review);
+                dbDriver.updateAverageRating(courseID);
+                dbDriver.commit();
+                inputComment.clear();
+                inputRating.clear();
+                dbDriver.disconnect();
+                openCourseReviewScene();
+            } else if (comment == null && isValidRating(rating)) {
+                Review review = new Review(userID, courseID, rating);
+                dbDriver.addReview(review);
+                dbDriver.updateAverageRating(courseID);
+                dbDriver.commit();
+                inputComment.clear();
+                inputRating.clear();
+                dbDriver.disconnect();
+                openCourseReviewScene();
+            } else if (!isValidRating(rating)) {
+                Platform.runLater(() -> errorMessage.setText("Rating must be a whole number integer between 1 and 5"));
             }
-            else{
-                Platform.runLater(() -> {
-                    errorMessage.setText("Rating must be a whole number integer between 1 and 5");
-                });
-            }
-            dbDriver.disconnect();
-        } catch (SQLException e) {
-            throw e;
+        } else {
+            Platform.runLater(() -> errorMessage.setText("Rating must be a whole number integer between 1 and 5"));
         }
+        dbDriver.disconnect();
     }
 
-    private boolean checkForDecimals(String ratingText){
+    private boolean checkForDecimals(String ratingText) {
         return ratingText.contains(".");
     }
 
 
-
-    private boolean isValidRating(Integer ratingText){
+    private boolean isValidRating(Integer ratingText) {
         try {
             int rating = Integer.parseInt(String.valueOf(ratingText));
 
-            //Check # is whole number integer
-
-            //Check if the rating is within the valid range (1 to 5)
             if (rating >= 1 && rating <= 5) {
                 return true;
             } else {
-                Platform.runLater(() -> {
-                    errorMessage.setText("Please make sure your rating is between 1 to 5, inclusively");
-                });
+                Platform.runLater(() -> errorMessage.setText("Please make sure your rating is between 1 to 5, inclusively"));
                 return false;
             }
         } catch (NumberFormatException e) {
@@ -319,5 +270,4 @@ public class AddReviewController {
             throw new RuntimeException(e);
         }
     }
-
 }
