@@ -1,11 +1,10 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/DC1SF4uZ)
-# Homework 6 - Responding to Change
+As part of my software development class final project, my team and I developed a file-based SQLite database application, ensuring persistent storage for users, courses, and reviews. I led the team by orchestrating a clear project agenda as we applied agile methodologies throughout the development lifecycle. The final result was a clear and intuitive interface connecting various scenes within the application, prioritizing user experience with a strong emphasis on usability and aesthetics. 
 
 ## Authors
-1) Ashley Sokol, mqx4vk, mqx4vk
-2) Mia Ark, pzc4aq, MiaLA55
-3) Kimberly Liu, hfx6mh, kimberlyyliuu
-4) Haley Andres, vwz2wb, haleyandres
+1) Ashley Sokol, mqx4vk
+2) Mia Ark, MiaLA55
+3) Kimberly Liu, kimberlyyliuu
+4) Haley Andres, haleyandres
 
 ## To Run
 Run CourseReviewsApplication.java with the following VM arguments:
